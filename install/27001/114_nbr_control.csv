@@ -1,0 +1,115 @@
+item;control
+A5.1.1;Políticas para segurança da informação
+A5.1.2;Análise crítica das políticas para segurança da Informação
+A6.1.1;Responsabilidades e papéis da segurança da informação
+A6.1.2;Segregação de deveres
+A6.1.3;Contato com autoridades
+A6.1.4;Contato com grupos especiais
+A6.1.5;Segurança da informação no gerenciamento de projetos
+A6.2.1;Política para uso de  dispositivo móvel
+A6.2.2;Trabalho remoto
+A7.1.1;Seleção
+A7.1.2;Termos e condições de contratação
+A7.2.1;Responsabilidades da direção
+A7.2.2;Conscientização, educação e treinamento em segurança da informação
+A7.2.3;Processo disciplinar
+A7.3.1;Responsabilidades pelo encerramento ou mudança da contratação
+A8.1.1;Inventário dos ativos
+A8.1.2;Proprietario dos ativos
+A8.1.3;Uso aceitável dos ativos
+A8.1.4;Devolução dos ativos
+A8.2.1;Classificação da informação
+A8.2.2;Rótulos e tratamento da informação
+A8.2.3;Tratamento dos ativos
+A8.3.1;Gerenciamento de mídias removíveis
+A8.3.2;Descarte de mídias
+A8.3.3;Transferência física de mídias
+A9.1.1;Política de controle de acesso
+A9.1.2;Acesso a redes e serviços de rede
+A9.2.1;Registro e cancelamento de usuário
+A9.2.2;Provisionamento para acesso de usuário
+A9.2.3;Gerenciamento de direitos de acesso privilegiado
+A9.2.4;Gerenciamento da informação de autenticação secreta de usuários
+A9.2.5;Análise crítica dos direitos de acesso dos usuários
+A9.2.6;Retirada ou ajuste dos direitos de acesso
+A9.3.1;Uso da informação de autenticação secreta
+A9.4.1;Restrição de acesso à informação
+A9.4.2;Procedimentos seguros de entrada no sistema (log-on)
+A9.4.3;Sistema de gerenciamento de senha
+A9.4.4;Uso de programas utilitários privilegiados
+A9.4.5;Controle de acesso ao código-fonte de programas
+A10.1.1;Política para uso de controles criptográficos
+A10.1.2;Gerenciamento de chaves
+A11.1.1;Perímetro de segurança física
+A11.1.2;Controles de entrada física
+A11.1.3;Segurança em escritórios, salas e instalações
+A11.1.4;Proteção contra ameaças externas e do meio ambiente
+A11.1.5;Trabalhando em áreas seguras
+A11.1.6;Áreas de entrega e de carregamento
+A11.2.1;Localização e proteção do equipamento
+A11.2.2;Utilidades
+A11.2.3;Segurança do cabeamento
+A11.2.4;Manutenção dos equipamentos
+A11.2.5;Remoção de ativos
+A11.2.6;Segurança de equipamentos e ativos fora das dependências da organização
+A11.2.7;Reutilização e/ou descarte seguro de equipamentos
+A11.2.8;Equipamentos de usuários sem monitoração
+A11.2.9;Política de mesa limpa e tela limpa
+A12.1.1;Documentação dos procedimentos de operação
+A12.1.2;Gestão de mudanças
+A12.1.3;Gestão de capacidades
+A12.1.4;Separação dos ambientes de desenvolvimento, teste e de produção
+A12.2.1;Controles contra malwares
+A12.3.1;Cópias de Segurança da Informação
+A12.4.1;Registros de eventos
+A12.4.2;Proteção das informações dos registros de eventos (logs)
+A12.4.3;Registros de eventos (log) de administrador e operador
+A12.4.4;Sincronização dos relógios
+A12.5.1;Instalação de software nos sistemas operacionais
+A12.6.1;Gestão de Vulnerabilidades Técnicas
+A12.6.2;Restrição quanto à instalação de softwares
+A12.7.1;Controles de auditoria de sistemas de informação
+A13.1.1;Controles de redes
+A13.1.2;Segurança dos serviços de rede
+A13.1.3;Segregação de redes
+A13.2.1;Políticas e procedimentos para transferência de informações
+A13.2.2;Acordos para transferência de informações
+A13.2.3;Mensagens eletrônicas
+A13.2.4;Acordos de confidencialidade e não divulgação
+A14.1.1;Análise e especificação dos requisitos de segurança da informação
+A14.1.2;Serviços de aplicação seguros em redes públicas
+A14.1.3;Protegendo as transações nos aplicativos de serviços
+A14.2.1;Política de desenvolvimento seguro
+A14.2.2;Procedimentos para controle de mudanças de sistema
+A14.2.3;Análise crítica técnica das aplicações após mudanças nas plataformas operacionais
+A14.2.4;Restrições sobre mudanças em pacotes de software
+A14.2.5;Principios para projetar sistemas seguros
+A14.2.6;Ambiente seguro para desenvolvimento
+A14.2.7;Desenvolvimento terceirizado
+A14.2.8;Teste de segurança do sistema
+A14.2.9;Testes de aceitação de sistemas
+A14.3.1;Proteção dos dados para teste
+A15.1.1;Politica de segurança da informação no relacionamento com os fornecedores
+A15.1.2;Identificando segurança da informação nos acordos com fornecedores
+A15.1.3;Cadeia de suprimento na tecnologia da informação e comunicação
+A15.2.1;Monitoramento e análise crítica de serviços com fornecedores
+A15.2.2;Gerenciamento de mudanças para serviços com fornecedores
+A16.1.1;Responsabilidades e procedimentos 
+A16.1.2;Notificação de eventos de segurança da informação
+A16.1.3;Notificando fragilidades de segurança da informação
+A16.1.4;Avaliação e decisão dos eventos de segurança da informação
+A16.1.5;Resposta aos incidentes de segurança da informação
+A16.1.6;Aprendendo com os incidentes de segurança da informação
+A16.1.7;Coleta de evidencias
+A17.1.1;Planejando a continuidade da segurança da informação
+A17.1.2;Implementando a continuidade da segurança da informação
+A17.1.3;Verificação, análise crítica e avaliação da continuidade da segurança da informação
+A17.2.1;Disponibilidade dos recursos de processamento da informação
+A18.1.1;Identificação da legislação aplicável e de requisitos contratuais
+A18.1.2;Direitos de propriedade intelectual
+A18.1.3;Proteção de registros
+A18.1.4;Proteção e privacidade de informações de identificação de pessoal 
+A18.1.5;Regulamentação de controles de criptografia
+A18.2.1;Analise critica independente da segurança da informação
+A18.2.2;Conformidade com as políticas e normas de segurança da informação
+A18.2.3;Análise crítica da conformidade técnica

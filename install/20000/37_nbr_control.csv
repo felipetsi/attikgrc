@@ -1,0 +1,37 @@
+item,control
+4.1.1;Compromisso da direção
+4.1.2;Política de gestão de serviços
+4.1.3;Autoridade, responsabilidade e comunicação
+4.1.4;Representante da direção
+4.2.-;Para os processos nas Seções 5 a 9, o provedor de serviço deve identificar todos os processos, ou as partes dos processos, que são operados por outras partes. Outras partes podem ser um grupo interno, um cliente ou um fornecedor
+4.3.1;Estabelecer e manter documentos
+4.3.2;Controle dos documentos
+4.3.3;Controle dos registros
+4.4.1;Disponibilização de recursos
+4.4.2;Recursos humanos
+4.5.1;Definição do escopo
+4.5.2;Planejar o SGS (Planejar - Plan)
+4.5.3;Implementação e operação do SGS (Fazer – Do)
+4.5.4;Monitorar e analisar criticamente o SGS (Checar – Check)
+4.5.5;Manter e melhorar o SGS (Agir – Act)
+5.1.-;O provedor de serviço deve utilizar este processo para todos os novos serviços ou para efetuar mudanças em serviços existentes que tenham, potencialmente, impacto significativo nos serviços ou no cliente. As mudanças que estão no escopo da Seção 5 devem ser determinadas pela política de gerenciamento de mudanças acordada como parte do processo de gerenciamento de mudanças.
+5.2.-;O provedor de serviço deve identificar os requisitos de serviço para os serviços novos ou modificados. Serviços novos ou modificados devem ser planejados para atender aos requisitos de serviço. O planejamento para serviços novos ou modificados deve ser acordado com o cliente e com as partes Interessadas
+5.3.-;Os serviços novos ou modificados devem ser desenhados e documentados…
+5.4.-;Os serviços novos ou modificados devem ser testados para verificar se cumprem com os requisitos de serviço e com o desenho documentado. Os serviços novos ou modificados devem ser verificados com base nos critérios de aceite de serviço previamente acordados entre o provedor de serviço e as partes interessadas. Se os critérios de aceite do serviço não forem alcançados, o provedor de serviço e as partes interessadas devem tomar uma decisão sobre as ações necessárias e entrega
+6.1.-;O provedor de serviço e o cliente devem acordar os serviços a serem fornecidos
+6.2.-;A descrição de cada relato de serviço, incluindo sua identidade, propósito, audiência, frequência e detalhes da(s) fonte(s) de dados, deve ser documentada e aprovada pelo provedor de serviço e partes Interessadas
+6.3.1;Requisitos de continuidade e Disponibilidade de serviço
+6.3.2;Planos de continuidade e disponibilidade de serviço
+6.3.3;Monitoramento e teste de continuidade e disponibilidade de serviço
+6.4.-;Haverá uma interface definida entre o orçamento e a contabilidade para o processo de serviços e outros processos de gestão financeira
+6.5.-;O provedor de serviço deve identificar e acordar os requisitos de capacidade e desempenho com o cliente e as partes interessadas
+6.6.1;Política de segurança da informação
+6.6.2;Controles de segurança da informação
+6.6.3;Mudanças e incidentes da segurança da informação
+7.1.-;O provedor de serviço deve identificar e documentar os clientes, usuários e partes interessadas nos Serviços
+7.2.-;O provedor de serviço pode utilizar fornecedores para implementar e operar partes dos processos de gerenciamento de serviços
+8.1.-;Deve existir um procedimento documentado para todos os incidentes, que defina: registro, definição de prioridade, classificação, atualização dos registros, escaladas, resolução, encerramento
+8.2.-;Deve haver um procedimento documentado para identificar problemas e minimizar ou evitar o impacto de incidentes e problemas
+9.1.-;Deve haver uma definição documentada de cada tipo de IC
+9.2.-;Uma política de gerenciamento de mudanças deve ser estabelecida definindo: IC´s que estão sob o controle de gerenciamento de mudanças e critérios para determinar mudanças com potencial para causar um impacto significativo nos serviços ou no cliente
+9.3.-;O provedor de serviço deve estabelecer e entrar em acordo com o cliente sobre uma política de liberação que declare a freqüência e os tipos de liberações

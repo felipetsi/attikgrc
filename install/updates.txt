@@ -1,0 +1,6 @@
+### 06/08/2018 
+# Change table trevision_control to allow insert revision automatic whenever is detect by daily.sh script.
+TRUNCATE TABLE trevision_control
+ALTER TABLE trevision_control ALTER COLUMN execution_date DROP NOT NULL
+ALTER TABLE trevision_control ALTER COLUMN execution_date DROP DEFAULT
+ALTER TABLE trevision_control ALTER COLUMN result DROP NOT NULL

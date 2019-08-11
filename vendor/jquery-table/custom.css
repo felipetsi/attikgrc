@@ -1,0 +1,46 @@
+table{
+  border:1px solid #ccc;
+}
+
+table thead th{
+  background-color:#4579b3; /*#007bff*/
+  padding:6px;
+  color:#fff;
+  text-align:center;
+}
+
+table thead th.header{
+  cursor:pointer;
+}
+
+table tbody td{
+  padding:6px;
+  text-align:center;
+  color:#333;
+  font-size:12px;
+}
+
+table tbody tr.odd td{
+  background-color:#ffffcc;
+}
+
+table tbody tr.even td{
+  background-color:#ffffff;
+}
+
+table tbody tr.hover td{
+  background-color:#a9d0f5;
+}
+
+table tbody tr.selected td{
+  background-color:#a9f5a9!important;
+}
+
+.row div{
+	margin-top: 2px;
+}
+
+#dataTable, #dataTable2, #dataTable3, #dataTable4 td:hover {
+    cursor: pointer;
+}
+
