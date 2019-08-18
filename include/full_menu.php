@@ -1,12 +1,12 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-	  <a class="navbar-brand" href="/attikgrc/dashboard.php">@ttik GRC</a>
+	  <a class="navbar-brand" href="/dashboard.php">@ttik GRC</a>
 	  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarResponsive">
 		<ul class="navbar-nav navbar-sidenav" id="risk_session">
 		  <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
-			<a class="nav-link" href="/attikgrc/dashboard.php">
+			<a class="nav-link" href="/dashboard.php">
 			  <i class="fa fa-fw fa-dashboard"></i>
 			  <span class="nav-link-text">
 				<?php echo $LANG_DASHBOARD;?></span>
@@ -20,19 +20,19 @@
             </a>
             <ul class="sidenav-second-level collapse" id="risk_session_component">
               <li>
-                <a href="/attikgrc/module/risk/area.php"><?php echo $LANG_AREA;?></a>
+                <a href="/module/risk/area.php"><?php echo $LANG_AREA;?></a>
               </li>
               <li>
-                <a href="/attikgrc/module/risk/process.php"><?php echo $LANG_PROCESS;?></a>
+                <a href="/module/risk/process.php"><?php echo $LANG_PROCESS;?></a>
               </li>
               <li>
-                <a href="/attikgrc/module/risk/asset.php"><?php echo $LANG_ASSET;?></a>
+                <a href="/module/risk/asset.php"><?php echo $LANG_ASSET;?></a>
               </li>
               <li>
-                <a href="/attikgrc/module/risk/risk.php"><?php echo $LANG_RISK;?></a>
+                <a href="/module/risk/risk.php"><?php echo $LANG_RISK;?></a>
               </li>
               <li>
-                <a href="/attikgrc/module/risk/control.php"><?php echo $LANG_CONTROL;?></a>
+                <a href="/module/risk/control.php"><?php echo $LANG_CONTROL;?></a>
               </li>
             </ul>
           </li>
@@ -44,17 +44,17 @@
             </a>
             <ul class="sidenav-second-level collapse" id="improvement_session">
               <li>
-                <a href="/attikgrc/module/improvement/task.php"><?php echo $LANG_TASKS;?></a>
+                <a href="/module/improvement/task.php"><?php echo $LANG_TASKS;?></a>
               </li>
               <li>
-                <a href="/attikgrc/module/improvement/incident.php"><?php echo $LANG_SECURITY_INCIDENT;?></a>
+                <a href="/module/improvement/incident.php"><?php echo $LANG_SECURITY_INCIDENT;?></a>
               </li>
               <li>
-                <a href="/attikgrc/module/improvement/nonconformity.php"><?php echo $LANG_NONCONFORMITY;?></a>
+                <a href="/module/improvement/nonconformity.php"><?php echo $LANG_NONCONFORMITY;?></a>
               </li>
-              <li>
-                <a href="/attikgrc/module/improvement/project.php"><?php echo $LANG_PROJECT;?></a>
-              </li>
+              <!-- <li>
+                <a href="/module/improvement/project.php"><?php echo $LANG_PROJECT;?></a>
+              </li> -->
             </ul>
           </li>
 		  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reports">
@@ -68,7 +68,7 @@
 				<a class="nav-link-collapse collapsed" data-toggle="collapse" href="#compReport"><?php echo $LANG_COMPLIANCE;?></a>
 				<ul class="sidenav-third-level collapse" id="compReport">
 				  <li>
-					<a href="/attikgrc/module/report/soa.php"><?php echo $LANG_SOA;?></a>
+					<a href="/module/report/soa.php"><?php echo $LANG_SOA;?></a>
 				  </li>
 				</ul>
 			  </li>
@@ -76,41 +76,41 @@
 				<a class="nav-link-collapse collapsed" data-toggle="collapse" href="#riskReport"><?php echo $LANG_RISKS;?></a>
 				<ul class="sidenav-third-level collapse" id="riskReport">
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=riskbyarea"><?php echo $LANG_RISK_BY_AREA;?></a>
+					<a href="/module/report/reports.php?datatype=riskbyarea"><?php echo $LANG_RISK_BY_AREA;?></a>
 				  </li>
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=riskbyprocess"><?php echo $LANG_RISK_BY_PROCESS;?></a>
+					<a href="/module/report/reports.php?datatype=riskbyprocess"><?php echo $LANG_RISK_BY_PROCESS;?></a>
 				  </li>
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=riskbyrf"><?php echo $LANG_RISK_BY_FACTOR;?></a>
+					<a href="/module/report/reports.php?datatype=riskbyrf"><?php echo $LANG_RISK_BY_FACTOR;?></a>
 				  </li>
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=riskbylabel"><?php echo $LANG_RISK_BY_LABEL;?></a>
+					<a href="/module/report/reports.php?datatype=riskbylabel"><?php echo $LANG_RISK_BY_LABEL;?></a>
 				  </li>
 					
 				</ul>
 				<a class="nav-link-collapse collapsed" data-toggle="collapse" href="#controlReport"><?php echo $LANG_CONTROLS;?></a>
 				<ul class="sidenav-third-level collapse" id="controlReport">
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=controlNotEvaluated"><?php echo $LANG_NOT_EVALUATED;?></a>
+					<a href="/module/report/reports.php?datatype=controlNotEvaluated"><?php echo $LANG_NOT_EVALUATED;?></a>
 				  </li>
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=controlDelayedRev"><?php echo $Ce;?></a>
+					<a href="/module/report/reports.php?datatype=controlDelayedRev"><?php echo $Ce;?></a>
 				  </li>
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=controlNotEffective"><?php echo $Cn;?></a>
+					<a href="/module/report/reports.php?datatype=controlNotEffective"><?php echo $Cn;?></a>
 				  </li>
 				</ul>
 				<a class="nav-link-collapse collapsed" data-toggle="collapse" href="#taskReport"><?php echo $LANG_TASK;?></a>
 				<ul class="sidenav-third-level collapse" id="taskReport">
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=pedingtask"><?php echo $LANG_PENDING_TASKS;?></a>
+					<a href="/module/report/reports.php?datatype=pedingtask"><?php echo $LANG_PENDING_TASKS;?></a>
 				  </li>
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=taskbyperson"><?php echo $LANG_TASK_BY_PERSON;?></a>
+					<a href="/module/report/reports.php?datatype=taskbyperson"><?php echo $LANG_TASK_BY_PERSON;?></a>
 				  </li>
 				  <li>
-					<a href="/attikgrc/module/report/reports.php?datatype=taskdelayed"><?php echo $LANG_TASKS_DELAYED;?></a>
+					<a href="/module/report/reports.php?datatype=taskdelayed"><?php echo $LANG_TASKS_DELAYED;?></a>
 				  </li>
 				</ul>
 			  </li>
@@ -124,16 +124,16 @@
             </a>
             <ul class="sidenav-second-level collapse" id="configuration_session">
               <li>
-                <a href="/attikgrc/user.php"><?php echo $LANG_USER_MANAGEMENT;?></a>
+                <a href="/user.php"><?php echo $LANG_USER_MANAGEMENT;?></a>
               </li>
               <li>
-                <a href="/attikgrc/user_profile.php"><?php echo $LANG_PROFILE_MANAGEMENT;?></a>
+                <a href="/user_profile.php"><?php echo $LANG_PROFILE_MANAGEMENT;?></a>
               </li>
               <li>
-                <a href="/attikgrc/actions_history.php"><?php echo ($LANG_ACTION_HISTORY." (".$LANG_LOG.")");?></a>
+                <a href="/actions_history.php"><?php echo ($LANG_ACTION_HISTORY." (".$LANG_LOG.")");?></a>
               </li>
               <li>
-                <a href="/attikgrc/configuration.php"><?php echo $LANG_GENERAL_CONFIGURATION;?></a>
+                <a href="/configuration.php"><?php echo $LANG_GENERAL_CONFIGURATION;?></a>
               </li>
             </ul>
           </li>
@@ -177,7 +177,7 @@
 			<div class="dropdown-menu" aria-labelledby="alertsDropdown">
 			  <h6 class="dropdown-header"><?php echo ($LANG_TASKS);?>:</h6>
 			  <div class="dropdown-divider"></div>
-				  <form action="/attikgrc/module/improvement/task.php" method="post" name="formExclusiveTask" id="formExclusiveTask">
+				  <form action="/module/improvement/task.php" method="post" name="formExclusiveTask" id="formExclusiveTask">
 					  <input type="hidden" name="checkeditemtask" id="checkeditemtask" value="">
 					  <?php
 					  for ($i=1; $i <= $TEMP_ARRAY_TASK[0]; $i++)

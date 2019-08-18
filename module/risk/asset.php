@@ -81,7 +81,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 		<?php print_general_head($LANG); 
 	
 		// Start - individual configuration
-
+		echo '<script src="'.$_SESSION['LP'].'js/nonconformity.js"></script>';
 		// End - individual configuration 
 		?>
 		<body class="fixed-nav sticky-footer bg-dark" id="page-top">
