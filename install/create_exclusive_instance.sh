@@ -583,6 +583,79 @@ do
 		DROP table tmp_category; \
 		DROP table tmp_control;"
 		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c "$SQL" >> $LOGFILE;
+
+		## 	IMPORT BEST PRATICES  - Lei 13.709 - LGPD
+		# sections or clauses
+		SQL=" \
+		CREATE TABLE tmp_section( \
+		  id serial primary key, \
+		  section varchar(1000), \
+		  control varchar (1000) \
+		); \
+		 \
+		COPY tmp_section \
+		( \
+		  section, \
+		  control \
+		) \
+		FROM '/var/www/attikgrc/install/13709/sections.csv' \
+		DELIMITER '@' \
+		CSV HEADER; \
+		 \
+		CREATE TABLE tmp_category( \
+		  id serial primary key, \
+		  section varchar(1000), \
+		  control varchar (1000) \
+		); \
+		 \
+		COPY tmp_category \
+		( \
+		  section, \
+		  control \
+		) \
+		FROM '/var/www/attikgrc/install/13709/category.csv' \
+		DELIMITER '@' \
+		CSV HEADER; \
+		 \
+		CREATE TABLE tmp_control( \
+		  id serial primary key, \
+		  section varchar(1000), \
+		  control varchar (1000) \
+		); \
+		 \
+		COPY tmp_control \
+		( \
+		  section, \
+		  control \
+		) \
+		FROM '/var/www/attikgrc/install/13709/control.csv' \
+		DELIMITER '@' \
+		CSV HEADER; \
+		 \
+		INSERT INTO tbest_pratice( \
+			id_instance, name, detail, status) \
+			VALUES (1, 'Lei 13.709:2018', 'Lei Geral de Proteção de Dados Pessoais (LGPD)', 'a'); \
+			 \
+		INSERT INTO tsection_best_pratice( \
+			item, id_best_pratice, name) \
+			SELECT s.section,5,s.control FROM tmp_section s;  \
+		 \
+		INSERT INTO tcategory_best_pratice( \
+			item, id_section, name) \
+			SELECT c.section,s.id,c.control FROM tmp_category c, tsection_best_pratice s WHERE  \
+				s.item = (REPLACE(SUBSTRING(c.section FROM 1 FOR 1),'.','')) AND \
+				s.id_best_pratice = 5; \
+		 \
+		INSERT INTO tcontrol_best_pratice( \
+			item, id_category, name) \
+			SELECT t.section,c.id,SUBSTRING(t.control,1,200) FROM tmp_control t, tcategory_best_pratice c, tsection_best_pratice s WHERE  \
+				(REPLACE(SUBSTRING(c.item FROM 1 FOR 4),'.','')) = (REPLACE(SUBSTRING(t.section FROM 1 FOR 4),'.','')) \
+				AND c.id_section = s.id AND s.id_best_pratice = 5;
+		 \
+		DROP table tmp_section; \
+		DROP table tmp_category; \
+		DROP table tmp_control;"
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c "$SQL" >> $LOGFILE;
 		
 	fi
 done

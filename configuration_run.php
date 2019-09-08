@@ -115,7 +115,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 
 			if(pg_affected_rows($RS) > 0){
 				$_SESSION['MSG_TOP'] = 'LANG_MSG_OPERATION_SUCESS_NEXT_LOGIN';
-				insertHistory($_SESSION['INSTANCE_ID'],$CODE_SUCCESSFUL,$_SESSION['user_name']);
+				insertHistory($_SESSION['INSTANCE_ID'],$CODE_SUCCESSFUL,$_SESSION['user_name'],"");
 			} else {
 				$_SESSION['MSG_TOP'] = 'LANG_MSG_OPERATION_ERRO';
 				insertHistory($_SESSION['INSTANCE_ID'],$CODE_FAILED,$_SESSION['user_name'],"");

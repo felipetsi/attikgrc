@@ -19,7 +19,8 @@
 	$SQL .= "(SELECT id FROM tcategory_best_pratice WHERE id_section IN ";
 	$SQL .= "(SELECT id FROM tsection_best_pratice WHERE id_best_pratice = $BP)) ";
 	$SQL .= "ORDER BY CAST(SUBSTRING(REPLACE(REPLACE(REPLACE(item,'A',''),'-','1'),'.',''),1,8) AS integer)";
-//$SQL .= "ORDER BY CAST (replace(replace(substring(replace(item,'.',''),1,6),'-','1'),'A','') AS integer)";	
+//$SQL .= "ORDER BY CAST (replace(replace(substring(replace(item,'.',''),1,6),'-','1'),'A','') AS integer)";
+
 	$RS = pg_query($conn, $SQL) or (die("INTERNAL ERROR SYSTEM"));
 	$ARRAY = pg_fetch_array($RS);
 	echo '
