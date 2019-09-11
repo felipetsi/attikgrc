@@ -17,9 +17,10 @@ clear
 	
 
 echo "#### Enter the instance data:"
-echo "DB name:"
-read INSTANCE_DB_NAME
-INSTANCE_DB_NAME=`echo attikgrc_$INSTANCE_DB_NAME`
+#echo "DB name:"
+#read INSTANCE_DB_NAME
+INSTANCE_DB_NAME="attikgrc"
+#INSTANCE_DB_NAME=`echo attikgrc_$INSTANCE_DB_NAME`
 #INSTANCE_DB_NAME=`echo $INSTANCE_DB_NAME`
 echo "Name:"
 read INSTANCE_NAME
