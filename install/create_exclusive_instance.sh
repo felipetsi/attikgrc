@@ -1,4 +1,11 @@
 #!/bin/bash
+######################################################################################
+#                                                                                    #
+# This script was created to run in OS DEBIAN. 										 #
+# Consider adapt something in your environment if you use another Operation System.  #
+#                                                                                    #
+######################################################################################
+
 clear
 # Create new instance
 ### General parameters
@@ -299,6 +306,14 @@ do
 			fi
 		done
 
+		## MOVE THE CVS FILES TO TMP
+		mkdir /tmp/best_practices/
+		mv /var/www/attikgrc/install/27001/ /tmp/best_practices/
+		mv /var/www/attikgrc/install/20000/ /tmp/best_practices/ 
+		mv /var/www/attikgrc/install/9001/ /tmp/best_practices/ 
+		mv /var/www/attikgrc/install/BACEN/ /tmp/best_practices/
+		mv /var/www/attikgrc/install/13709/ /tmp/best_practices/
+
 		## 	IMPORT BEST PRATICES  - ISO/IEC 27001
 		# sections or clauses
 		SQL=" \
@@ -313,7 +328,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/27001/14_nbr_sections.csv' \
+		FROM '/tmp/best_practices/27001/14_nbr_sections.csv' \
 		DELIMITER ';' \
 		CSV HEADER; \
 		 \
@@ -328,7 +343,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/27001/35_nbr_category.csv' \
+		FROM '/tmp/best_practices/27001/35_nbr_category.csv' \
 		DELIMITER ';' \
 		CSV HEADER; \
 		 \
@@ -343,7 +358,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/27001/114_nbr_control.csv' \
+		FROM '/tmp/best_practices/27001/114_nbr_control.csv' \
 		DELIMITER ';' \
 		CSV HEADER; \
 		 \
@@ -384,7 +399,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/20000/6_nbr_sections.csv' \
+		FROM '/tmp/best_practices/20000/6_nbr_sections.csv' \
 		DELIMITER ';' \
 		CSV HEADER; \
 		 \
@@ -399,7 +414,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/20000/22_nbr_category.csv' \
+		FROM '/tmp/best_practices/20000/22_nbr_category.csv' \
 		DELIMITER ';' \
 		CSV HEADER; \
 		 \
@@ -414,7 +429,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/20000/37_nbr_control.csv' \
+		FROM '/tmp/best_practices/20000/37_nbr_control.csv' \
 		DELIMITER ';' \
 		CSV HEADER; \
 		 \
@@ -457,7 +472,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/9001/7_9001_sections.csv' \
+		FROM '/tmp/best_practices/9001/7_9001_sections.csv' \
 		DELIMITER ';' \
 		CSV HEADER; \
 		 \
@@ -472,7 +487,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/9001/28_9001_category.csv' \
+		FROM '/tmp/best_practices/9001/28_9001_category.csv' \
 		DELIMITER ';' \
 		CSV HEADER; \
 		 \
@@ -487,7 +502,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/9001/61_9001_control.csv' \
+		FROM '/tmp/best_practices/9001/61_9001_control.csv' \
 		DELIMITER ';' \
 		CSV HEADER; \
 		 \
@@ -530,7 +545,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/BACEN/4_sections.csv' \
+		FROM '/tmp/best_practices/BACEN/4_sections.csv' \
 		DELIMITER '@' \
 		CSV HEADER; \
 		 \
@@ -545,7 +560,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/BACEN/5_category.csv' \
+		FROM '/tmp/best_practices/BACEN/5_category.csv' \
 		DELIMITER '@' \
 		CSV HEADER; \
 		 \
@@ -560,7 +575,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/BACEN/10_control.csv' \
+		FROM '/tmp/best_practices/BACEN/10_control.csv' \
 		DELIMITER '@' \
 		CSV HEADER; \
 		 \
@@ -603,7 +618,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/13709/sections.csv' \
+		FROM '/tmp/best_practices/13709/sections.csv' \
 		DELIMITER '@' \
 		CSV HEADER; \
 		 \
@@ -618,7 +633,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/13709/category.csv' \
+		FROM '/tmp/best_practices/13709/category.csv' \
 		DELIMITER '@' \
 		CSV HEADER; \
 		 \
@@ -633,7 +648,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/var/www/attikgrc/install/13709/control.csv' \
+		FROM '/tmp/best_practices/13709/control.csv' \
 		DELIMITER '@' \
 		CSV HEADER; \
 		 \

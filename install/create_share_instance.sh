@@ -1,4 +1,10 @@
 #!/bin/bash
+######################################################################################
+#                                                                                    #
+# This script was created to run in OS DEBIAN. 										 #
+# Consider adapt something in your environment if you use another Operation System.  #
+#                                                                                    #
+######################################################################################
 clear
 # Create new instance
 ### General parameters
