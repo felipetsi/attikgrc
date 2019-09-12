@@ -802,7 +802,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			</div>
 			
 			<div class="modal fade" id="bp_box" tabindex="-1" role="dialog" aria-labelledby="bp_boxLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content" id="panel_related"></div>
 				</div>
 			</div>
