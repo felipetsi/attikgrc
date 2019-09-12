@@ -49,11 +49,6 @@ echo "Default language:"
 read INSTANCE_LANG
 echo "#### End the instance data:"
 
-# Set permitions
-chmod 500 /var/www/attikgrc/install/create_exclusive_instance.sh /var/www/attikgrc/install/create_share_instance.sh
-chmod -R 666 /var/www/attikgrc/install/13709/ /var/www/attikgrc/install/20000/ /var/www/attikgrc/install/27001/ /var/www/attikgrc/install/9001/ /var/www/attikgrc/install/BACEN/
-chmod 555 /var/www/attikgrc/install/13709/ /var/www/attikgrc/install/20000/ /var/www/attikgrc/install/27001/ /var/www/attikgrc/install/9001/ /var/www/attikgrc/install/BACEN/
-
 SQL="CREATE DATABASE $INSTANCE_DB_NAME WITH OWNER = arm_user TABLESPACE = pg_default CONNECTION LIMIT = -1;"
 psql -U $userDB -h $server -p $portDB -c "$SQL" >> $LOGFILE;
 SQL="COMMENT ON DATABASE $INSTANCE_DB_NAME \
