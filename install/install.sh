@@ -327,8 +327,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_section \
 		( \
 		  section, \
@@ -343,8 +344,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_category \
 		( \
 		  section, \
@@ -359,8 +361,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_control \
 		( \
 		  section, \
@@ -401,8 +404,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_section \
 		( \
 		  section, \
@@ -417,8 +421,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_category \
 		( \
 		  section, \
@@ -433,8 +438,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_control \
 		( \
 		  section, \
@@ -477,8 +483,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_section \
 		( \
 		  section, \
@@ -493,8 +500,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_category \
 		( \
 		  section, \
@@ -509,8 +517,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_control \
 		( \
 		  section, \
@@ -553,8 +562,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_section \
 		( \
 		  section, \
@@ -569,8 +579,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_category \
 		( \
 		  section, \
@@ -585,8 +596,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_control \
 		( \
 		  section, \
@@ -596,7 +608,7 @@ do
 		DELIMITER '@' \
 		CSV HEADER; " < /var/www/attikgrc/install/BACEN/10_control.csv >> $LOGFILE;
 		
-		SQL= " \
+		SQL=" \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'BACEN 4.658', 'BACEN Resolução 4.658', 'a'); \
@@ -629,8 +641,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_section \
 		( \
 		  section, \
@@ -645,8 +658,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_category \
 		( \
 		  section, \
@@ -661,8 +675,9 @@ do
 		  id serial primary key, \
 		  section varchar(1000), \
 		  control varchar (1000) \
-		); \
-		 \
+		); "
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		COPY tmp_control \
 		( \
 		  section, \
