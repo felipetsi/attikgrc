@@ -335,7 +335,7 @@ do
 		  section, \
 		  control \
 		) \
-		FROM SDTIN \
+		FROM STDIN \
 		DELIMITER ';' \
 		CSV HEADER;" < /var/www/attikgrc/install/27001/14_nbr_sections.csv >> $LOGFILE;
 		
