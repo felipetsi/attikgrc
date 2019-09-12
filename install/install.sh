@@ -15,14 +15,14 @@ clear
 	LOGFILE="/var/log/attikgrc/instance_created.log";
 	export PGPASSWORD="postgres";
 
-echo "#############################################"
+echo "###################################################################"
 echo "============================ ATTENTION ============================"
 echo ""
 echo "CERTIFY THAT YOU ALREADY EXECUTED THE PROCEDURES SHOWN IN README.md"
 echo "==================================================================="
 echo "THIS SCRIPT WAS CREATED TO:"
 echo "	- OPERATION SYSTEM DEBIAN;"
-echo "	- UNTIL DEFAULT PASSWORD OF postgres USER OF DB POSTGRESQL;"
+echo "	- WITH DEFAULT PASSWORD OF postgres USER OF DB POSTGRESQL;"
 echo "	- THE DEFAULT PORT OF POSTGRESQL IS 5432;"
 echo "	- THE DIRECTORY OF APACHE2 USER IS /var/www/ ;"
 echo ""
@@ -320,17 +320,11 @@ do
 			fi
 		done
 
-		## MOVE THE CVS FILES TO TMP
-		mkdir /tmp/best_practices/
-		mv /var/www/attikgrc/install/27001/ /tmp/best_practices/
-		mv /var/www/attikgrc/install/20000/ /tmp/best_practices/ 
-		mv /var/www/attikgrc/install/9001/ /tmp/best_practices/ 
-		mv /var/www/attikgrc/install/BACEN/ /tmp/best_practices/
-		mv /var/www/attikgrc/install/13709/ /tmp/best_practices/
+psql -h localhost -U arm_user -W attikgrc -c "COPY tmp_section (section,control) FROM STDIN DELIMITER '@' CSV HEADER;" < /home/sections.csv
 
 		## 	IMPORT BEST PRATICES  - ISO/IEC 27001
 		# sections or clauses
-		SQL=" \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -342,10 +336,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/27001/14_nbr_sections.csv' \
+		FROM SDTIN \
 		DELIMITER ';' \
-		CSV HEADER; \
-		 \
+		CSV HEADER;" < /var/www/attikgrc/install/27001/14_nbr_sections.csv >> $LOGFILE;
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \ 
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -357,10 +352,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/27001/35_nbr_category.csv' \
+		FROM STDIN \
 		DELIMITER ';' \
-		CSV HEADER; \
-		 \
+		CSV HEADER; " < /var/www/attikgrc/install/27001/35_nbr_category.csv >> $LOGFILE;
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \ 
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -372,10 +368,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/27001/114_nbr_control.csv' \
+		FROM STDIN  \
 		DELIMITER ';' \
-		CSV HEADER; \
-		 \
+		CSV HEADER;" < /var/www/attikgrc/install/27001/114_nbr_control.csv >> $LOGFILE;
+		
+		SQL = " \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'NBR ISO/IEC 27001', 'ABNT NBR ISO/IEC 27001', 'a'); \
@@ -401,7 +398,7 @@ do
 		
 		## 	IMPORT BEST PRATICES  - ISO/IEC 20000
 		# sections or clauses
-		SQL=" \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -413,10 +410,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/20000/6_nbr_sections.csv' \
+		FROM STDIN \
 		DELIMITER ';' \
-		CSV HEADER; \
-		 \
+		CSV HEADER; " < /var/www/attikgrc/install/20000/6_nbr_sections.csv >> $LOGFILE;
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -428,10 +426,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/20000/22_nbr_category.csv' \
+		FROM STDIN  \
 		DELIMITER ';' \
-		CSV HEADER; \
-		 \
+		CSV HEADER;" < /var/www/attikgrc/install/20000/22_nbr_category.csv >> $LOGFILE;
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -443,10 +442,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/20000/37_nbr_control.csv' \
+		FROM STDIN \
 		DELIMITER ';' \
-		CSV HEADER; \
-		 \
+		CSV HEADER; " < /var/www/attikgrc/install/20000/37_nbr_control.csv >> $LOGFILE;
+		
+		SQL = " \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'NBR ISO/IEC 20000', 'ABNT NBR ISO/IEC 20000', 'a'); \
@@ -474,7 +474,7 @@ do
 		
 		## 	IMPORT BEST PRATICES  - ISO/IEC 9001
 		# sections or clauses
-		SQL=" \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -486,10 +486,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/9001/7_9001_sections.csv' \
+		FROM STDIN  \
 		DELIMITER ';' \
-		CSV HEADER; \
-		 \
+		CSV HEADER;" < /var/www/attikgrc/install/9001/7_9001_sections.csv >> $LOGFILE;
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -501,10 +502,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/9001/28_9001_category.csv' \
+		FROM STDIN \
 		DELIMITER ';' \
-		CSV HEADER; \
-		 \
+		CSV HEADER; " < /var/www/attikgrc/install/9001/28_9001_category.csv >> $LOGFILE;
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -516,10 +518,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/9001/61_9001_control.csv' \
+		FROM STDIN \
 		DELIMITER ';' \
-		CSV HEADER; \
-		 \
+		CSV HEADER;" < /var/www/attikgrc/install/9001/61_9001_control.csv >> $LOGFILE;
+		
+		SQL = " \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'NBR ISO 9001', 'ABNT NBR ISO 9001', 'a'); \
@@ -547,7 +550,7 @@ do
 		
 		## 	IMPORT BEST PRATICES  - BACEN 4.658
 		# sections or clauses
-		SQL=" \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -559,10 +562,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/BACEN/4_sections.csv' \
+		FROM STDIN \
 		DELIMITER '@' \
-		CSV HEADER; \
-		 \
+		CSV HEADER; " < /var/www/attikgrc/install/BACEN/4_sections.csv >> $LOGFILE;
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -574,10 +578,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/BACEN/5_category.csv' \
+		FROM STDIN \
 		DELIMITER '@' \
-		CSV HEADER; \
-		 \
+		CSV HEADER; " < /var/www/attikgrc/install/BACEN/5_category.csv >> $LOGFILE;
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -589,10 +594,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/BACEN/10_control.csv' \
+		FROM STDIN \
 		DELIMITER '@' \
-		CSV HEADER; \
-		 \
+		CSV HEADER; " < /var/www/attikgrc/install/BACEN/10_control.csv >> $LOGFILE;
+		
+		SQL= " \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'BACEN 4.658', 'BACEN Resolução 4.658', 'a'); \
@@ -620,7 +626,7 @@ do
 
 		## 	IMPORT BEST PRATICES  - Lei 13.709 - LGPD
 		# sections or clauses
-		SQL=" \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -632,10 +638,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/13709/sections.csv' \
+		FROM STDIN \
 		DELIMITER '@' \
-		CSV HEADER; \
-		 \
+		CSV HEADER; " < /var/www/attikgrc/install/13709/sections.csv >> $LOGFILE;
+		
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -647,10 +654,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/13709/category.csv' \
+		FROM STDIN \
 		DELIMITER '@' \
-		CSV HEADER; \
-		 \
+		CSV HEADER;" < /var/www/attikgrc/install/13709/category.csv >> $LOGFILE;
+		 
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
 		  section varchar(1000), \
@@ -662,10 +670,11 @@ do
 		  section, \
 		  control \
 		) \
-		FROM '/tmp/best_practices/13709/control.csv' \
+		FROM STDIN \
 		DELIMITER '@' \
-		CSV HEADER; \
-		 \
+		CSV HEADER; " < /var/www/attikgrc/install/13709/control.csv >> $LOGFILE;
+		
+		SQL = " \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'Lei 13.709:2018', 'Lei Geral de Proteção de Dados Pessoais (LGPD)', 'a'); \
