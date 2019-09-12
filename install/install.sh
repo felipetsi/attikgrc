@@ -322,14 +322,14 @@ do
 
 		## 	IMPORT BEST PRATICES  - ISO/IEC 27001
 		# sections or clauses
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_section \
 		( \
 		  section, \
@@ -339,14 +339,14 @@ do
 		DELIMITER ';' \
 		CSV HEADER;" < /var/www/attikgrc/install/27001/14_nbr_sections.csv >> $LOGFILE;
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \ 
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c "  
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_category \
 		( \
 		  section, \
@@ -356,14 +356,14 @@ do
 		DELIMITER ';' \
 		CSV HEADER; " < /var/www/attikgrc/install/27001/35_nbr_category.csv >> $LOGFILE;
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \ 
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c "  
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_control \
 		( \
 		  section, \
@@ -399,14 +399,14 @@ do
 		
 		## 	IMPORT BEST PRATICES  - ISO/IEC 20000
 		# sections or clauses
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_section \
 		( \
 		  section, \
@@ -416,14 +416,14 @@ do
 		DELIMITER ';' \
 		CSV HEADER; " < /var/www/attikgrc/install/20000/6_nbr_sections.csv >> $LOGFILE;
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_category \
 		( \
 		  section, \
@@ -433,14 +433,14 @@ do
 		DELIMITER ';' \
 		CSV HEADER;" < /var/www/attikgrc/install/20000/22_nbr_category.csv >> $LOGFILE;
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_control \
 		( \
 		  section, \
@@ -478,14 +478,14 @@ do
 		
 		## 	IMPORT BEST PRATICES  - ISO/IEC 9001
 		# sections or clauses
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_section \
 		( \
 		  section, \
@@ -495,14 +495,14 @@ do
 		DELIMITER ';' \
 		CSV HEADER;" < /var/www/attikgrc/install/9001/7_9001_sections.csv >> $LOGFILE;
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_category \
 		( \
 		  section, \
@@ -512,14 +512,14 @@ do
 		DELIMITER ';' \
 		CSV HEADER; " < /var/www/attikgrc/install/9001/28_9001_category.csv >> $LOGFILE;
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_control \
 		( \
 		  section, \
@@ -557,14 +557,14 @@ do
 		
 		## 	IMPORT BEST PRATICES  - BACEN 4.658
 		# sections or clauses
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_section \
 		( \
 		  section, \
@@ -574,14 +574,14 @@ do
 		DELIMITER '@' \
 		CSV HEADER; " < /var/www/attikgrc/install/BACEN/4_sections.csv >> $LOGFILE;
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_category \
 		( \
 		  section, \
@@ -591,14 +591,14 @@ do
 		DELIMITER '@' \
 		CSV HEADER; " < /var/www/attikgrc/install/BACEN/5_category.csv >> $LOGFILE;
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_control \
 		( \
 		  section, \
@@ -636,14 +636,14 @@ do
 
 		## 	IMPORT BEST PRATICES  - Lei 13.709 - LGPD
 		# sections or clauses
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_section( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_section \
 		( \
 		  section, \
@@ -653,14 +653,14 @@ do
 		DELIMITER '@' \
 		CSV HEADER; " < /var/www/attikgrc/install/13709/sections.csv >> $LOGFILE;
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_category( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_category \
 		( \
 		  section, \
@@ -670,14 +670,14 @@ do
 		DELIMITER '@' \
 		CSV HEADER;" < /var/www/attikgrc/install/13709/category.csv >> $LOGFILE;
 		 
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		CREATE TABLE tmp_control( \
 		  id serial primary key, \
-		  section varchar(1000), \
-		  control varchar (1000) \
+		  section varchar(10000), \
+		  control varchar (10000) \
 		); "
 		
-		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
+		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " 
 		COPY tmp_control \
 		( \
 		  section, \
