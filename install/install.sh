@@ -236,9 +236,9 @@ do
 		SQL="INSERT INTO timpact_type( \
 			id_instance, name, default_type, status) VALUES ($ID_INST, 'security', 'y', 'a'); \
 		INSERT INTO timpact_type( \
-			id_instance, name, default_type, status) VALUES ($ID_INST, 'quality', 'y', 'a'); \
+			id_instance, name, default_type, status) VALUES ($ID_INST, 'quality', 'n', 'd'); \
 		INSERT INTO timpact_type( \
-			id_instance, name, default_type, status) VALUES ($ID_INST, 'city', 'y', 'a');"
+			id_instance, name, default_type, status) VALUES ($ID_INST, 'city', 'n', 'd');"
 
 		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c "$SQL" >> $LOGFILE;
 
@@ -685,7 +685,7 @@ do
 		SQL=" \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
-			VALUES (1, 'Lei 13.709:2018', 'Lei Geral de Proteção de Dados Pessoais (LGPD)', 'a'); \
+			VALUES (1, 'Lei 13.709', 'Lei Geral de Proteção de Dados Pessoais (LGPD)', 'a'); \
 			 \
 		INSERT INTO tsection_best_pratice( \
 			item, id_best_pratice, name) \
