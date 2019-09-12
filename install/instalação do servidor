@@ -1,7 +1,0 @@
-apt-get install apache2 php git postgresql-client php-pgsql
-letsencrypt  - https://seginfo.com.br/2015/12/09/guia-passo-a-passo-para-instalar-o-certificado-ssl-gratuito-da-lets-encrypt-no-seu-site-2/
-git clone https://github.com/letsencrypt/letsencrypt
-cd letsencrypt
-./letsencrypt-auto
-
-É importante notar que a versão beta expira após 90 dias. Assim, para renovar o seu certificado SSL, você precisa executar o script letsencrypt-auto novamente após o vencimento.

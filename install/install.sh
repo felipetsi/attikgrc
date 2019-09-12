@@ -14,7 +14,20 @@ clear
 	portDB="5432";
 	LOGFILE="/var/log/attikgrc/instance_created.log";
 	export PGPASSWORD="postgres";
-	
+
+echo "#############################################"
+echo "============================ ATTENTION ============================"
+echo ""
+echo "CERTIFY THAT YOU ALREADY EXECUTED THE PROCEDURES SHOWN IN README.md"
+echo "==================================================================="
+echo "THIS SCRIPT WAS CREATED TO:"
+echo "	- OPERATION SYSTEM DEBIAN;"
+echo "	- UNTIL DEFAULT PASSWORD OF postgres USER OF DB POSTGRESQL;"
+echo "	- THE DEFAULT PORT OF POSTGRESQL IS 5432;"
+echo "	- THE DIRECTORY OF APACHE2 USER IS /var/www/ ;"
+echo ""
+echo "CONSIDER ADAPT SOMETHING IN YOUR ENVIRONMENT IF YOU USE ANOTHER CONFIGURATION"
+echo "==================================================================="
 
 echo "#### Enter the instance data:"
 #echo "DB name:"
