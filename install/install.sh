@@ -320,8 +320,6 @@ do
 			fi
 		done
 
-psql -h localhost -U arm_user -W attikgrc -c "COPY tmp_section (section,control) FROM STDIN DELIMITER '@' CSV HEADER;" < /home/sections.csv
-
 		## 	IMPORT BEST PRATICES  - ISO/IEC 27001
 		# sections or clauses
 		psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB -c " \
@@ -372,7 +370,7 @@ psql -h localhost -U arm_user -W attikgrc -c "COPY tmp_section (section,control)
 		DELIMITER ';' \
 		CSV HEADER;" < /var/www/attikgrc/install/27001/114_nbr_control.csv >> $LOGFILE;
 		
-		SQL = " \
+		SQL=" \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'NBR ISO/IEC 27001', 'ABNT NBR ISO/IEC 27001', 'a'); \
@@ -446,7 +444,7 @@ psql -h localhost -U arm_user -W attikgrc -c "COPY tmp_section (section,control)
 		DELIMITER ';' \
 		CSV HEADER; " < /var/www/attikgrc/install/20000/37_nbr_control.csv >> $LOGFILE;
 		
-		SQL = " \
+		SQL=" \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'NBR ISO/IEC 20000', 'ABNT NBR ISO/IEC 20000', 'a'); \
@@ -522,7 +520,7 @@ psql -h localhost -U arm_user -W attikgrc -c "COPY tmp_section (section,control)
 		DELIMITER ';' \
 		CSV HEADER;" < /var/www/attikgrc/install/9001/61_9001_control.csv >> $LOGFILE;
 		
-		SQL = " \
+		SQL=" \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'NBR ISO 9001', 'ABNT NBR ISO 9001', 'a'); \
@@ -674,7 +672,7 @@ psql -h localhost -U arm_user -W attikgrc -c "COPY tmp_section (section,control)
 		DELIMITER '@' \
 		CSV HEADER; " < /var/www/attikgrc/install/13709/control.csv >> $LOGFILE;
 		
-		SQL = " \
+		SQL=" \
 		INSERT INTO tbest_pratice( \
 			id_instance, name, detail, status) \
 			VALUES (1, 'Lei 13.709:2018', 'Lei Geral de Proteção de Dados Pessoais (LGPD)', 'a'); \
