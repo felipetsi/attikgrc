@@ -699,6 +699,11 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			}
 		}
 	}
-	header("Location:$DESTINATION_PAGE");
+	
+	load_user_task($_SESSION['user_id']);
+	
+	if ($DESTINATION_PAGE == "task.php"){
+		header("Location:$DESTINATION_PAGE");
+	}
 }
 ?>

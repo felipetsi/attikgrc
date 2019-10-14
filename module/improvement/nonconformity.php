@@ -98,10 +98,10 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 					echo '
 				<div id="box_submenu2" role="menu">
 					<ul class="submenu2 dropdown-menu">
-						<li><a id="e2" href="#"><i class="fa fa-edit"></i>'.$LANG_EDIT.'</a></li>
-						<li><a id="i2" href="#"><i class="fa fa-plus-square-o"></i>'.$LANG_INSERT.'</a></li>
-						<li><a id="d2" href="#"><i class="fa fa-minus-square-o"></i>'.$LANG_DELETE.'</a></li>
-						<li><a id="u2" href="#"><i class="fa fa-clone"></i>'.$LANG_DUPLICATE.'</a></li>
+						<li><a id="e2"><i class="fa fa-edit"></i>'.$LANG_EDIT.'</a></li>
+						<li><a id="i2"><i class="fa fa-plus-square-o"></i>'.$LANG_INSERT.'</a></li>
+						<li><a id="d2"><i class="fa fa-minus-square-o"></i>'.$LANG_DELETE.'</a></li>
+						<li><a id="u2"><i class="fa fa-clone"></i>'.$LANG_DUPLICATE.'</a></li>
 					</ul>
 				</div>';}
 			}?>

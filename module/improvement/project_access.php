@@ -89,10 +89,10 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			echo '
 			<div id="box_submenu2" role="menu">
 				<ul class="submenu2 dropdown-menu">
-					<li><a id="e2" href="#"><i class="fa fa-edit"></i>'.$LANG_EDIT.'</a></li>
-					<li><a id="i2" href="#"><i class="fa fa-plus-square-o"></i>'.$LANG_INSERT.'</a></li>
-					<li><a id="d2" href="#"><i class="fa fa-minus-square-o"></i>'.$LANG_DELETE.'</a></li>
-					<li><a id="u2" href="#"><i class="fa fa-clone"></i>'.$LANG_DUPLICATE.'</a></li>
+					<li><a id="e2"><i class="fa fa-edit"></i>'.$LANG_EDIT.'</a></li>
+					<li><a id="i2"><i class="fa fa-plus-square-o"></i>'.$LANG_INSERT.'</a></li>
+					<li><a id="d2"><i class="fa fa-minus-square-o"></i>'.$LANG_DELETE.'</a></li>
+					<li><a id="u2"><i class="fa fa-clone"></i>'.$LANG_DUPLICATE.'</a></li>
 				</ul>
 			</div>';
 			?>
@@ -170,7 +170,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 													do {
 														$SQL = "SELECT id,CAST (replace(replace(substring(replace(item,'.',''),1,6),'-','1'),'A','') AS integer) as ord_item, item, name ";
 														$SQL .= "FROM tsection_best_pratice WHERE id_best_pratice = ".$ARRAYBESTPRATICES['id'];
-														$SQL .= "ORDER BY ord_item"; 
+														$SQL .= " ORDER BY ord_item"; 
 														$RSSECTION = pg_query($conn, $SQL);
 														$ARRAYSECTION = pg_fetch_array($RSSECTION);
 														do {
@@ -189,7 +189,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 																	$SQL = "SELECT id,CAST(REPLACE(SUBSTRING(item FROM 2 FOR 6),'.','') as integer) as ord_item, 
 																			item, name ";
 																	$SQL .= "FROM tcategory_best_pratice WHERE id_section = ".$ARRAYSECTION['id'];
-																	$SQL .= "ORDER BY ord_item"; 
+																	$SQL .= " ORDER BY ord_item"; 
 																	$RSCATEGORY = pg_query($conn, $SQL);
 																	$ARRAYCATEGORY = pg_fetch_array($RSCATEGORY);
 																	do{
@@ -202,25 +202,37 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 
 																		$SQL = "SELECT id,CAST (replace(replace(substring(replace(item,'.',''),1,6),'-','1'),'A','') AS integer) as ord_item, item, ";
 																		$SQL .= "name FROM tcontrol_best_pratice WHERE id_category = ".$ARRAYCATEGORY['id'];
-																		$SQL .= "ORDER BY ord_item"; 
+																		$SQL .= " ORDER BY ord_item"; 
 																		$RSCONTROL = pg_query($conn, $SQL);
 																		$ARRAYCONTROL = pg_fetch_array($RSCONTROL);
-																		do{
+																		if (pg_affected_rows($RSCONTROL) > 0){
+																			do{
+																				echo '
+																				<div class="table_less_row_right">
+																					<div class="col-md-6 table_less_collunm_middle">
+																						'.$ARRAYCONTROL['item'].' - '.$ARRAYCONTROL['name'].'
+																					</div>
+																					<div class="col-md table_less_collunm_end">';
+																						echo '
+																						<div id="listRelatedTask'.$ARRAYCONTROL['id'].'">';
+																						showListTaskProjet($ID_ITEM_SELECTED,'proj',$ARRAYCONTROL['id']);
+																						echo '
+																						</div>
+																					</div>
+																				</div>';
+																			}while($ARRAYCONTROL = pg_fetch_array($RSCONTROL));
+																		} else {
 																			echo '
-																			
 																			<div class="table_less_row_right">
 																				<div class="col-md-6 table_less_collunm_middle">
-																					'.$ARRAYCONTROL['item'].' - '.$ARRAYCONTROL['name'].'
+																					-
 																				</div>
-																				<div class="col-md table_less_collunm_end">';
-																					echo '
-																					<div id="listRelatedTask'.$ARRAYCONTROL['id'].'">';
-																					showListTaskProjet($ID_ITEM_SELECTED,'proj',$ARRAYCONTROL['id']);
-																					echo '
+																				<div class="col-md table_less_collunm_end">
+																					-
 																					</div>
 																				</div>
 																			</div>';
-																		}while($ARRAYCONTROL = pg_fetch_array($RSCONTROL));
+																		}
 																		echo '
 																		</div>
 																	</div>';																	

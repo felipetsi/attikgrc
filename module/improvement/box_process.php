@@ -14,16 +14,21 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 	
 	$DESTINATION_PAGE = ("associateControlObj.php");
 	
-	$PERMITIONS_NAME_1 = "create_process@";
-	$PERMITIONS_NAME_3 = "read_all_nonconformity@";
-
-	// Load the process related with this task
+	// Load the process related with this Obj
 	if($SOURCE == "nonc"){
 		$SQL = "SELECT id_nonconformity FROM tanonconformity_process WHERE id_process = $ID_PROCESS ";
 		$SQL .= "AND id_nonconformity = $ID_RELATED_ITEM";
 		$RS = pg_query($conn, $SQL);
 		$ARRAY = pg_fetch_array($RS);
 		$LIST_ITEM_CONNECTED = pg_affected_rows($RS);
+		$PERMITIONS_NAME_1 = "create_nonconformity@";
+	} elseif ($SOURCE == "asse"){
+		$SQL = "SELECT id_asset FROM taasset_process WHERE id_process = $ID_PROCESS ";
+		$SQL .= "AND id_asset = $ID_RELATED_ITEM";
+		$RS = pg_query($conn, $SQL);
+		$ARRAY = pg_fetch_array($RS);
+		$LIST_ITEM_CONNECTED = pg_affected_rows($RS);
+		$PERMITIONS_NAME_1 = "create_asset@";
 	}
 	
 	
@@ -46,8 +51,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			<div class="col-md">
 				<div class="card mb-3"> 	
 					<div class="panel panel-default">';
-						if((strpos($_SESSION['user_permission'],$PERMITIONS_NAME_3)) === false &&
-						  (strpos($_SESSION['user_permission'],$PERMITIONS_NAME_1)) === false){
+						if((strpos($_SESSION['user_permission'],$PERMITIONS_NAME_1)) === false){
 							echo '<center>'.$LANG_YOU_NOT_HAVE_PERMISSION.'</center>';
 						} elseif(pg_affected_rows($RS) == 0){
 							echo '<center>'.$LANG_CONTROL_NOT_FOUND.'</center>';
@@ -55,12 +59,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						} else {
 						echo '
 						<form action="" method="post" name="control_form" id="control_form" autocomplete="off">
-							<input type="hidden" name="id_control_selected" id="id_control_selected" value="'.$ID_PROCESS.'">';
-							if($SOURCE == "nonc"){
-								echo '
-							<input type="hidden" name="id_nonconformity_selected" id="id_nonconformity_selected" value="'.$ID_RELATED_ITEM.'">';
-							}
-							echo '
+							<input type="hidden" name="id_control_selected" id="id_control_selected" value="'.$ID_PROCESS.'">
 							<div class="row">
 								<div class="col-md">
 									<label class="control-label"><u>'.$LANG_NAME.':</u></label>

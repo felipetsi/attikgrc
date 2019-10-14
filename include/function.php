@@ -198,6 +198,7 @@ function generate_password(){
 
 function insertHistory($instance,$code,$LANG_NAME_person,$detail){
 	require($_SESSION['LP']."include/conn_db.php");
+	$detail = substr(trim(addslashes($detail)),0,500);
 	$SQL = "INSERT INTO thistory (id_instance,code,name_person,detail) ";
 	$SQL .= "VALUES ($instance,'$code','$LANG_NAME_person','$detail')";
 	$RS = pg_query($conn, $SQL);
@@ -342,18 +343,8 @@ function updateResidualRisk($ID_RISK){
 	$RS = pg_query($conn, $SQL) or (die("INTERNAL ERROR SYSTEM"));
 }
 
-function login_procedures($ID_LOGIN){
+function load_user_task($ID_LOGIN){
 	require($_SESSION['LP']."include/conn_db.php");
-	// Load user logged permitions
-	$SQL = "SELECT ip.name AS permission FROM tperson p, tprofile pr, titemprofile ip, taprofile_itemprofile tapi ";
-	$SQL .= "WHERE p.id_profile = pr.id AND tapi.id_profile = pr.id AND tapi.id_itemprofile = ip.id AND p.id = ".$ID_LOGIN;
-	$RS = pg_query($conn, $SQL);
-	$ARRAY = pg_fetch_array($RS);
-	unset($_SESSION['user_permission']);
-	do{
-		$_SESSION['user_permission'] .= $ARRAY['permission']."@";
-	}while($ARRAY = pg_fetch_array($RS));
-
 	// Load user tasks
 	$SQL = "SELECT t.id, t.name AS task_name,p.name AS creator, t.prevision_date FROM ttask_workflow t, tperson p ";
 	$SQL .= "WHERE t.id_creator = p.id AND t.status != 'c' AND t.id_instance = ".$_SESSION['INSTANCE_ID']." AND ";
@@ -373,6 +364,22 @@ function login_procedures($ID_LOGIN){
 		}while($ARRAY = pg_fetch_array($RS));	
 	}
 	$_SESSION['task_logged'] = $TEMP_ARRAY_TASK;
+}
+
+function login_procedures($ID_LOGIN){
+	require($_SESSION['LP']."include/conn_db.php");
+	// Load user logged permitions
+	$SQL = "SELECT ip.name AS permission FROM tperson p, tprofile pr, titemprofile ip, taprofile_itemprofile tapi ";
+	$SQL .= "WHERE p.id_profile = pr.id AND tapi.id_profile = pr.id AND tapi.id_itemprofile = ip.id AND p.id = ".$ID_LOGIN;
+	$RS = pg_query($conn, $SQL);
+	$ARRAY = pg_fetch_array($RS);
+	unset($_SESSION['user_permission']);
+	do{
+		$_SESSION['user_permission'] .= $ARRAY['permission']."@";
+	}while($ARRAY = pg_fetch_array($RS));
+	
+	// Load user tasks
+	load_user_task($ID_LOGIN);
 
 	// Load financial impact values to formula of calculate risk factor
 	$SQL = "SELECT * FROM tinstance_impact_money WHERE id_instance = ".$_SESSION['INSTANCE_ID'];

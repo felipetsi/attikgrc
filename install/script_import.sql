@@ -292,7 +292,7 @@ INSERT INTO tcategory_best_pratice(
 	item, id_section, name)
 	SELECT c.section,s.id,c.control FROM tmp_category c, tsection_best_pratice s WHERE 
     	s.item = (REPLACE(SUBSTRING(c.section FROM 1 FOR 3),'.','')) AND 
-		s.id_best_pratice = 3
+		s.id_best_pratice = 1
         
 INSERT INTO tcontrol_best_pratice(
 	item, id_category, name,detail)
@@ -301,5 +301,5 @@ INSERT INTO tcontrol_best_pratice(
     	(REPLACE(SUBSTRING(c.item FROM 1 FOR 4),'.','')) = 
 		(REPLACE(SUBSTRING(t.section FROM 1 FOR 4),'.','')) AND
 		c.id_section = s.id AND
-		s.id_best_pratice = 3
+		s.id_best_pratice = 1
 	 

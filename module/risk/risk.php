@@ -109,10 +109,10 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			</div>
 			<div id="box_submenu2" role="menu">
 				<ul class="submenu2 dropdown-menu">
-					<li><a id="e2" href="#"><i class="fa fa-edit"></i> <?php echo $LANG_EDIT;?></a></li>
-					<li><a id="i2" href="#"><i class="fa fa-plus-square-o"></i> <?php echo $LANG_INSERT;?></a></li>
-					<li><a id="d2" href="#"><i class="fa fa-minus-square-o"></i> <?php echo $LANG_DELETE;?></a></li>
-					<li><a id="u2" href="#"><i class="fa fa-clone"></i> <?php echo $LANG_DUPLICATE;?></a></li>
+					<li><a id="e2"><i class="fa fa-edit"></i> <?php echo $LANG_EDIT;?></a></li>
+					<li><a id="i2"><i class="fa fa-plus-square-o"></i> <?php echo $LANG_INSERT;?></a></li>
+					<li><a id="d2"><i class="fa fa-minus-square-o"></i> <?php echo $LANG_DELETE;?></a></li>
+					<li><a id="u2"><i class="fa fa-clone"></i> <?php echo $LANG_DUPLICATE;?></a></li>
 				</ul>
 			</div>
 			<!-- End - individual configuration - End submenu -->
@@ -242,7 +242,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 													</div>
 													<div class="row">
 														<div class="col-md">
-															<label class="control-label"><u><?php echo $LANG_LABEL;?>:</u></label>
+															<label class="control-label"><?php echo $LANG_LABEL;?>:</label>
 															<select class="form-control" id="label" name="label" <?php echo $CRET_CONT_SEL?>>
 																<option></option>
 																<?php

@@ -36,5 +36,10 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 				}
 			}
 		}
+		if(pg_affected_rows($RS) > 0){
+			$_SESSION['MSG_TOP'] = 'LANG_MSG_OPERATION_SUCESS';
+		} else {
+			$_SESSION['MSG_TOP'] = 'LANG_MSG_OPERATION_ERRO';
+		}
 	}
 }

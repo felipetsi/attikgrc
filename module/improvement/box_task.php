@@ -96,7 +96,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
-	<div class="modal-body" >
+	<div class="modal-body">
 		<div id="row">
 			<div class="col-md">
 				<div class="card mb-3"> 	
@@ -156,7 +156,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 
 							<div class="row">
 								<div class="col-md-5">
-									<label class="control-label"><u>'.$LANG_NAME.':</u></label>
+									<label class="control-label" id="la_name"><u>'.$LANG_NAME.':</u></label>
 									<input class="form-control input-sm" type="text" id="name" name="name" 
 										   placeholder="'.$LANG_NAME.'" 
 										   value ="';
@@ -188,7 +188,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 							</div>
 							<div class="row">
 								<div class="col-md-5">
-									<label class="control-label"><u>'.$LANG_RESPONSIBLE.':</u></label>
+									<label class="control-label" id="la_responsible"><u>'.$LANG_RESPONSIBLE.':</u></label>
 									<select class="form-control" id="responsible" name="responsible" '.$CRET_CONT_SEL.'>
 										<option></option>';
 										$SQL = "SELECT id,name FROM tperson WHERE id_instance = ".$_SESSION['INSTANCE_ID']."  ";
@@ -245,7 +245,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_task_insert"
+		<button type="button" class="btn btn-primary" id="btn_task_insert"
 			onclick="javascript:submitTaskRelated('.$ID_RELATED_ITEM.',\''.$SOURCE.'\',\''.$RESP_TYPE.'\');">
 			<i class="fa fa-plus-square-o"></i> ';
 			if(empty($ID_TASK)){echo "$LANG_INSERT";} else {echo "$LANG_UPDATE";}  echo '</button>
@@ -275,7 +275,8 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 		</button>
 			';}
 	} echo '
-	</div>';
+	</div>
+	';
 	
 	unset($_SESSION['NAME']);
 	unset($_SESSION['DETAIL']);

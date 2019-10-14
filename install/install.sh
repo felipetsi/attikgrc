@@ -49,6 +49,10 @@ echo "Default language:"
 read INSTANCE_LANG
 echo "#### End the instance data:"
 
+ATTIKGRC_DIR="/var/www/attikgrc"
+ln -s $ATTIKGRC_DIR/module/improvement/task_run.php $ATTIKGRC_DIR/module/risk/
+box_task.php
+
 SQL="CREATE DATABASE $INSTANCE_DB_NAME WITH OWNER = arm_user TABLESPACE = pg_default CONNECTION LIMIT = -1;"
 psql -U $userDB -h $server -p $portDB -c "$SQL" >> $LOGFILE;
 SQL="COMMENT ON DATABASE $INSTANCE_DB_NAME \

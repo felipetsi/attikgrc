@@ -25,37 +25,25 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 	require_once($_SESSION['LP']."include/lang/$LANG/general.php");
 	
 	// Start - individual configuration	
-	$PERMITIONS_NAME_1 = "view_history@";
-	
-	if(isset($_POST['checkeditem'])){
-		$ID_ITEM_SELECTED = substr(trim(addslashes($_POST['checkeditem'])),0,20);
-		
-		$SQL = "SELECT code, to_char(execution_time,'".$LANG_SQL_TIMESTAMP_FORMAT."') as execution_time, ";
-		$SQL .= "name_person FROM thistory WHERE id = $ID_ITEM_SELECTED AND id_instance=".$_SESSION['INSTANCE_ID'];
-		$RS = pg_query($conn, $SQL);
-		$ARRAYSELECTION = pg_fetch_array($RS);
-	} else {
-		$ID_ITEM_SELECTED = '';
-	}
-	if(isset($_POST['executor'])){
-		$EXECUTOR = substr(trim(addslashes($_POST['executor'])),0,20);
-	} else {
-		$EXECUTOR = '';
-	} if(isset($_POST['action'])){
-		$ACTION = substr(trim(addslashes($_POST['action'])),0,10);
-	} else {
-		$ACTION = '';
-	} if(isset($_POST['detail'])){
-		$DETAIL = substr(trim(addslashes($_POST['detail'])),0,50);
-	} else {
-		$DETAIL = '';
-	} if(isset($_POST['execution_time'])){
-		$EXECUTION_TIME = substr(trim(addslashes($_POST['execution_time'])),0,10);
-	} else {
-		$EXECUTION_TIME = '';
-	}
-	
+	// if(isset($_POST['executor'])){
+	// 	$EXECUTOR = substr(trim(addslashes($_POST['executor'])),0,20);
+	// } else {
+	// 	$EXECUTOR = '';
+	// } if(isset($_POST['action'])){
+	// 	$ACTION = substr(trim(addslashes($_POST['action'])),0,10);
+	// } else {
+	// 	$ACTION = '';
+	// } if(isset($_POST['detail'])){
+	// 	$DETAIL = substr(trim(addslashes($_POST['detail'])),0,50);
+	// } else {
+	// 	$DETAIL = '';
+	// } if(isset($_POST['execution_time'])){
+	// 	$EXECUTION_TIME = substr(trim(addslashes($_POST['execution_time'])),0,10);
+	// } else {
+	// 	$EXECUTION_TIME = '';
+	// }
 
+	$PERMITIONS_NAME_1 = "view_history@";
 	
 	// End - individual configuration
 	?>
@@ -99,19 +87,19 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 								<label class="control-label"><center><i><u><?php echo $LANG_FILTER;?></u></i></center></label>
 								<div class="row">
 									<div class="col-md-12">
-										<button id="btn_collapse_panel" type="button" class="btn btn-default  btn-block" data-toggle="collapse" data-target="#editPanel"><i id="btn_collapse_panel_icon_up" class="fa fa-angle-double-down"></i></button>
+										<!-- <button id="btn_collapse_panel" type="button" class="btn btn-default  btn-block" data-toggle="collapse" data-target="#editPanel"><i id="btn_collapse_panel_icon_up" class="fa fa-angle-double-down"></i></button> -->
 									</div>
 								</div>
 								<div id= "editPanel" class="<?php if(isset($_SESSION['NAME'])){echo 'collapse_in';}else{echo 'collapse';}?>">
 									<?php if((strpos($_SESSION['user_permission'],$PERMITIONS_NAME_1)) === false){
 										echo'<center> '.$LANG_YOU_NOT_HAVE_PERMISSION.'</center>';
 									} else {?>
-									<form action="<?php echo $DESTINATION_PAGE;?>" method="post" name="main_form" id="main_form" onkeydown="javascript:submitenter(event.keyCode);" autocomplete="off">
+									<!-- <form action="<?php echo $DESTINATION_PAGE;?>" method="post" name="main_form" id="main_form" onkeydown="javascript:submitenter(event.keyCode);" autocomplete="off">
 										<div class="row">
 											<div class="col-md-3">
 												<label class="control-label"><?php echo $LANG_EXECUTOR;?>:</label>
 												<input class="form-control input-sm" type="text" id="executor" name="executor" 
-													   placeholder="<?php echo $LANG_EXECUTOR;?>" value ="<?php echo $EXECUTOR;?>" />
+													   placeholder="<?php echo $LANG_EXECUTOR;?>" value ="" />
 											</div>
 											<?php
 											/*
@@ -124,14 +112,14 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 											<div class="col-md-3">
 												<label class="control-label"><?php echo $LANG_OBJECT;?>:</label>
 												<input class="form-control input-sm" type="text" id="detail" name="detail" 
-													   placeholder="<?php echo $LANG_OBJECT;?>" value ="<?php echo $DETAIL;?>" />
+													   placeholder="<?php echo $LANG_OBJECT;?>" value ="" />
 											</div>
 											<div class="col-md-3">
 												<label class="control-label"><?php echo $LANG_EXECUTION_TIME;?>:</label>
 												<div class="input-group">
 													<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 													<input class="form-control input-sm" type="text" id="execution_time" name="execution_time" 
-														   placeholder="<?php echo $LANG_DATE_FORMAT_UPPERCASE;?>" value ="<?php echo $EXECUTION_TIME;?>" />
+														   placeholder="<?php echo $LANG_DATE_FORMAT_UPPERCASE;?>" value ="" />
 												</div>
 											</div>
 
@@ -144,7 +132,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 												</div>
 											</div>
 										</div>
-									</form>
+									</form> -->
 									<?php }?>
 								</div>
 							</div>
@@ -169,13 +157,17 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 										<?php
 										// Select this page item
 										$SQL = "SELECT id, code, detail, to_char(execution_time,'".$LANG_SQL_TIMESTAMP_FORMAT."') AS execution_time, ";
-										$SQL .= "name_person FROM thistory WHERE id_instance=".$_SESSION['INSTANCE_ID']." ORDER BY id DESC";
+										$SQL .= "name_person FROM thistory WHERE id_instance=".$_SESSION['INSTANCE_ID'];
 										if(!empty($EXECUTOR)){
 											$SQL .= " AND name_person LIKE '%$EXECUTOR%'";
+										}
+										if(!empty($EXECUTOR)){
+											$SQL .= " AND detail LIKE '%$DETAIL%'";
 										}
 										if(!empty($EXECUTION_TIME)){
 											$SQL .= " AND execution_time = '$EXECUTION_TIME'";
 										}
+										$SQL .= " ORDER BY id DESC";
 										$RS = pg_query($conn, $SQL);
 										$ARRAY = pg_fetch_array($RS);
 										if(pg_affected_rows($RS) == 0){?>
@@ -197,15 +189,9 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 											</tr>';
 										} else {
 											do{
-											if($ARRAY['id'] == $ID_ITEM_SELECTED) {
-												//$sel = 'selected="selected"';
-												$sel = 'checked="checked"';
-											} else {
-												$sel = '';
-											}
 											?>
 												<tr class="odd gradeX">
-													<td><a href="<?php echo 'javascript:selectTableItem('.$ARRAY['id'].')';?>"><input type="checkbox" name="optcheckitem[]" value="<?php echo $ARRAY['id']; ?>" <?php echo $sel; ?> ></a></td>
+													<td><a href="<?php echo 'javascript:showActHistDetail('.$ARRAY['id'].')';?>"><input type="checkbox" name="optcheckitem[]" value="<?php echo $ARRAY['id']; ?>" ></a></td>
 													<td><?php echo $ARRAY['name_person'];?></td>
 													<td><?php echo ${$ARRAY['code']};?></td>
 													<td><?php echo $ARRAY['detail'];?></td>
@@ -217,43 +203,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 										?>
 									</table>
 								</form>
-								<!-- Start Modal -->
-								<div id="showBox" class="modal fade" role="dialog">
-									<div class="modal-dialog">
-										<!-- Modal content-->
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-												<h4 class="modal-title"><?php echo $LANG_DETAIL;?></h4>
-											</div>
-											<div class="modal-body">
-												<div class="row">
-													<div class="col-md-12">
-														<b><?php echo $LANG_EXECUTOR;?>:</b>
-														<?php echo $ARRAYSELECTION['name_person'];?>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-12">
-														<b><?php echo $LANG_ACTION;?>:</b>
-														<?php echo ${$ARRAYSELECTION['code']};?>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-12">
-														<b><?php echo $LANG_EXECUTION_TIME;?>:</b>
-														<?php echo $ARRAYSELECTION['execution_time'];?>
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
 
-									</div>
-								</div>
-								<!-- End Modal -->
 							</div>
 						</div>
 					</div>
@@ -261,14 +211,15 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 				</div>	
 			</div>
 			<!-- /.container-fluid -->
+			<div class="modal fade" id="showDetail" tabindex="-1" role="dialog" aria-labelledby="task_boxLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content" id="panel_detail">
+					</div>
+				</div>
+			</div>
+			
 			<?php 
-			if(!empty($ID_ITEM_SELECTED)){
-				echo '
-				<script type="text/javascript">
-					showDetail();
-				</script>';
-			}
-
+			echo '<script src="'.$_SESSION['LP'].'js/configuration.js"></script>';
 			print_end_page_inside($LANG,$ID_ITEM_SELECTED);?>
 
 		</body>

@@ -52,9 +52,9 @@
               <li>
                 <a href="/module/improvement/nonconformity.php"><?php echo $LANG_NONCONFORMITY;?></a>
               </li>
-              <!-- <li>
+              <li>
                 <a href="/module/improvement/project.php"><?php echo $LANG_PROJECT;?></a>
-              </li> -->
+              </li>
             </ul>
           </li>
 		  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reports">
@@ -146,14 +146,11 @@
 		  </li>
 		</ul>
 		<ul class="navbar-nav ml-auto">
-		<?php
-		if(!empty($_SESSION['MSG_TOP'])){
-			echo '
-			<div class="alert info text-center" id="alert_box" name="alert_box">
-			  '.${$_SESSION['MSG_TOP']}.'
-			</div> ';
-			unset($_SESSION['MSG_TOP']);
-		}?>
+
+		<div id="msg_box" >
+			<script> showMSGTop(); </script>
+		</div>
+
 		<div id="loading_box" >
 			<i class="fa fa-spinner fa-spin loading_box_img"></i>
 

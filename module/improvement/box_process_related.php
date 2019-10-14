@@ -11,21 +11,16 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 	$ID_RELATED_ITEM = trim(addslashes($_POST['id_source'])); // ID Incident, Task, etc
 	$SOURCE = trim(addslashes($_POST['source'])); // Incident, Task, etc
 	
-	$PERMITIONS_NAME_1 = "create_incident@";
-	$PERMITIONS_NAME_3 = "read_all_incident@";
-
-
-	// Load the process related with this task
-	if($SOURCE == "inci"){
-		$SQL = "SELECT * FROM tincident_file WHERE id_incident = $ID_RELATED_ITEM ";
-		$RS = pg_query($conn, $SQL);
-		//$raw = pg_fetch_result($RS, 'file');
-		$ARRAYSELECTION = pg_fetch_array($RS);
-		// pg_unescape_bytea($ARRAYSELECTION['uploaded_file'])
-		
-		$RS = pg_query($conn, $SQL);
-		$ARRAY = pg_fetch_array($RS);
+	if($SOURCE == "nonc"){
+		$SQL_C = "WHERE p.id IN (SELECT id_process FROM tanonconformity_process WHERE ";
+		$SQL_C .= "id_nonconformity = $ID_RELATED_ITEM) ";
+		$PERMITIONS_NAME_1 = "create_nonconformity@";
+	}elseif($SOURCE == "asse"){
+		$SQL_C = "WHERE p.id IN (SELECT id_process FROM taasset_process WHERE ";
+		$SQL_C .= "id_asset = $ID_RELATED_ITEM) ";
+		$PERMITIONS_NAME_1 = "create_asset@";
 	}
+
 	echo '
 	<script  src="'.$_SESSION['LP'].'js/custom.js" type="text/javascript"></script>
 	<script  src="'.$_SESSION['LP'].'js/nonconformity.js" type="text/javascript"></script>
@@ -37,7 +32,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 				<th>'.$LANG_NAME.'</th>
 			</tr>
 		</thead>';
-			if((strpos($_SESSION['user_permission'],$PERMITIONS_NAME_3)) === false){
+			if((strpos($_SESSION['user_permission'],$PERMITIONS_NAME_1)) === false){
 				 echo '
 			<tr class="odd gradeX">
 				<th></th>
@@ -45,11 +40,8 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			</tr>';
 				} else {
 					$SQL = "SELECT p.id, p.name, p.status FROM tprocess p ";
-					if($SOURCE == "nonc"){
-						$SQL .= "WHERE p.id IN (SELECT id_process FROM tanonconformity_process WHERE ";
-						$SQL .= "id_nonconformity = $ID_RELATED_ITEM) ";
-					}
-					$SQL .= "ORDER BY p.name DESC";
+					$SQL .= $SQL_C;
+					$SQL .= " ORDER BY p.name DESC";
 					$RS = pg_query($conn, $SQL);
 					$ARRAY = pg_fetch_array($RS);
 					if(pg_affected_rows($RS) == 0){

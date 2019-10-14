@@ -44,12 +44,16 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			$SQL .= "id_instance =".$_SESSION['INSTANCE_ID']." AND name LIKE 'security')";
 			$RS = pg_query($conn, $SQL);
 			$ARRAY = pg_fetch_array($RS);
-			do{
-				$IMPACT_VALUE[$ARRAY['id']] = trim(addslashes($_POST['impact_'.$ARRAY['id'].''])); 
-				$_SESSION['IMPACT'.$ARRAY['id'].''] = $IMPACT_VALUE[$ARRAY['id']];
-				if((empty($IMPACT_VALUE[$ARRAY['id']])) && ($ARRAY['name'] != 'financial')){
-					$IMPACT_VALUE[$ARRAY['id']] = 1;
+			do{				
+				if($ARRAY['name'] == 'financial'){
+					$IMPACT_VALUE[$ARRAY['id']] = preg_replace("/[^0-9.]/", "", (trim(addslashes($_POST['impact_'.$ARRAY['id'].'']))));
+				} else {
+					$IMPACT_VALUE[$ARRAY['id']] = trim(addslashes($_POST['impact_'.$ARRAY['id'].'']));
+					if(empty($IMPACT_VALUE[$ARRAY['id']])){
+						$IMPACT_VALUE[$ARRAY['id']] = 1;
+					}
 				}
+				$_SESSION['IMPACT'.$ARRAY['id'].''] = $IMPACT_VALUE[$ARRAY['id']];
 			}while($ARRAY = pg_fetch_array($RS));
 			$STATUS = 'a';
 			

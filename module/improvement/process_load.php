@@ -8,11 +8,20 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 	require_once($_SESSION['LP']."include/variable.php");
 	require_once($_SESSION['LP']."include/lang/".$_SESSION['lang_default']."/general.php");
 
-	$ID_RELATED_ITEM = trim(addslashes($_POST['id_source'])); // ID Nonconformity
+	$ID_RELATED_ITEM = trim(addslashes($_POST['id_source'])); // ID Nonconformity or Asset
 	$SOURCE = trim(addslashes($_POST['source'])); // Source type
 	
 	// Risk permitions
 	$PERMITIONS_NAME_3 = "read_all_nonconformity@";
+	if($SOURCE == "nonc"){
+		$SQL_C = "AND p.id NOT IN (SELECT id_process FROM tanonconformity_process WHERE ";
+		$SQL_C .= "id_nonconformity = $ID_RELATED_ITEM) ";
+		$PERMITIONS_NAME_1 = "create_nonconformity@";
+	}elseif($SOURCE == "asse"){
+		$SQL_C = "AND p.id NOT IN (SELECT id_process FROM taasset_process WHERE ";
+		$SQL_C .= "id_asset = $ID_RELATED_ITEM) ";
+		$PERMITIONS_NAME_1 = "create_asset@";
+	}
 	
 	echo '
 	<script  src="'.$_SESSION['LP'].'js/custom.js" type="text/javascript"></script>
@@ -34,7 +43,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						<th>'.$LANG_DETAIL.'</th>
 					</tr>
 				</thead>';
-					if((strpos($_SESSION['user_permission'],$PERMITIONS_NAME_3)) === false){
+					if((strpos($_SESSION['user_permission'],$PERMITIONS_NAME_1)) === false){
 						 echo '
 					<tr class="odd gradeX">
 						<th>'.$LANG_YOU_NOT_HAVE_PERMISSION.'</th>
@@ -42,11 +51,8 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 					</tr>';
 						} else {
 							$SQL = "SELECT p.id, p.name, p.detail FROM tprocess p WHERE p.status != 'd' ";
-							if($SOURCE == "nonc"){
-								$SQL .= "AND p.id NOT IN (SELECT id_process FROM tanonconformity_process WHERE ";
-								$SQL .= "id_nonconformity = $ID_RELATED_ITEM) ";
-							}
-							$SQL .= "AND p.id_area IN ";
+							$SQL .= $SQL_C;
+							$SQL .= " AND p.id_area IN ";
 							$SQL .= "(SELECT id FROM tarea WHERE id_instance = ".$_SESSION['INSTANCE_ID'].") ";
 							$SQL .= "ORDER BY p.name";
 							$RS = pg_query($conn, $SQL);

@@ -84,7 +84,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						$SQL .= "WHERE p.id = r.id_process AND p.id_risk_responsible = e.id $SQL_COMPL $COMMPL_CONTROL AND ";
 						$SQL .= "r.id_process IN(SELECT id FROM tprocess WHERE id_area IN(SELECT id FROM tarea WHERE ";
 						$SQL .= "id_instance = ".$_SESSION['INSTANCE_ID'].")) ";
-						$SQL .= "ORDER BY r.creation_time ASC"; 
+						$SQL .= "ORDER BY r.creation_time ASC";
 						$RS = pg_query($conn, $SQL);
 						$ARRAY = pg_fetch_array($RS);
 						if(pg_affected_rows($RS) == 0){

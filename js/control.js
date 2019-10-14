@@ -67,9 +67,11 @@ function selectedBP($id_source){
 				$("#show_item_bp").html(data);
 				showListComplianceRelated($id_source);
 				$('#bp_box').modal('toggle');
+				showMSGTop();
 			},
 			error: function(xhr) {
 				$("#show_item_bp").html(xhr.responseText);
+				showMSGTop();
 				//$("#panel_related").html(xhr.responseText);
 			}
 		})

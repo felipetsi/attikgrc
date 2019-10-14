@@ -309,7 +309,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 														
 															<div class="collapse box_show_task_side_right" id="show_risks">
 																<label class="control-label">'.$LANG_PROCESS.':</label>
-																<div id="listRelationshipRiskBox"></div>
+																<div id="listProcessBox"></div>
 																<div class="row">
 																	<div class="col-md-4">
 																		<button type="button" class="btn btn-default btn-block" data-toggle="tooltip" 
@@ -469,7 +469,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 				</div>
 			</div>
 			
-			<div class="modal fade" id="modalRelated" tabindex="-1" role="dialog" aria-labelledby="risk_boxLabel" aria-hidden="true">
+			<div class="modal fade" id="modalRelated" tabindex="-1" role="dialog" aria-labelledby="process_boxLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content" id="panel_related">
 					</div>

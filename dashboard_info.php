@@ -31,7 +31,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						'.$AR_AMOUNTS.' '.$LANG_RISKS.'
 					</div>
 				</div>
-				<a href="/attikgrc/module/risk/risk.php" class="card-footer text-white clearfix small z-1">
+				<a href="/module/risk/risk.php" class="card-footer text-white clearfix small z-1">
 					<span class="float-left">'.$LANG_VIEW.'</span>
 					<span class="float-right"><i class="fa fa-angle-right"></i></span>
 				</a>
@@ -58,7 +58,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						'.$ANC_AMOUNTS.' '.$LANG_NONCONFORMITY.'
 					</div>
 				</div>
-				<a href="/attikgrc/module/improvement/nonconformity.php" class="card-footer text-white clearfix small z-1">
+				<a href="/module/improvement/nonconformity.php" class="card-footer text-white clearfix small z-1">
 					<span class="float-left">'.$LANG_VIEW.'</span>
 					<span class="float-right"><i class="fa fa-angle-right"></i></span>
 				</a>
@@ -87,7 +87,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						'.$AC_AMOUNTS.' '.$LANG_CONTROLS.'
 					</div>
 				</div>
-				<a href="/attikgrc/module/risk/control.php" class="card-footer text-white clearfix small z-1">
+				<a href="/module/risk/control.php" class="card-footer text-white clearfix small z-1">
 					<span class="float-left">'.$LANG_VIEW.'</span>
 					<span class="float-right"><i class="fa fa-angle-right"></i></span>
 				</a>
@@ -114,7 +114,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						'.$AI_AMOUNTS.' '.$LANG_SECURITY_INCIDENTS.'
 					</div>
 				</div>
-				<a href="/attikgrc/module/improvement/incident.php" class="card-footer text-white clearfix small z-1">
+				<a href="/module/improvement/incident.php" class="card-footer text-white clearfix small z-1">
 					<span class="float-left">'.$LANG_VIEW.'</span>
 					<span class="float-right"><i class="fa fa-angle-right"></i></span>
 				</a>
@@ -140,7 +140,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						'.$AT_AMOUNTS.' '.$LANG_TASKS.'
 					</div>
 				</div>
-				<a href="/attikgrc/module/improvement/task.php" class="card-footer text-white clearfix small z-1">
+				<a href="/module/improvement/task.php" class="card-footer text-white clearfix small z-1">
 					<span class="float-left">'.$LANG_VIEW.'</span>
 					<span class="float-right"><i class="fa fa-angle-right"></i></span>
 				</a>

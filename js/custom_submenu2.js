@@ -7,6 +7,11 @@
 			if ($menu.length === 0) return;
 
 			menus[settings.menuSelector] = {$menu: $menu, settings: settings};
+			
+			//Keep scroll position where be
+			$('a').click(function () {
+				void(0);
+			});
 
 			//make sure menu closes on any click
 			$('body').click(function () {

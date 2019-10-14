@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS thistory (
 	id serial PRIMARY KEY,
 	id_instance integer NOT NULL REFERENCES tinstance(id),
 	code varchar(10),
-	detail varchar(50),
+	detail varchar(500),
 	execution_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	name_person varchar(255) NOT NULL -- When have procurator, thouth the name with procurator
 );

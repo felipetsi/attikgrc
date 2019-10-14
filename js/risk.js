@@ -1,7 +1,7 @@
 function showTaskRelatedAj($id_task,$id_source,$source,$resp_type){
 	if(($id_source != "") && ($source != "")){
 		$.ajax({
-			url: "box_task.php",
+			url: pathVerify("impr")+"box_task.php",
 			type: "post",
 			data: {id_task: $id_task, id_source: $id_source, source: $source, response_type: $resp_type},
 			success: function(data) {
@@ -20,7 +20,7 @@ function showImpactRelatedAj($cret_cont_sel){
 	var $id_risk = $("#id_item_selected").val();
 	if($id_type != ""){
 		$.ajax({
-			url: "box_show_impact.php",
+			url: pathVerify("risk")+"box_show_impact.php",
 			type: "post",
 			data: {id_risk: $id_risk,id_impact_type: $id_type, cret_cont_sel: $cret_cont_sel},
 			success: function(data) {
@@ -35,7 +35,7 @@ function showImpactRelatedAj($cret_cont_sel){
 
 function showListRisk(){
 	$.ajax({
-		url: "risk_list.php",
+		url: pathVerify("risk")+"risk_list.php",
 		type: "post",
 		data: {},
 		success: function(data) {

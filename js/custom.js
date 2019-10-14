@@ -43,10 +43,6 @@ $(function() {
 	});
 });
 
-function showDetail(){
-	$("#showBox").modal();
-}
-
 function postViewForm(){
 	document.getElementById("view_form").submit();
 }
@@ -72,6 +68,26 @@ function selectTableItem($item){
 function selectTableRelatedItem($item){
 	document.getElementById("relateditem").value = $item;
 	document.getElementById("submit_to_net").submit();
+}
+
+function pathVerify($target){
+	pathname = window.location.pathname;
+	dirPath = pathname.split('/');
+	var ret_val = "./";
+	if($target == "impr"){
+		if (dirPath[1] != "improvement"){
+			ret_val = "../improvement/";
+		}
+	} else if($target == "risk"){
+		if (dirPath[1] != "risk"){
+			ret_val = "../risk/";
+		}
+	} else if($target == "root"){
+		if (dirPath[1] != "/"){
+			ret_val = "../../";
+		}
+	}
+	return ret_val;
 }
 
 function backToRelatedObj($item,$dest){
@@ -225,7 +241,7 @@ function showAnyItemHiddenBox($target){
 function showTaskRelatedAj($id_task,$id_source,$source,$resp_type){
 	if(($id_source != "") && ($source != "")){
 		$.ajax({
-			url: "box_task.php",
+			url: pathVerify("impr")+"box_task.php",
 			type: "post",
 			data: {id_task: $id_task, id_source: $id_source, source: $source, response_type: $resp_type},
 			success: function(data) {
@@ -242,7 +258,7 @@ function showTaskRelatedAj($id_task,$id_source,$source,$resp_type){
 function showListTaskRelated($id_source,$source,$resp_type){
 	if(($id_source > 0) && ($source != "")){
 		$.ajax({
-			url: "box_task_related.php",
+			url: pathVerify("impr")+"box_task_related.php",
 			type: "post",
 			data: {id_source: $id_source, source: $source, response_type: $resp_type},
 			success: function(data) {
@@ -262,17 +278,34 @@ function showListTaskRelated($id_source,$source,$resp_type){
 }
 
 function submitTaskRelated($id_source,$source,$resp_type){
-	$.ajax({
-		url: "task_run.php",
-		type: "post",
-		data: $('#task_form').serialize(),
-		success: function() {
-			showListTaskRelated($id_source,$source,$resp_type);
-		},
-		error: function(xhr) {
-			$('#panel_task').html(xhr.responseText);
+	if (($('#responsible').val() != "") && ($('#name').val() != "")){
+		$.ajax({
+			url: pathVerify("impr")+"task_run.php",
+			type: "post",
+			data: $('#task_form').serialize(),
+			success: function() {
+				$('#taskBoxRelated').modal('hide');
+				showListTaskRelated($id_source,$source,$resp_type);
+				showMSGTop();
+			},
+			error: function(xhr) {
+				$('#taskBoxRelated').modal('hide');
+				$('#panel_task').html(xhr.responseText);
+				showListTaskRelated($id_source,$source,$resp_type);
+				showMSGTop();
+			}
+		})
+	} else {
+		if ($('#responsible').val() == ""){
+			$('#la_responsible').css("color", "#DC143C"); //Crimson
+		} else{
+			$('#la_responsible').css("color", "#000000"); //black
+		} if ($('#name').val() == ""){
+			$('#la_name').css("color", "#DC143C"); //Crimson
+		} else{
+			$('#la_name').css("color", "#000000"); //black
 		}
-	})
+	}
 }
 
 function addTaskRelated($id_source,$source,$resp_type){
@@ -292,7 +325,7 @@ function deletetTask($target_item,$id_source,$source,$resp_type){
 function deleteConfirmedTask(){
 	if(($GLOBAL_id_source > 0) && ($GLOBAL_id_source,$GLOBAL_id_source != "")){
 		$.ajax({
-			url: "task_run.php",
+			url: pathVerify("impr")+"task_run.php",
 			type: "post",
 			data: {mark_deletetask:1, id_task_selected:$GLOBAL_id_task_selected},
 			success: function() {
@@ -302,9 +335,11 @@ function deleteConfirmedTask(){
 				$GLOBAL_id_source = "";
 				$GLOBAL_source = "";
 				$GLOBAL_resp_type = "";
+				showMSGTop();
 			},
 			error: function(xhr) {
 				$('#panel_task').html(xhr.responseText);
+				showMSGTop();
 			}
 		})
 	}
@@ -313,26 +348,30 @@ function deleteConfirmedTask(){
 function duplicateTask($target_item,$id_source,$source,$resp_type){
 	if ($source == 'risk'){
 		$.ajax({
-			url: "task_run.php",
+			url: pathVerify("impr")+"task_run.php",
 			type: "post",
 			data: {mark_duplicatetask: 1, id_task_selected: $target_item, id_risk_selected:$id_source},
 			success: function() {
 				showListTaskRelated($id_source,$source);
+				showMSGTop();
 			},
 			error: function(xhr) {
 				$('#panel_task').html(xhr.responseText);
+				showMSGTop();
 			}
 		})
 	} else if ($source == 'cont'){
 		$.ajax({
-			url: "task_run.php",
+			url: pathVerify("impr")+"task_run.php",
 			type: "post",
 			data: {mark_duplicatetask: 1, id_task_selected: $target_item, id_control_mech_selected:$id_source},
 			success: function() {
 				showListTaskRelated($id_source,$source);
+				showMSGTop();
 			},
 			error: function(xhr) {
 				$('#panel_task').html(xhr.responseText);
+				showMSGTop();
 			}
 		})
 	} else if ($source == 'inci'){
@@ -342,9 +381,11 @@ function duplicateTask($target_item,$id_source,$source,$resp_type){
 			data: {mark_duplicatetask: 1, id_task_selected: $target_item, id_incident_selected:$id_source, response:$resp_type},
 			success: function() {
 				showListTaskRelated($id_source,$source,$resp_type);
+				showMSGTop();
 			},
 			error: function(xhr) {
 				$('#panel_task').html(xhr.responseText);
+				showMSGTop();
 			}
 		})
 	} else if ($source == 'nonc'){
@@ -354,9 +395,11 @@ function duplicateTask($target_item,$id_source,$source,$resp_type){
 			data: {mark_duplicatetask: 1, id_task_selected: $target_item, id_nonconformity_selected:$id_source, response:$resp_type},
 			success: function() {
 				showListTaskRelated($id_source,$source,$resp_type);
+				showMSGTop();
 			},
 			error: function(xhr) {
 				$('#panel_task').html(xhr.responseText);
+				showMSGTop();
 			}
 		})
 	} else if ($source == 'proj'){
@@ -366,9 +409,11 @@ function duplicateTask($target_item,$id_source,$source,$resp_type){
 			data: {mark_duplicatetask: 1, id_task_selected: $target_item, id_project_selected:$id_source, id_control_selected:$resp_type},
 			success: function() {
 				showListTaskRelated($id_source,$source,$resp_type);
+				showMSGTop();
 			},
 			error: function(xhr) {
 				$('#panel_task').html(xhr.responseText);
+				showMSGTop();
 			}
 		})
 	}
@@ -802,4 +847,31 @@ function showFileRelationship($id_source,$source){
 			}
 		})
 	}
+}
+
+function showMSGTop(){
+	$.ajax({
+		url: pathVerify("root")+"box_msg_top.php",
+		type: "post",
+		success: function(data) {
+			$("#msg_box").html(data);
+			setTimeout(function(){
+				$(".alert").each(function(index){
+					$(this).delay(200*index).fadeTo(1500,0).slideUp(500,function(){
+						$(this).remove();
+					});
+				});
+			},4000);
+		},
+		error: function(xhr) {
+			$("#msg_box").html(xhr.responseText);
+			setTimeout(function(){
+				$(".alert").each(function(index){
+					$(this).delay(200*index).fadeTo(1500,0).slideUp(500,function(){
+						$(this).remove();
+					});
+				});
+			},4000);
+		}
+	})
 }
