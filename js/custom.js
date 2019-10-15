@@ -83,8 +83,10 @@ function pathVerify($target){
 			ret_val = "../risk/";
 		}
 	} else if($target == "root"){
-		if (dirPath[1] != "/"){
+		if (dirPath[1] == "module"){
 			ret_val = "../../";
+		} else {
+			ret_val = "./";
 		}
 	}
 	return ret_val;
@@ -621,7 +623,7 @@ function showRevisionRelatedAj($prevision,$id_cont){
 
 function showPersonalSettings(){
 	$.ajax({
-		url: "box_personal_setting.php",
+		url: pathVerify("root")+"box_personal_setting.php",
 		type: "post",
 		success: function(data) {
 			$("#panel_personal_settings").html(data);
@@ -635,7 +637,7 @@ function showPersonalSettings(){
 
 function updatePersonalSettings(){
 	$.ajax({
-		url: "box_personal_setting_run.php",
+		url: pathVerify("root")+"box_personal_setting_run.php",
 		type: "post",
 		data: $('#personal_setting_form').serialize(),
 		success: function() {

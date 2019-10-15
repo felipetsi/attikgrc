@@ -4,9 +4,9 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 	$DESTINATIONPAGE_NO_LOGIN = $_SESSION['LP']."login.php?instance=".$_SESSION['INSTANCE_NAME'];
 	header("Location:".$_SESSION['LP']."$DESTINATIONPAGE_NO_LOGIN");
 } else {
-	require_once($_SESSION['LP']."include/conn_db.php");
-	require_once($_SESSION['LP']."include/variable.php");
-	require_once($_SESSION['LP']."include/lang/".$_SESSION['lang_default']."/general.php");
+	require_once("./include/conn_db.php");
+	require_once("./include/variable.php");
+	require_once("./include/lang/".$_SESSION['lang_default']."/general.php");
 
 	$SQL = "SELECT p.id, p.name, p.detail, p.email, p.language_default FROM tperson p ";
 	$SQL .= "WHERE id = ".$_SESSION['user_id']." AND p.id_instance = ".$_SESSION['INSTANCE_ID'];

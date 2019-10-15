@@ -3,10 +3,13 @@ session_start();
 
 $CODE_SUCCESSFUL_UP = 'SUUSPE0001';
 $CODE_SUCCESSFUL_UP_2 = 'SUUSPE0002';
+$DESTINATIONPAGE_NO_LOGIN = "login.php?instance=".$_SESSION['INSTANCE_NAME'];
 
 if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 	header("Location:".$_SESSION['LP']."$DESTINATIONPAGE_NO_LOGIN");
 } else {
+	$LAST_LP = $_SESSION['LP'];
+	$_SESSION['LP'] = "./";
 	require_once($_SESSION['LP'].'include/function.php');
 	
 	$NAME = substr(trim(addslashes($_POST['name'])),0,255);
@@ -51,5 +54,6 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 		$RS = pg_query($conn, $SQL) or (die("INTERNAL ERROR SYSTEM"));
 		insertHistory($_SESSION['INSTANCE_ID'],$CODE_SUCCESSFUL_UP_2,$_SESSION['user_name'],$NAME);
 	}
+	$_SESSION['LP'] = $LAST_LP;
 }
 ?>
