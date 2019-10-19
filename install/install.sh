@@ -51,7 +51,7 @@ read server
 echo "IMPORTANT: You need already created the arm_user in your PostgreSQL instance"
 echo "Type the arm_user password of PostgreSQL:"
 read -s PGPASSWORD
-export PGPASSWORD=$PGPASSWORD;
+export PGPASSWORD="$PGPASSWORD";
 
 echo "#### End the instance data:"
 

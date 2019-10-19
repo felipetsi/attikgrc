@@ -17,7 +17,7 @@ The @ttik GRC came with suppot to:
 
 See [INSTALL.md](INSTALL.md) file.
 
-## Built With
+## Created by
 
 * [@ttik GRC](http://www.attik.com.br) - The web of maintainer
 
@@ -27,7 +27,7 @@ Please read [CONTRIBUTING.md](https://www.attik.com.br/attik_grc_donations.php)
 
 ## Authors
 
-* **Felipe Pereira da Silva** - *Main Sponsor * - [-](https://www.linkedin.com/in/felipe-pereira-da-silva-57566822/)
+* [**Felipe Pereira da Silva**](https://www.linkedin.com/in/felipe-pereira-da-silva-57566822/) - Sponsor 
 
 ## License
 
