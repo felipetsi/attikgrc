@@ -15,7 +15,7 @@ The @ttik GRC came with suppot to:
 
 ## To Install
 
-See INSTALL.md file.
+See [INSTALL.md](INSTALL.md) file.
 
 ## Built With
 
