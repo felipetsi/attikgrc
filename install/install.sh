@@ -9,11 +9,10 @@
 clear
 # Create new instance
 ### General parameters
-	server="localhost";
-	userDB="postgres";
+	userDB="arm_user";
 	portDB="5432";
 	LOGFILE="/var/log/attikgrc/instance_created.log";
-	export PGPASSWORD="postgres";
+	ATTIKGRC_DIR="/var/www/attikgrc"
 
 echo "###################################################################"
 echo "============================ ATTENTION ============================"
@@ -22,7 +21,7 @@ echo "CERTIFY THAT YOU ALREADY EXECUTED THE PROCEDURES SHOWN IN README.md"
 echo "==================================================================="
 echo "THIS SCRIPT WAS CREATED TO:"
 echo "	- OPERATION SYSTEM DEBIAN;"
-echo "	- WITH DEFAULT PASSWORD OF postgres USER OF DB POSTGRESQL;"
+echo "	- YOU NEED SET AND PUT THE PASSWORD OF postgres USER OF DB POSTGRESQL BEFORE;"
 echo "	- THE DEFAULT PORT OF POSTGRESQL IS 5432;"
 echo "	- THE DIRECTORY OF APACHE2 USER IS /var/www/ ;"
 echo ""
@@ -45,20 +44,16 @@ echo "email main:"
 read INSTANCE_EMAIL
 echo "Limit users:"
 read INSTANCE_LIMIT_USER
-echo "Default language:"
+echo "Default language (type en, pt or es. [en=English], [pt=portuguese], es [es=spanish]):"
 read INSTANCE_LANG
+echo "Type the IP address of Postgresql"
+read server
+echo "IMPORTANT: You need already created the arm_user in your PostgreSQL instance"
+echo "Type the arm_user password of PostgreSQL:"
+read -s PGPASSWORD
+export PGPASSWORD=$PGPASSWORD;
+
 echo "#### End the instance data:"
-
-ATTIKGRC_DIR="/var/www/attikgrc"
-ln -s $ATTIKGRC_DIR/module/improvement/task_run.php $ATTIKGRC_DIR/module/risk/
-box_task.php
-
-SQL="CREATE DATABASE $INSTANCE_DB_NAME WITH OWNER = arm_user TABLESPACE = pg_default CONNECTION LIMIT = -1;"
-psql -U $userDB -h $server -p $portDB -c "$SQL" >> $LOGFILE;
-SQL="COMMENT ON DATABASE $INSTANCE_DB_NAME \
-  IS 'Data base of @ttik GRC Application - client $INSTANCE_NAME.';"
-psql -U $userDB -h $server -p $portDB -c "$SQL" >> $LOGFILE;
-
 
 cat attik-grc.sql | psql -U $userDB -d $INSTANCE_DB_NAME -h $server -p $portDB
 

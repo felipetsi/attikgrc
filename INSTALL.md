@@ -16,7 +16,7 @@ What things you need to install the software and how to install them:
 
 ```
 Examples Debian instalation packages
-# apt-get install apache2 php git postgresql-client php-pgsql
+# apt-get install apache2 php git postgresql postgresql-client php-pgsql
 
 # git clone https://github.com/felipetsi/attikgrc.git
 
@@ -36,14 +36,22 @@ Examples Debian instalation packages
 After you instaled prereqs, you can advanced
 
 ```
-# tar -xzvf attikgrc-xxx.tar.gz
 # mv attikgrc /var/www/
-# touch /var/log/attikgrc/scheduling.log
+# mkdir /var/log/attikgrc/
+# touch -c /var/log/attikgrc/scheduling.log
 # chown www-data.www-data -R /var/log/attikgrc/scheduling.log
 # chown www-data.www-data -R /var/www/attikgrc/
 # vi /var/www/attikgrc/include/conn_db.php
-#### Configure the \$userDB and \$passwd parameters, according to you put in your PostgreSQL instalation.
-# ./create_exclusive_instance.sh
+```
+## Before advance, you need to create the attigrc(arm_user) user in PostgreSQL. 
+## A example how to do this is in shell: # sudo -u postgres psql -c "CREATE USER arm_user WITH PASSWORD 'YOUR_PASSWORD';"
+## After create the user is necessary create now "attikgrc" Database 
+## A example how to do this is in shell: # sudo -u postgres psql -c "CREATE DATABASE attikgrc WITH OWNER = arm_user;"
+
+```
+# cd /var/www/attikgrc/install/
+# chmod 500 install.sh
+# ./install.sh
 ##### if you alread have one @ttik GRC instaled and need create anouther instance, you can run "create_share_instance.sh" script.
 
 # cp daily.sh /etc/cron.d/daily
