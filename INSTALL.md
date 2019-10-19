@@ -45,9 +45,9 @@ After you instaled prereqs, you can advanced
 ```
 ## Before advance, you need to prepare the PostgreSQL 
 #### create the attigrc(arm_user) user in PostgreSQL.
-#### A example how to do this is in shell: # sudo -u postgres psql -c "CREATE USER arm_user WITH PASSWORD 'YOUR_PASSWORD';"
+##### A example how to do this is: # sudo -u postgres psql -c "CREATE USER arm_user WITH PASSWORD 'YOUR_PASSWORD';"
 #### After create the user is necessary create now "attikgrc" Database
-#### A example how to do this is in shell: # sudo -u postgres psql -c "CREATE DATABASE attikgrc WITH OWNER = arm_user;"
+##### A example how to do this is: # sudo -u postgres psql -c "CREATE DATABASE attikgrc WITH OWNER = arm_user;"
 
 ```
 # cd /var/www/attikgrc/install/
