@@ -33,9 +33,9 @@ Examples Debian instalation packages
 ```
 ## Before advance, you need to prepare the PostgreSQL 
  * Create the attigrc(arm_user) user in PostgreSQL.
- * * A example how to do this is: # sudo -u postgres psql -c "CREATE USER arm_user WITH PASSWORD 'YOUR_PASSWORD';"
+   * A example how to do this is: # sudo -u postgres psql -c "CREATE USER arm_user WITH PASSWORD 'YOUR_PASSWORD';"
  * After create the user is necessary create now "attikgrc" Database
- * * A example how to do this is: # sudo -u postgres psql -c "CREATE DATABASE attikgrc WITH OWNER = arm_user;"
+   * A example how to do this is: # sudo -u postgres psql -c "CREATE DATABASE attikgrc WITH OWNER = arm_user;"
 
 Change the password of arm_user in database connecntion file
 
