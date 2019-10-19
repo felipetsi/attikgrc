@@ -32,10 +32,10 @@ Examples Debian instalation packages
 
 ```
 ## Before advance, you need to prepare the PostgreSQL 
-#### create the attigrc(arm_user) user in PostgreSQL.
-##### A example how to do this is: # sudo -u postgres psql -c "CREATE USER arm_user WITH PASSWORD 'YOUR_PASSWORD';"
-#### After create the user is necessary create now "attikgrc" Database
-##### A example how to do this is: # sudo -u postgres psql -c "CREATE DATABASE attikgrc WITH OWNER = arm_user;"
+ * Create the attigrc(arm_user) user in PostgreSQL.
+ * * A example how to do this is: # sudo -u postgres psql -c "CREATE USER arm_user WITH PASSWORD 'YOUR_PASSWORD';"
+ * After create the user is necessary create now "attikgrc" Database
+ * * A example how to do this is: # sudo -u postgres psql -c "CREATE DATABASE attikgrc WITH OWNER = arm_user;"
 
 Change the password of arm_user in database connecntion file
 
@@ -55,7 +55,7 @@ Next:
 # cp daily.sh /etc/cron.d/daily
 
 ```
-## if you alread have one @ttik GRC instaled and need create anouther instance, you can run "create_share_instance.sh" script.
+#### If you alread have one @ttik GRC instaled and need create anouther instance, you can run "create_share_instance.sh" script.
 
 ## Now you need configure attikgrc as virtual site in apache.
 
