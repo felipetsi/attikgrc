@@ -1,20 +1,19 @@
 # @ttik GRC
 
-## Getting Started
+## Let's start
 
-These instructions will get you a copy of the project up and running on your server for use. 
+These instructions will go you to install @ttik GRC in your server. 
 
-### Prerequisites
+### Prereqs
 
-What things you need to install the software and how to install them:
-#### Download the last version of @ttik GRC
-#### Apache2
-#### PHP 7 or more
-#### PostgreSQL, include client
-#### Compose
-#### Git
+* Apache2
+* PHP 7 or more
+* PostgreSQL, include client
+* Compose
+* Git
 
-Examples Debian instalation packages
+This examples will show how to install @ttik GRC in OS Debian. If you use anouther OS is necessary adapt each step.
+
 ```
 # apt-get install apache2 php git postgresql postgresql-client php-pgsql
 
@@ -37,7 +36,7 @@ Examples Debian instalation packages
  * After create the user is necessary create now "attikgrc" Database
    * A example how to do this is: # sudo -u postgres psql -c "CREATE DATABASE attikgrc WITH OWNER = arm_user;"
 
-Change the password of arm_user in database connecntion file
+Set the password of arm_user in database connecntion file
 
 ```
 # vi /var/www/attikgrc/include/conn_db.php
@@ -55,6 +54,8 @@ Next:
 # cp daily.sh /etc/cron.d/daily
 
 ```
+#### Make sure that running "install.sh" didn't give any errors.
+
 #### If you alread have one @ttik GRC instaled and need create anouther instance, you can run "create_share_instance.sh" script.
 
 ## Now you need configure attikgrc as virtual site in apache.
@@ -64,7 +65,7 @@ Configure attikgrc as virtual site.
 
 ```
 
-### The next step is optional, but recommended If you want, now you can remove the directory /install
+### The next step is optional, but recommended.
 
 ```
 # rm /var/www/attikgrc/install/  
@@ -76,18 +77,19 @@ Configure attikgrc as virtual site.
 Now you can access access @ttik GRC with http://YOUR_IP/attikgrc?instance=NAME_PLACE_IN_INSTALLATION
 Change:
  * YOUR_IP to the address IP of your server or DNS name created by youself
- *  NAME_PLACE_IN_INSTALLATION 
+ * NAME_PLACE_IN_INSTALLATION 
+
+   * The parameter "?instance" is obligatory
 
 ## Deployment
 
-For new deployments you'll just replace the files and directories inside attikgrc/ directory, keeping only the conn_db.php file.
+For new deployments you should just replace the files and directories inside attikgrc/ directory, keeping only the conn_db.php file.
 
 ## CAUTION
 ####                                                                               ####
-#### We really recommended you apply hardening procedures in you Operation System, ####
+#### We really recommend you apply hardening procedures in you Operation System,   ####
 #### in special in Apache and PostgreSQL configurations, including change the user ####
 #### and directory default. Here we are introducing the installation considering   ####
-#### the default setting of the environment, so adapt as the settings exist in     ####
-#### your settings.                                                                ####
+#### the default setting.                                                          ####
 ####                                                                               ####
 
