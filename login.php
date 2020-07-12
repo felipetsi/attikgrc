@@ -52,7 +52,7 @@ if((!isset($_GET['instance']))||(empty($_GET['instance']))){
 			}
 			?>
 			  <div class="card card-login mx-auto mt-5">
-				  <h2>@ttik GRC</h2>
+			  	<img src="../img/logoattik_GRC.png" class="img-fluid" alt="Responsive image">
 				<div class="card-header">
 				  <?php echo $LANG_LOGIN;?>
 				</div>

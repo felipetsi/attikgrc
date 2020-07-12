@@ -6,7 +6,7 @@ The @ttik GRC came with suppot to:
 * Identify the risks according with business process of areas in a Organization;
 * Risks treatment;
 * Compliance requiriment control;
-* Natively implemented ISO 27001, 20000, 9001, BACEN 4.658 and lei 13.709(LGPD);
+* Natively implemented ISO 27001, 20000, 9001, BACEN 4.658 and law 13.709(LGPD);
 * Efficacy review of controls;
 * Nonconformity and Incident treatment;
 * Report control;
