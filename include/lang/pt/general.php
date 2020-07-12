@@ -1,5 +1,5 @@
 <?php
-$LANG_TITLE_PAGE = "@ttik GRC - Governança, Gestão de Riscos e Compliance perto de você";
+$LANG_TITLE_PAGE = "Attik GRC";
 $LANG_LOGIN = "Login";
 $LANG_LOGIN_MY_USER = "$LANG_LOGIN com meu próprio usuário";
 $LANG_LOGIN_SEL_USER = "$LANG_LOGIN com o usuário selecionado";
