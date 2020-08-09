@@ -227,7 +227,7 @@
 }
 
 .box_show_warning {
-	background-color: #f35a2e;
+	background-color: #D90404;
     color: white;
 	border-radius:3px;
 	height:30px;
@@ -237,7 +237,7 @@
 }
 
 .box_show_ok {
-	background-color: #4ef81a;
+	background-color: #167362;
 	border-radius:3px;
 	height:30px;
 	padding-top: 5px;
@@ -246,7 +246,7 @@
 }
 
 .box_show_out {
-	background-color: #c10000;
+	background-color: #D90404;
     color: white;
 	border-radius:3px;
 	height:30px;
