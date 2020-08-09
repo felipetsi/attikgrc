@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS tcontrol (
 	enable_revision char(1) NULL,
 	apply_revision_from date NULL,
 	scheduling_day integer NULL,
-	scheduling_month integer NULL,
+	scheduling_month varchar(30) NULL,
 	scheduling_weekday integer NULL,
 	deadline_revision integer NULL,
 	status char(1) NOT NULL

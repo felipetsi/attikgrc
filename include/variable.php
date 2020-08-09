@@ -1,6 +1,6 @@
 <?php
 // Configuration version
-$CONF_VERSION = "1.0";
+$CONF_VERSION = "1.1";
 // Configuration session
 $CONF_AVAILABLE_LANGUAGE = array("English@en@Welcome","Português@pt@Bem-vindo","Español@es@Bienvenido");
 $CONF_ERROR_LOGIN_SCALE = array("0","3","4","5","6","7","8","9","10");

@@ -52,7 +52,7 @@ do
 		WHERE p.id_area IN(SELECT id FROM tarea WHERE id_instance = $ID_INST) AND c.status != 'd' AND \
 		c.id_process = p.id AND c.enable_revision = 'e' AND c.apply_revision_from <= '$FULLDATE' AND \
 		(scheduling_day = $DAY OR scheduling_day = 32) AND \
-		(scheduling_month = $MONTH OR scheduling_month = 13) AND \
+		(scheduling_month LIKE '%$MONTH,%' OR scheduling_month LIKE '$MONTH' OR scheduling_month = '13') AND \
 		(scheduling_weekday = $WEEKDAY OR scheduling_weekday = 7) ";
 		psql -U $userDB -d $nameDB -h $server -p $portDB -t -c "$SQL" | 
 		while read CONTROL 

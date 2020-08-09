@@ -457,10 +457,11 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 															echo '
 															<div class="col-md-4">
 																<center><label class="control-label">'.$LANG_MONTH.':</label></center>
-																<select class="form-control" data-live-search="true" id="scheduling_month"
-																		name="scheduling_month" '.$CRET_CONT_SEL.'>';
+																<select class="form-control" data-live-search="true" id="scheduling_month[]"
+																		name="scheduling_month[]" '.$CRET_CONT_SEL.' multiple="multiple">';
+																$sc_month_split = explode(',', $sc_month);
 																foreach($CONF_MONTHS as $key => $value){
-																	if ($key == $sc_month) {
+																	if (in_array($key, $sc_month_split)) {
 																		$sel = 'selected="selected"';
 																	} else {
 																		$sel = '';

@@ -52,7 +52,23 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			if(empty($APPLY_REVISION_FROM)){$APPLY_REVISION_FROM = date('Y-m-d');}
 			$APPLY_REVISION_FROM = "'".$APPLY_REVISION_FROM."'";
 			$SC_DAY = preg_replace("/[^0-9]/", "",(substr(trim(addslashes($_POST['scheduling_day'])),0,10))); $_SESSION['SCHEDULING_DAY'] = $SC_DAY;
-			$SC_MONTH = preg_replace("/[^0-9]/", "",(substr(trim(addslashes($_POST['scheduling_month'])),0,10))); $_SESSION['SCHEDULING_MONTH'] = $SC_MONTH;
+			
+			$f = 0;
+			if ((array_sum($_POST['scheduling_month']) >= 78) || (in_array('13',$_POST['scheduling_month']))){
+				$SC_MONTH = '13';
+			} else {
+				foreach ($_POST['scheduling_month'] as $value) {
+					if ($f == 0){
+						$SC_MONTH = trim(addslashes($value));
+					} else {
+						$SC_MONTH .= ",".trim(addslashes($value));
+					}
+					$f++;
+				}
+			}
+
+			//$SC_MONTH = preg_replace("/[^0-9]/", "",(substr(trim(addslashes($_POST['scheduling_month'])),0,30))); $_SESSION['SCHEDULING_MONTH'] = $SC_MONTH;
+			
 			$SC_WEEKDAY = preg_replace("/[^0-9]/", "",(substr(trim(addslashes($_POST['scheduling_weekday'])),0,10))); $_SESSION['SCHEDULING_WEEKDAY'] = $SC_WEEKDAY;
 			$DEADLINE_REV = preg_replace("/[^0-9]/", "",(substr(trim(addslashes($_POST['deadline_revision'])),0,10))); $_SESSION['DEADLINE_REVISION'] = $DEADLINE_REV;
 			if(empty($DEADLINE_REV)){ $DEADLINE_REV = 'NULL';}
@@ -71,7 +87,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			$GOAL = 'NULL';
 			$APPLY_REVISION_FROM = 'NULL';
 			$SC_DAY = 'NULL';
-			$SC_MONTH = 'NULL';
+			$SC_MONTH = "";
 			$SC_WEEKDAY = 'NULL';
 			$DEADLINE_REV = 'NULL';
 		}
@@ -156,7 +172,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 					$SQL = "INSERT INTO tcontrol(name, detail, id_process, metric, metric_detail, goal, implementation_date, ";
 					$SQL .= "enable_revision,status, apply_revision_from, scheduling_day, scheduling_month, scheduling_weekday, deadline_revision) ";
 					$SQL .= "VALUES ('$NAME', '$DETAIL', $PROCESS, '$METRIC', '$METRIC_DETAIL', $GOAL, $IMPLEMENTATION, ";
-					$SQL .= "'$ENABLE_REVISION', '$STATUS', $APPLY_REVISION_FROM,$SC_DAY, $SC_MONTH, $SC_WEEKDAY,$DEADLINE_REV)";
+					$SQL .= "'$ENABLE_REVISION', '$STATUS', $APPLY_REVISION_FROM,$SC_DAY, '$SC_MONTH', $SC_WEEKDAY,$DEADLINE_REV)";
 					$RS = pg_query($conn, $SQL) or (die("INTERNAL ERROR SYSTEM"));
 					$LAST_ID_ARRAY = pg_fetch_array(pg_query("SELECT CURRVAL('tcontrol_id_seq')"));
 					$LAST_ID_CONTROL = $LAST_ID_ARRAY[0];
@@ -258,7 +274,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						
 						$SQL = "UPDATE tcontrol SET id_process=$PROCESS, name='$NAME', detail='$DETAIL', metric='$METRIC', metric_detail='$METRIC_DETAIL', ";
 						$SQL .= "goal=$GOAL, implementation_date=$IMPLEMENTATION, enable_revision='$ENABLE_REVISION', ";
-						$SQL .= "apply_revision_from=$APPLY_REVISION_FROM, scheduling_day=$SC_DAY, scheduling_month=$SC_MONTH, ";
+						$SQL .= "apply_revision_from=$APPLY_REVISION_FROM, scheduling_day=$SC_DAY, scheduling_month='$SC_MONTH', ";
 						$SQL .= "scheduling_weekday=$SC_WEEKDAY, deadline_revision=$DEADLINE_REV ";
 						$SQL .= "WHERE id_process IN (SELECT id FROM tprocess WHERE id_area IN ";
 						$SQL .= "(SELECT id FROM tarea WHERE id_instance=".$_SESSION['INSTANCE_ID'].")) AND id = $ID_ITEM[0]";
