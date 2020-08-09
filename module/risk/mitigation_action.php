@@ -13,7 +13,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 		$SQL = "SELECT c.name, c.id, c.status, r.risk_factor, r.risk_residual FROM tcontrol c, trisk r, tarisk_control ta ";
 		$SQL .= "WHERE c.id = ta.id_control AND ta.id_risk = $ID_SELECTED_SOURCE AND r.id = $ID_SELECTED_SOURCE ORDER BY c.name";
 		$RS = pg_query($conn, $SQL) or (die("INTERNAL ERROR SYSTEM"));
-		$ARRAY = pg_fetch_array($RS);print_r($ARRAY);
+		$ARRAY = pg_fetch_array($RS);
 		echo '
 		<did class="row">
 			<div class="col-md-2">

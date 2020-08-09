@@ -336,6 +336,53 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			</div>
 			';
 			break;
+		case 'controlCompliance':
+			echo '
+			<div class="card mb-3">
+				<label class="control-label"><center><i><u>'.$LANG_CONTROL.' - '.$LANG_COMPLIANCE.'</u></i></center></label>
+			</div>';
+			$_SESSION['show_report'] = 'controlCompliance';
+			$SQL = "SELECT id,name FROM tbest_pratice WHERE status = 'a' AND id_instance = ".$_SESSION['INSTANCE_ID']." ORDER BY name";
+			$RS = pg_query($conn, $SQL);
+			$ARRAY = pg_fetch_array($RS);
+
+			do{
+				echo '
+					<div class="panel panel-default">
+						<div class="row">
+							<div class="col-md">
+								<div class="col-xl">
+									<table class="table table-bordered" width="100%" id="dataTable" name="dataTable" cellspacing="0">
+										<thead>
+											<tr>
+												<th>'.$ARRAY['name'].' - '.$LANG_ITENS.'</th>
+												<th>'.$LANG_CONTROL.'</th>
+											</tr>
+										</thead>';
+				$SQL = "SELECT cbp.item AS item,cbp.name AS requeriment,c.name AS control, ";
+				$SQL .= "CAST (replace(replace(substring(replace(cbp.item,'.',''),1,6),'-','1'),'A','') AS integer) AS item_ord ";
+				$SQL .= "FROM tsection_best_pratice se, tcategory_best_pratice ca, tcontrol_best_pratice cbp ";
+				$SQL .= "LEFT JOIN tcontrol AS c ON c.id IN (SELECT id_control FROM tacontrol_best_pratice ";
+				$SQL .= "									WHERE id_control_best_pratice = cbp.id) ";
+				$SQL .= "WHERE ca.id = cbp.id_category AND se.id = ca.id_section AND se.id_best_pratice=".$ARRAY['id']." ORDER BY item_ord";
+				$RS_IN = pg_query($conn, $SQL);
+				$ARRAY_IN = pg_fetch_array($RS_IN);
+				do{
+									echo '
+										<tr class="odd gradeX">
+											<td>'.$ARRAY_IN['item'].' - '.$ARRAY_IN['requeriment'].'</td>
+											<td>'.$ARRAY_IN['control'].'</td>
+										</tr>
+									';
+				}while($ARRAY_IN = pg_fetch_array($RS_IN));
+									echo '
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>';
+			} while($ARRAY = pg_fetch_array($RS));
+			break;
 		case 'pedingtask':
 			$_SESSION['show_report'] = 'pedingtask';
 			$SQL = "SELECT t.id, t.name AS task, t.action, t.status,p.name AS responsible, t.prevision_date, t.execution_date FROM ttask_workflow t, ";

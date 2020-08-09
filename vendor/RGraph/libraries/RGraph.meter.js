@@ -1,75 +1,1482 @@
+// Version: 2020-05-31
+//
+    // o--------------------------------------------------------------------------------o
+    // | This file is part of the RGraph package - you can learn more at:               |
+    // |                                                                                |
+    // |                         https://www.rgraph.net                                 |
+    // |                                                                                |
+    // | RGraph is licensed under the Open Source MIT license. That means that it's     |
+    // | totally free to use and there are no restrictions on what you can do with it!  |
+    // o--------------------------------------------------------------------------------o
 
-RGraph=window.RGraph||{isRGraph:true};RGraph.Meter=function(conf)
-{if(typeof conf==='object'&&typeof conf.value!=='undefined'&&typeof conf.id==='string'){var id=conf.id
-var canvas=document.getElementById(id);var min=conf.min;var max=conf.max;var value=conf.value;var parseConfObjectForOptions=true;}else{var id=conf;var canvas=document.getElementById(id);var min=arguments[1];var max=arguments[2];var value=arguments[3];}
-this.id=id;this.canvas=canvas;this.context=this.canvas.getContext?this.canvas.getContext("2d",{alpha:(typeof id==='object'&&id.alpha===false)?false:true}):null;this.canvas.__object__=this;this.type='meter';this.min=RGraph.stringsToNumbers(min);this.max=RGraph.stringsToNumbers(max);this.value=RGraph.stringsToNumbers(value);this.centerx=null;this.centery=null;this.radius=null;this.isRGraph=true;this.currentValue=null;this.uid=RGraph.CreateUID();this.canvas.uid=this.canvas.uid?this.canvas.uid:RGraph.CreateUID();this.colorsParsed=false;this.coordsText=[];this.original_colors=[];this.firstDraw=true;this.properties={'chart.background.image.url':null,'chart.background.image.offsetx':0,'chart.background.image.offsety':0,'chart.background.image.stretch':true,'chart.background.color':'white','chart.gutter.left':15,'chart.gutter.right':15,'chart.gutter.top':15,'chart.gutter.bottom':20,'chart.linewidth':1,'chart.linewidth.segments':0,'chart.strokestyle':null,'chart.border':true,'chart.border.color':'black','chart.text.font':'Segoe UI, Arial, Verdana, sans-serif','chart.text.size':12,'chart.text.color':'black','chart.text.valign':'center','chart.text.accessible':false,'chart.text.accessible.overflow':'visible','chart.text.accessible.pointerevents':true,'chart.value.text.decimals':0,'chart.value.text.units.pre':'','chart.value.text.units.post':'','chart.title':'','chart.title.background':null,'chart.title.hpos':null,'chart.title.vpos':null,'chart.title.color':'black','chart.title.bold':true,'chart.title.font':null,'chart.title.x':null,'chart.title.y':null,'chart.title.halign':null,'chart.title.valign':null,'chart.green.start':((this.max-this.min)*0.35)+this.min,'chart.green.end':this.max,'chart.green.color':'#207A20','chart.yellow.start':((this.max-this.min)*0.1)+this.min,'chart.yellow.end':((this.max-this.min)*0.35)+this.min,'chart.yellow.color':'#D0AC41','chart.red.start':this.min,'chart.red.end':((this.max-this.min)*0.1)+this.min,'chart.red.color':'#9E1E1E','chart.colors.ranges':null,'chart.units.pre':'','chart.units.post':'','chart.contextmenu':null,'chart.zoom.factor':1.5,'chart.zoom.fade.in':true,'chart.zoom.fade.out':true,'chart.zoom.hdir':'right','chart.zoom.vdir':'down','chart.zoom.frames':25,'chart.zoom.delay':16.666,'chart.zoom.shadow':true,'chart.zoom.background':true,'chart.zoom.action':'zoom','chart.annotatable':false,'chart.annotate.color':'black','chart.shadow':false,'chart.shadow.color':'rgba(0,0,0,0.5)','chart.shadow.blur':3,'chart.shadow.offsetx':3,'chart.shadow.offsety':3,'chart.resizable':false,'chart.resize.handle.adjust':[0,0],'chart.resize.handle.background':null,'chart.tickmarks.small.num':100,'chart.tickmarks.big.num':10,'chart.tickmarks.small.color':'#bbb','chart.tickmarks.big.color':'black','chart.scale.decimals':0,'chart.scale.point':'.','chart.scale.thousand':',','chart.radius':null,'chart.centerx':null,'chart.centery':null,'chart.labels':true,'chart.labels.count':10,'chart.labels.specific':null,'chart.segment.radius.start':0,'chart.needle.radius':null,'chart.needle.type':'normal','chart.needle.tail':false,'chart.needle.head':true,'chart.needle.color':'black','chart.needle.image.url':null,'chart.needle.image.offsetx':0,'chart.needle.image.offsety':0,'chart.adjustable':false,'chart.angles.start':RGraph.PI,'chart.angles.end':RGraph.TWOPI,'chart.centerpin.stroke':'black','chart.centerpin.fill':'white','chart.clearto':'rgba(0,0,0,0)'}
-if(!this.canvas){alert('[METER] No canvas support');return;}
-if(!this.canvas.__rgraph_aa_translated__){this.context.translate(0.5,0.5);this.canvas.__rgraph_aa_translated__=true;}
-var RG=RGraph,ca=this.canvas,co=ca.getContext('2d'),prop=this.properties,pa2=RG.path2,win=window,doc=document,ma=Math
-if(RG.Effects&&typeof RG.Effects.decorate==='function'){RG.Effects.decorate(this);}
-this.set=this.Set=function(name)
-{var value=arguments[1]||null;if(arguments.length===1&&typeof name==='object'){RG.parseObjectStyleConfig(this,name);return this;}
-if(name.substr(0,6)!='chart.'){name='chart.'+name;}
-while(name.match(/([A-Z])/)){name=name.replace(/([A-Z])/,'.'+RegExp.$1.toLowerCase());}
-if(name=='chart.value'){this.value=value;return;}
-prop[name]=value;return this;};this.get=this.Get=function(name)
-{if(name.substr(0,6)!='chart.'){name='chart.'+name;}
-while(name.match(/([A-Z])/)){name=name.replace(/([A-Z])/,'.'+RegExp.$1.toLowerCase());}
-if(name=='chart.value'){return this.value;}
-return prop[name];};this.draw=this.Draw=function()
-{RG.FireCustomEvent(this,'onbeforedraw');if(this.value>this.max)this.value=this.max;if(this.value<this.min)this.value=this.min;this.currentValue=this.value;this.gutterLeft=prop['chart.gutter.left'];this.gutterRight=prop['chart.gutter.right'];this.gutterTop=prop['chart.gutter.top'];this.gutterBottom=prop['chart.gutter.bottom'];this.centerx=((ca.width-this.gutterLeft-this.gutterRight)/2)+this.gutterLeft;this.centery=ca.height-this.gutterBottom;this.radius=Math.min((ca.width-this.gutterLeft-this.gutterRight)/2,(ca.height-this.gutterTop-this.gutterBottom));this.coordsText=[];if(typeof(prop['chart.centerx'])=='number')this.centerx=prop['chart.centerx'];if(typeof(prop['chart.centery'])=='number')this.centery=prop['chart.centery'];if(typeof(prop['chart.radius'])=='number')this.radius=prop['chart.radius'];if(!this.colorsParsed){this.parseColors();this.colorsParsed=true;}
-this.drawBackground();this.drawLabels();this.drawNeedle();this.drawReadout();RG.DrawTitle(this,prop['chart.title'],this.gutterTop,null,prop['chart.title.size']?prop['chart.title.size']:prop['chart.text.size']+2);if(prop['chart.contextmenu']){RG.ShowContext(this);}
-if(prop['chart.resizable']){RG.AllowResizing(this);}
-RG.InstallEventListeners(this);if(this.firstDraw){this.firstDraw=false;RG.fireCustomEvent(this,'onfirstdraw');this.firstDrawFunc();}
-RG.FireCustomEvent(this,'ondraw');return this;};this.exec=function(func)
-{func(this);return this;};this.drawBackground=this.DrawBackground=function()
-{if(typeof prop['chart.background.image.url']==='string'&&!this.__background_image__){var x=0+prop['chart.background.image.offsetx'];var y=0+prop['chart.background.image.offsety'];var img=new Image();this.__background_image__=img;img.src=prop['chart.background.image.url'];img.onload=function()
-{if(prop['chart.background.image.stretch']){co.drawImage(this,x,y,ca.width,ca.height);}else{co.drawImage(this,x,y);}
-RG.redraw();}}else if(this.__background_image__){var x=0+prop['chart.background.image.offsetx'];var y=0+prop['chart.background.image.offsety'];if(prop['chart.background.image.stretch']){co.drawImage(this.__background_image__,x,y,ca.width,ca.height);}else{co.drawImage(this.__background_image__,x,y);}}
-co.beginPath();co.fillStyle=prop['chart.background.color'];if(prop['chart.shadow']){RG.SetShadow(this,prop['chart.shadow.color'],prop['chart.shadow.offsetx'],prop['chart.shadow.offsety'],prop['chart.shadow.blur']);}
-co.moveTo(this.centerx,this.centery);co.arc(this.centerx,this.centery,this.radius,prop['chart.angles.start'],prop['chart.angles.end'],false);co.fill();RG.NoShadow(this);if(prop['chart.shadow']){co.beginPath();var r=(this.radius*0.06)>40?40:(this.radius*0.06);co.arc(this.centerx,this.centery,r,0,RG.TWOPI,0);co.fill();RG.NoShadow(this);}
-if(prop['chart.tickmarks.small.num']){for(var i=0;i<(prop['chart.angles.end']-prop['chart.angles.start']);i+=(RG.PI/prop['chart.tickmarks.small.num'])){co.beginPath();co.strokeStyle=prop['chart.tickmarks.small.color'];co.arc(this.centerx,this.centery,this.radius,prop['chart.angles.start']+i,prop['chart.angles.start']+i+0.00001,0);co.arc(this.centerx,this.centery,this.radius-5,prop['chart.angles.start']+i,prop['chart.angles.start']+i+0.00001,0);co.stroke();}
-co.beginPath();co.fillStyle=prop['chart.background.color'];co.arc(this.centerx,this.centery,this.radius-4,prop['chart.angles.start'],prop['chart.angles.end'],false);co.closePath();co.fill();}
-if(prop['chart.tickmarks.big.num']){var colors=['white','white',prop['chart.tickmarks.big.color']];for(var j=0;j<colors.length;++j){for(var i=0;i<(prop['chart.angles.end']-prop['chart.angles.start']);i+=((prop['chart.angles.end']-prop['chart.angles.start'])/prop['chart.tickmarks.big.num'])){co.beginPath();co.strokeStyle=colors[j];co.arc(this.centerx,this.centery,this.radius,prop['chart.angles.start']+i,prop['chart.angles.start']+i+0.001,0);co.arc(this.centerx,this.centery,this.radius-5,prop['chart.angles.start']+i,prop['chart.angles.start']+i+0.0001,0);co.stroke();}}}
-co.beginPath();co.fillStyle=prop['chart.background.color'];co.moveTo(this.centerx,this.centery);co.arc(this.centerx,this.centery,this.radius-7,prop['chart.angles.start'],prop['chart.angles.end'],false);co.closePath();co.fill();var ranges=prop['chart.colors.ranges'];if(RG.is_array(prop['chart.colors.ranges'])){var ranges=prop['chart.colors.ranges'];for(var i=0;i<ranges.length;++i){co.strokeStyle=prop['chart.strokestyle']?prop['chart.strokestyle']:ranges[i][2];co.fillStyle=ranges[i][2];co.lineWidth=prop['chart.linewidth.segments'];co.beginPath();co.arc(this.centerx,this.centery,this.radius*0.85,(((ranges[i][0]-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],(((ranges[i][1]-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],false);if(prop['chart.segment.radius.start']>0){co.arc(this.centerx,this.centery,prop['chart.segment.radius.start'],(((ranges[i][1]-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],(((ranges[i][0]-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],true);}else{co.lineTo(this.centerx,this.centery);}
-co.closePath();co.stroke();co.fill();}
-co.beginPath();}else{co.lineWidth=prop['chart.linewidth'];co.strokeStyle=prop['chart.strokestyle']?prop['chart.strokestyle']:prop['chart.green.color'];co.fillStyle=prop['chart.green.color'];co.lineWidth=prop['chart.linewidth.segments'];co.beginPath();co.arc(this.centerx,this.centery,this.radius*0.85,(((prop['chart.green.start']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-this.properties['chart.angles.start']))+prop['chart.angles.start'],(((prop['chart.green.end']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],false);if(prop['chart.segment.radius.start']>0){co.arc(this.centerx,this.centery,prop['chart.segment.radius.start'],(((prop['chart.green.end']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],(((prop['chart.green.start']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],true);}else{co.lineTo(this.centerx,this.centery);}
-co.closePath();co.stroke();co.fill();co.strokeStyle=prop['chart.strokestyle']?prop['chart.strokestyle']:prop['chart.yellow.color'];co.fillStyle=prop['chart.yellow.color'];co.lineWidth=prop['chart.linewidth.segments'];co.beginPath();co.arc(this.centerx,this.centery,this.radius*0.85,(((prop['chart.yellow.start']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],(((prop['chart.yellow.end']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],false);if(prop['chart.segment.radius.start']>0){co.arc(this.centerx,this.centery,prop['chart.segment.radius.start'],(((prop['chart.yellow.end']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],(((prop['chart.yellow.start']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],true);}else{co.lineTo(this.centerx,this.centery);}
-co.closePath();co.stroke();co.fill();co.strokeStyle=prop['chart.strokestyle']?prop['chart.strokestyle']:prop['chart.red.color'];co.fillStyle=prop['chart.red.color'];co.lineWidth=prop['chart.linewidth.segments'];co.beginPath();co.arc(this.centerx,this.centery,this.radius*0.85,(((prop['chart.red.start']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],(((prop['chart.red.end']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],false);if(prop['chart.segment.radius.start']>0){co.arc(this.centerx,this.centery,prop['chart.segment.radius.start'],(((prop['chart.red.end']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],(((prop['chart.red.start']-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'],true);}else{co.lineTo(this.centerx,this.centery);}
-co.closePath();co.stroke();co.fill();co.lineWidth=1;}
-if(prop['chart.border']){co.strokeStyle=prop['chart.border.color'];co.lineWidth=prop['chart.linewidth'];co.beginPath();co.moveTo(this.centerx,this.centery);co.arc(this.centerx,this.centery,this.radius,prop['chart.angles.start'],prop['chart.angles.end'],false);co.closePath();}
-co.stroke();co.lineWidth=1;};this.drawNeedle=this.DrawNeedle=function()
-{var a=(((this.value-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'];if(typeof prop['chart.needle.image.url']==='string'&&!this.__needle_image__){var img=new Image();this.__needle_image__=img;img.src=prop['chart.needle.image.url'];img.onload=function()
-{co.save();RG.rotateCanvas(ca,this.centerx,this.centery,a);co.drawImage(this,this.centerx+prop['chart.needle.image.offsetx'],this.centery+prop['chart.needle.image.offsety']);co.restore();RG.redraw();}}else if(this.__needle_image__){co.save();RG.rotateCanvas(ca,this.centerx,this.centery,a);co.drawImage(this.__needle_image__,this.centerx+prop['chart.needle.image.offsetx'],this.centery+prop['chart.needle.image.offsety']);co.restore();}
-var needleRadius=typeof(prop['chart.needle.radius'])=='number'?prop['chart.needle.radius']:this.radius*0.7;if(prop['chart.needle.type']==='pointer'){var r=(this.radius*0.06)>40?40:(this.radius*0.06);co.beginPath();co.fillStyle=prop['chart.needle.color'];co.moveTo(this.centerx,this.centery);co.arc(this.centerx,this.centery,r,0,RG.TWOPI,false);co.fill();co.beginPath();co.arc(this.centerx,this.centery,r,a+RG.HALFPI,a+RG.HALFPI+0.0001,false);co.arc(this.centerx,this.centery,needleRadius,a,a+0.001,false);co.arc(this.centerx,this.centery,r,a-RG.HALFPI,a-RG.HALFPI+0.001,false);co.fill();}else{co.fillStyle='black';co.lineWidth=this.radius>=200?7:3;co.lineCap='round';co.beginPath();co.strokeStyle=prop['chart.needle.color'];if(typeof(prop['chart.needle.linewidth'])=='number')co.lineWidth=prop['chart.needle.linewidth'];co.arc(this.centerx,this.centery,needleRadius,a,a+0.001,false);co.lineTo(this.centerx,this.centery);co.stroke();if(prop['chart.needle.head']){co.fillStyle=prop['chart.needle.color'];co.beginPath();co.lineWidth=1;co.arc(this.centerx,this.centery,needleRadius+15,a,a+0.001,0);co.arc(this.centerx,this.centery,needleRadius-15,a+0.087,a+0.087999,0);co.arc(this.centerx,this.centery,needleRadius-15,a-0.087,a-0.087999,1);co.fill();}
-if(prop['chart.needle.tail']){co.beginPath();co.strokeStyle=prop['chart.needle.color'];if(typeof(prop['chart.needle.linewidth'])=='number')co.lineWidth=prop['chart.needle.linewidth'];var a=((this.value-this.min)/(this.max-this.min)*(this.properties['chart.angles.end']-this.properties['chart.angles.start']))+this.properties['chart.angles.start']+RG.PI;co.arc(this.centerx,this.centery,25,a,a+0.001,false);co.lineTo(this.centerx,this.centery);co.stroke();}
-var r=(this.radius*0.06)>40?40:(this.radius*0.06);co.beginPath();co.fillStyle=prop['chart.centerpin.stroke'];co.arc(this.centerx,this.centery,r,0+0.001,RG.TWOPI,0);co.fill();co.fillStyle=prop['chart.centerpin.fill'];co.beginPath();co.arc(this.centerx,this.centery,r-2,0+0.001,RG.TWOPI,0);co.fill();}};this.drawLabels=this.DrawLabels=function()
-{if(!prop['chart.labels']){return;}
-var radius=this.radius,text_size=prop['chart.text.size'],text_font=prop['chart.text.font'],units_post=prop['chart.units.post'],units_pre=prop['chart.units.pre'],centerx=this.centerx,centery=this.centery,min=this.min,max=this.max,decimals=prop['chart.scale.decimals'],numLabels=prop['chart.labels.count'],specific=prop['chart.labels.specific']
-if(specific){for(var i=0;i<specific.length;++i){var angle=this.getAngle(specific[i][1]),angle_degrees=angle*(180/RG.PI),text=specific[i][0].toString(),coords=RG.getRadiusEndPoint(this.centerx,this.centery,angle,this.radius*0.925)
-RG.text2(this,{'font':text_font,'size':text_size,'x':coords[0],'y':coords[1],'text':text,'halign':'center','valign':'center','angle':angle_degrees+90,'bounding':false,'tag':'labels-specific',color:'black'});}
-return;}
-co.fillStyle=prop['chart.text.color'];co.lineWidth=1;co.beginPath();for(var i=0;i<=numLabels;++i){var angle=((prop['chart.angles.end']-prop['chart.angles.start'])*(i/numLabels))+prop['chart.angles.start'];var coords=RG.getRadiusEndPoint(centerx,centery,angle+(((i==0||i==numLabels)&&prop['chart.border'])?(i==0?0.05:-0.05):0),(this.radius*0.925)-(prop['chart.text.valign']==='bottom'?15:0));var angleStart=prop['chart.angles.start'],angleEnd=prop['chart.angles.end'],angleRange=angleEnd-angleStart,angleStart_degrees=angleStart*(180/RG.PI),angleEnd_degrees=angleEnd*(180/RG.PI),angleRange_degrees=angleRange*(180/RG.PI)
-valign=prop['chart.text.valign'];if(prop['chart.border']){if(i==0){halign='left';}else if(i==numLabels){halign='right';}else{halign='center'}}else{halign='center';}
-var value=((this.max-this.min)*(i/numLabels))+this.min;RG.text2(this,{'font':text_font,'size':text_size,'x':coords[0],'y':coords[1],'text':RG.numberFormat(this,(value).toFixed(value===0?0:decimals),units_pre,units_post),'halign':halign,'valign':valign,'angle':((angleRange_degrees*(1/numLabels)*i)+angleStart_degrees)-270,'bounding':false,'boundingFill':(i==0||i==numLabels)?'white':null,'tag':'scale'});}};this.drawReadout=this.DrawReadout=function()
-{if(prop['chart.value.text']){co.beginPath();co.fillStyle=prop['chart.text.color'];RG.Text2(this,{'font':prop['chart.text.font'],'size':prop['chart.text.size'],'x':this.centerx,'y':this.centery-prop['chart.text.size']-15,'text':prop['chart.value.text.units.pre']+(this.value).toFixed(prop['chart.value.text.decimals'])+prop['chart.value.text.units.post'],'halign':'center','valign':'bottom','bounding':true,'boundingFill':'white','tag':'value.text'});co.stroke();co.fill();}};this.getShape=function(e){};this.getValue=function(e)
-{var mouseXY=RG.getMouseXY(e);var angle=RG.getAngleByXY(this.centerx,this.centery,mouseXY[0],mouseXY[1]);var radius=RG.getHypLength(this.centerx,this.centery,mouseXY[0],mouseXY[1]);if(radius>this.radius){return null;}
-if(angle<RG.HALFPI){angle+=RG.TWOPI;}
-var value=(((angle-prop['chart.angles.start'])/(prop['chart.angles.end']-prop['chart.angles.start']))*(this.max-this.min))+this.min;value=Math.max(value,this.min);value=Math.min(value,this.max);return value;};this.getObjectByXY=function(e)
-{var mouseXY=RGraph.getMouseXY(e);var radius=RG.getHypLength(this.centerx,this.centery,mouseXY[0],mouseXY[1]);if(mouseXY[0]>(this.centerx-this.radius)&&mouseXY[0]<(this.centerx+this.radius)&&mouseXY[1]>(this.centery-this.radius)&&mouseXY[1]<(this.centery+this.radius)&&radius<=this.radius){return this;}};this.adjusting_mousemove=this.Adjusting_mousemove=function(e)
-{if(prop['chart.adjustable']&&RG.Registry.Get('chart.adjusting')&&RG.Registry.Get('chart.adjusting').uid==this.uid){this.value=this.getValue(e);RG.clear(this.canvas);RG.redrawCanvas(this.canvas);RG.fireCustomEvent(this,'onadjust');}};this.getAngle=function(value)
-{if(value>this.max||value<this.min){return null;}
-var angle=(((value-this.min)/(this.max-this.min))*(prop['chart.angles.end']-prop['chart.angles.start']))+prop['chart.angles.start'];return angle;};this.parseColors=function()
-{if(this.original_colors.length===0){this.original_colors['chart.green.color']=RG.array_clone(prop['chart.green.color']);this.original_colors['chart.yellow.color']=RG.array_clone(prop['chart.yellow.color']);this.original_colors['chart.red.color']=RG.array_clone(prop['chart.red.color']);this.original_colors['chart.colors.ranges']=RG.array_clone(prop['chart.colors.ranges']);}
-prop['chart.green.color']=this.parseSingleColorForGradient(prop['chart.green.color']);prop['chart.yellow.color']=this.parseSingleColorForGradient(prop['chart.yellow.color']);prop['chart.red.color']=this.parseSingleColorForGradient(prop['chart.red.color']);var ranges=prop['chart.colors.ranges'];if(ranges&&ranges.length){for(var i=0;i<ranges.length;++i){ranges[i][2]=this.parseSingleColorForGradient(ranges[i][2]);}}};this.reset=function()
-{};this.parseSingleColorForGradient=function(color)
-{if(!color||typeof(color)!='string'){return color;}
-if(color.match(/^gradient\((.*)\)$/i)){var parts=RegExp.$1.split(':');var grad=co.createRadialGradient(this.centerx,this.centery,prop['chart.segment.radius.start'],this.centerx,this.centery,this.radius*0.85);var diff=1/(parts.length-1);for(var j=0;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
-return grad?grad:color;};this.on=function(type,func)
-{if(type.substr(0,2)!=='on'){type='on'+type;}
-if(typeof this[type]!=='function'){this[type]=func;}else{RG.addCustomEventListener(this,type,func);}
-return this;};this.firstDrawFunc=function()
-{};this.grow=function()
-{var obj=this;obj.currentValue=obj.currentValue||obj.min;var opt=arguments[0]||{};var frames=opt.frames||30;var frame=0;var diff=obj.value-obj.currentValue;var step=diff/frames;var callback=arguments[1]||function(){};var initial=obj.currentValue;function iterator()
-{obj.value=initial+(frame++ *step);RG.clear(obj.canvas);RG.redrawCanvas(obj.canvas);if(frame<=frames){RG.Effects.updateCanvas(iterator);}else{callback(obj);}}
-iterator();return this;};RG.att(ca);RG.register(this);if(parseConfObjectForOptions){RG.parseObjectStyleConfig(this,conf.options);}};
+    RGraph = window.RGraph || {isrgraph:true,isRGraph:true,rgraph:true};
+
+    //
+    // The bar chart constructor
+    //
+    RGraph.Meter = function (conf)
+    {
+        var id                 = conf.id
+        var canvas             = document.getElementById(id);
+        var min                = conf.min;
+        var max                = conf.max;
+        var value              = conf.value;
+
+        // id, min, max, value
+        // Get the canvas and context objects
+        this.id                = id;
+        this.canvas            = canvas;
+        this.context           = this.canvas.getContext ? this.canvas.getContext("2d", {alpha: (typeof id === 'object' && id.alpha === false) ? false : true}) : null;
+        this.canvas.__object__ = this;
+        this.type              = 'meter';
+        this.min               = RGraph.stringsToNumbers(min);
+        this.max               = RGraph.stringsToNumbers(max);
+        this.value             = RGraph.stringsToNumbers(value);
+        this.centerx           = null;
+        this.centery           = null;
+        this.radius            = null;
+        this.isRGraph          = true;
+        this.isrgraph          = true;
+        this.rgraph            = true;
+        this.currentValue      = null;
+        this.uid               = RGraph.createUID();
+        this.canvas.uid        = this.canvas.uid ? this.canvas.uid : RGraph.createUID();
+        this.colorsParsed      = false;
+        this.coordsText        = [];
+        this.original_colors   = [];
+        this.firstDraw         = true; // After the first draw this will be false
+
+
+        // Various config type stuff
+        this.properties =
+        {
+            backgroundImageUrl:     			null,
+            backgroundImageOffsetx: 			0,
+            backgroundImageOffsety: 			0,
+            backgroundImageStretch: 			true,
+            backgroundColor:       				'white',
+
+            marginLeft:                         35,
+            marginRight:           				35,
+            marginTop:             				35,
+            marginBottom:          				35,
+
+            linewidth:              			1,
+            linewidthSegments:     				0,
+
+            colorsStroke:            			null,
+            
+            border:                 			true,
+            borderColor:           				'black',
+            
+            textFont:              				'Arial, Verdana, sans-serif',
+            textSize:              				12,
+            textColor:             				'black',
+            textBold:              				false,
+            textItalic:            				false,
+            textValign:            				'center',
+            textAccessible:               		false,
+            textAccessibleOverflow:      		'visible',
+            textAccessiblePointerevents: 		false,
+            
+            labels:                             true,
+            labelsCount:                        10,
+            labelsSpecific:                     null,
+            labelsRadiusOffset:                0,
+            labelsFont:                         null,
+            labelsSize:                         null,
+            labelsColor:                        null,
+            labelsBold:                         null,
+            labelsItalic:                       null,
+            labelsValueText:                   	false,
+            labelsValueTextFont:              	null,
+            labelsValueTextSize:              	null,
+            labelsValueTextBold:              	null,
+            labelsValueTextItalic:            	null,
+            labelsValueTextColor:             	null,
+            labelsValueTextDecimals:          	0,
+            labelsValueTextUnitsPre:         	'',
+            labelsValueTextUnitsPost:        	'',
+            labelsValueTextBackground:        	true,
+            labelsValueTextBackgroundFill:   	'rgba(255,255,255,0.75)',
+            labelsValueTextBackgroundStroke: 	'rgba(0,0,0,0)',
+            labelsValueTextSpecific:          	null,
+            labelsValueTextAccessible:        	true,
+            
+            title:                  			'',
+            titleBackground:        			null,
+            titleHpos:              			null,
+            titleVpos:              			null,
+            titleColor:             			null,
+            titleBold:              			null,
+            titleFont:              			null,
+            titleItalic:            			null,
+            titleSize:              			null,
+            titleX:                 			null,
+            titleY:                 			null,
+            titleHalign:            			null,
+            titleValign:            			null,
+
+            colorsGreenStart:            		((this.max - this.min) * 0.35) + this.min,
+            colorsGreenEnd:              		this.max,
+            colorsGreenColor:            		'#207A20',
+            colorsYellowStart:           		((this.max - this.min) * 0.1) + this.min,
+            colorsYellowEnd:             		((this.max - this.min) * 0.35) + this.min,
+            colorsYellowColor:           		'#D0AC41',
+            colorsRedStart:              		this.min,
+            colorsRedEnd:                		((this.max - this.min) * 0.1) + this.min,
+            colorsRedColor:              		'#9E1E1E',
+            colorsRanges:          				null,
+
+            contextmenu:            			null,
+
+            annotatable:            			false,
+            annotatableColor:      				'black',
+
+            shadow:                 			false,
+            shadowColor:           				'rgba(0,0,0,0.5)',
+            shadowBlur:            				3,
+            shadowOffsetx:         				3,
+            shadowOffsety:         				3,
+
+            resizable:                   		false,
+            resizableHandleAdjust:     			[0,0],
+            resizableHandleBackground: 			null,
+
+            tickmarksSmallCount:    			100,
+            tickmarksSmallColor:    			'#bbb',
+            tickmarksLargeCount:    			10,
+            tickmarksLargeColor:    			'black',
+
+            scaleUnitsPre:          			'',
+            scaleUnitsPost:         			'',
+            scaleDecimals:           			0,
+            scalePoint:              			'.',
+            scaleThousand:           			',',
+
+            radius:                   			null,
+            centerx:                  			null,
+            centery:                  			null,
+
+            segmentsRadiusStart:     			0,
+
+            needleRadius:            			null,
+            needleType:              			'normal',
+            needleTail:              			false,
+            needleHead:              			true,
+            needleHeadLength:       			30,
+            needleHeadWidth:        			0.088,
+            needleColor:             			'black',
+            needleImageUrl:         			null,
+            needleImageOffsetx:     			0,
+            needleImageOffsety:     			0,
+
+            adjustable:               			false,
+
+            anglesStart:             			RGraph.PI,
+            anglesEnd:               			RGraph.TWOPI,
+
+            centerpinStroke:         			'black',
+            centerpinFill:           			'white',
+
+            clearto:   							'rgba(0,0,0,0)'
+        }
+
+
+        // Check for support
+        if (!this.canvas) {
+            alert('[METER] No canvas support');
+            return;
+        }
+
+
+
+        // Translate half a pixel for antialiasing purposes - but only if it hasn't beeen
+        // done already
+        //
+        if (!this.canvas.__rgraph_aa_translated__) {
+            this.context.translate(0.5,0.5);
+            
+            this.canvas.__rgraph_aa_translated__ = true;
+        }
+
+
+
+
+        // Easy access to  properties and the path function
+        var prop  = this.properties;
+        this.path = RGraph.pathObjectFunction;
+        
+        
+        
+        //
+        // "Decorate" the object with the generic effects if the effects library has been included
+        //
+        if (RGraph.Effects && typeof RGraph.Effects.decorate === 'function') {
+            RGraph.Effects.decorate(this);
+        }
+        
+        
+        
+        // Add the responsive method. This method resides in the common file.
+        this.responsive = RGraph.responsive;
+
+
+        //
+        // A setter
+        //
+        this.set = function (name)
+        {
+            var value = typeof arguments[1] === 'undefined' ? null : arguments[1];
+
+            // the number of arguments is only one and it's an
+            // object - parse it for configuration data and return.
+            if (arguments.length === 1 && typeof arguments[0] === 'object') {
+                for (i in arguments[0]) {
+                    if (typeof i === 'string') {
+                        this.set(i, arguments[0][i]);
+                    }
+                }
+
+                return this;
+            }
+
+            prop[name] = value;
+
+            return this;
+        };
+
+
+
+
+
+
+
+
+        //
+        // A getter
+        // 
+        // @param name  string The name of the property to get
+        //
+        this.get = function (name)
+        {
+            return prop[name];
+        };
+
+
+
+
+
+
+
+
+        //
+        // The function you call to draw the bar chart
+        //
+        this.draw = function ()
+        {
+            //
+            // Fire the onbeforedraw event
+            //
+            RGraph.fireCustomEvent(this, 'onbeforedraw');
+    
+            //
+            // Constrain the value to be within the min and max
+            //
+            if (this.value > this.max) this.value = this.max;
+            if (this.value < this.min) this.value = this.min;
+    
+            //
+            // Set the current value
+            //
+            this.currentValue = this.value;
+
+
+
+            //
+            // Make the margins easy to access
+            //
+            this.marginLeft   = prop.marginLeft;
+            this.marginRight  = prop.marginRight;
+            this.marginTop    = prop.marginTop;
+            this.marginBottom = prop.marginBottom;
+            
+            this.centerx = ((this.canvas.width - this.marginLeft - this.marginRight) / 2) + this.marginLeft;
+            this.centery = this.canvas.height - this.marginBottom;
+            this.radius  = Math.min(
+                (this.canvas.width - this.marginLeft - this.marginRight) / 2,
+                (this.canvas.height - this.marginTop - this.marginBottom)
+            );
+                
+            //
+            // Stop this growing uncontrollably
+            //
+            this.coordsText = [];
+    
+    
+    
+            //
+            // Custom centerx, centery and radius
+            //
+            if (typeof prop.centerx === 'number') this.centerx = prop.centerx;
+            if (typeof prop.centery === 'number') this.centery = prop.centery;
+            if (typeof prop.radius  === 'number') this.radius  = prop.radius;
+    
+    
+            //
+            // Parse the colors for gradients. Its down here so that the center X/Y can be used
+            //
+            if (!this.colorsParsed) {
+    
+                this.parseColors();
+    
+                // Don't want to do this again
+                this.colorsParsed = true;
+            }
+    
+    
+            this.drawBackground();
+            this.drawLabels();
+            this.drawNeedle();
+            this.drawReadout();
+            
+            //
+            // Draw the title
+            //
+            RGraph.drawTitle(
+                this,
+                prop.title,
+                this.marginTop,
+                null,
+                typeof prop.titleSize === 'boolean' ? prop.titleSize : prop.textSize
+            );
+
+            //
+            // Setup the context menu if required
+            //
+            if (prop.contextmenu) {
+                RGraph.showContext(this);
+            }
+    
+            
+            //
+            // This function enables resizing
+            //
+            if (prop.resizable) {
+                RGraph.allowResizing(this);
+            }
+    
+    
+            //
+            // This installs the event listeners
+            //
+            RGraph.installEventListeners(this);
+
+
+
+            //
+            // Fire the onfirstdraw event
+            //
+            if (this.firstDraw) {
+                this.firstDraw = false;
+                RGraph.fireCustomEvent(this, 'onfirstdraw');
+                this.firstDrawFunc();
+            }
+
+
+
+
+            //
+            // Fire the RGraph draw event
+            //
+            RGraph.fireCustomEvent(this, 'ondraw');
+
+
+
+            return this;
+        };
+
+
+
+
+
+
+
+
+        //
+        // Used in chaining. Runs a function there and then - not waiting for
+        // the events to fire (eg the onbeforedraw event)
+        // 
+        // @param function func The function to execute
+        //
+        this.exec = function (func)
+        {
+            func(this);
+            
+            return this;
+        };
+
+
+
+
+
+
+
+
+        //
+        // Draws the background of the chart
+        //
+        this.drawBackground = function ()
+        {
+            //
+            // First draw the background image if it's defined
+            //
+            if (typeof prop.backgroundImageUrl === 'string' && !this.__background_image__) {
+                
+                var x   = 0 + prop.backgroundImageOffsetx;
+                var y   = 0 + prop.backgroundImageOffsety;
+                var img = new Image();
+
+                this.__background_image__ = img;
+                img.src = prop.backgroundImageUrl;
+                var obj = this;
+
+                img.onload = function ()
+                {
+                    if (prop.backgroundImageStretch) {
+                        obj.context.drawImage(this, x,y,obj.canvas.width, obj.canvas.height);
+                    } else {
+                        obj.context.drawImage(this, x,y);
+                    }
+                    RGraph.redraw();
+                }
+
+            } else if (this.__background_image__) {
+            
+                var x   = 0 + prop.backgroundImageOffsetx;
+                var y   = 0 + prop.backgroundImageOffsety;
+
+                if (prop.backgroundImageStretch) {
+                    this.context.drawImage(this.__background_image__, x,y,this.canvas.width, this.canvas.height);
+                } else {
+                    this.context.drawImage(this.__background_image__, x,y);
+                }
+            }
+
+
+
+            //
+            // Draw the white background
+            //
+            this.context.beginPath();
+    
+                this.context.fillStyle = prop.backgroundColor;
+                
+                if (prop.shadow) {
+                    RGraph.setShadow(
+                        this,
+                        prop.shadowColor,
+                        prop.shadowOffsetx,
+                        prop.shadowOffsety,
+                        prop.shadowBlur
+                    );
+                }
+
+                this.context.moveTo(this.centerx,this.centery);
+                this.context.arc(
+                    this.centerx,
+                    this.centery,
+                    this.radius,
+                    prop.anglesStart,
+                    prop.anglesEnd,
+                    false
+                );
+    
+            this.context.fill();
+            
+            RGraph.noShadow(this);
+    
+            
+            // Draw the shadow
+            if (prop.shadow) {
+    
+                this.context.beginPath();
+                    var r = (this.radius * 0.06) > 40 ? 40 : (this.radius * 0.06);
+                    this.context.arc(this.centerx, this.centery, r, 0, RGraph.TWOPI, 0);
+                this.context.fill();
+    
+                RGraph.noShadow(this);
+            }
+
+
+
+            // First, draw the grey tickmarks
+            if (prop.tickmarksSmallCount) {
+                for (var i=0; i<(prop.anglesEnd - prop.anglesStart); i+=(RGraph.PI / prop.tickmarksSmallCount)) {
+                    this.context.beginPath();
+                        this.context.strokeStyle = prop.tickmarksSmallColor;
+                        this.context.arc(this.centerx, this.centery, this.radius, prop.anglesStart + i, prop.anglesStart + i + 0.00001, 0);
+                        this.context.arc(this.centerx, this.centery, this.radius - 5, prop.anglesStart + i, prop.anglesStart + i + 0.00001, 0);
+                    this.context.stroke();
+                }
+    
+                // Draw the semi-circle that makes the tickmarks
+                this.context.beginPath();
+                    this.context.fillStyle = prop.backgroundColor;
+                    this.context.arc(this.centerx, this.centery, this.radius - 4, prop.anglesStart, prop.anglesEnd, false);
+                this.context.closePath();
+                this.context.fill();
+            }
+    
+    
+            // Second, draw the darker tickmarks. First run draws them in white to get rid of the existing tickmark,
+            // then the second run draws them in the requested color
+            
+            
+            if (prop.tickmarksLargeCount) {
+                
+                var colors = ['white','white',prop.tickmarksLargeColor];
+                
+                for (var j=0; j<colors.length; ++j) {
+                    for (var i=0; i<(prop.anglesEnd - prop.anglesStart); i+=((prop.anglesEnd - prop.anglesStart) / prop.tickmarksLargeCount)) {
+                        this.context.beginPath();
+                            this.context.strokeStyle = colors[j];
+                            this.context.arc(this.centerx, this.centery, this.radius, prop.anglesStart +  i, prop.anglesStart + i + 0.001, 0);
+                            this.context.arc(this.centerx, this.centery, this.radius - 5, prop.anglesStart + i, prop.anglesStart + i + 0.0001, 0);
+                        this.context.stroke();
+                    }
+                }
+            }
+    
+            // Draw the white circle that makes the tickmarks
+            this.context.beginPath();
+            this.context.fillStyle = prop.backgroundColor;
+            this.context.moveTo(this.centerx, this.centery);
+            this.context.arc(
+                this.centerx,
+                this.centery,
+                this.radius - 7,
+                prop.anglesStart,
+                prop.anglesEnd,
+                false
+            );
+            this.context.closePath();
+            this.context.fill();
+    
+            //
+            // Color ranges - either green/yellow/red or an arbitrary number of ranges
+            //
+            var ranges = prop.colorsRanges;
+    
+            if (RGraph.isArray(prop.colorsRanges)) {
+    
+                var ranges = prop.colorsRanges;
+    
+                for (var i=0; i<ranges.length; ++i) {
+    
+                    this.context.strokeStyle = prop.colorsStroke ? prop.colorsStroke : ranges[i][2];
+                    this.context.fillStyle = ranges[i][2];
+                    this.context.lineWidth = prop.linewidthSegments;
+    
+                    this.context.beginPath();
+                        this.context.arc(
+                            this.centerx,
+                            this.centery,
+                            this.radius * 0.85,
+                            (((ranges[i][0] - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                            (((ranges[i][1] - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                            false
+                        );
+    
+                        if (prop.segmentsRadiusStart > 0) {
+                            this.context.arc(
+                                this.centerx,
+                                this.centery,
+                                prop.segmentsRadiusStart,
+                                (((ranges[i][1] - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                                (((ranges[i][0] - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                                true
+                            );
+                        } else {
+                            this.context.lineTo(this.centerx, this.centery);
+                        }
+    
+                    this.context.closePath();
+                    this.context.stroke();
+                    this.context.fill();
+                }
+    
+                // Stops the last line from being changed to a big linewidth.
+                this.context.beginPath();
+    
+            } else {
+                this.context.lineWidth = prop.linewidth;
+    
+                // Draw the green area
+                this.context.strokeStyle = prop.colorsStroke ? prop.colorsStroke : prop.colorsGreenColor;
+                this.context.fillStyle   = prop.colorsGreenColor;
+                this.context.lineWidth   = prop.linewidthSegments;
+                
+                this.context.beginPath();
+                    this.context.arc(
+                        this.centerx,
+                        this.centery,
+                        this.radius * 0.85,
+                        (((prop.colorsGreenStart - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                        (((prop.colorsGreenEnd - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                        false
+                    );
+    
+                    if (prop.segmentsRadiusStart > 0) {
+    
+                        this.context.arc(
+                            this.centerx,
+                            this.centery,
+                            prop.segmentsRadiusStart,
+                            (((prop.colorsGreenEnd - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                            (((prop.colorsGreenStart - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                            true
+                        );
+                    } else {
+                        this.context.lineTo(this.centerx, this.centery);
+                    }
+    
+                this.context.closePath();
+                this.context.stroke();
+                this.context.fill();
+                
+                // Draw the yellow area
+                this.context.strokeStyle = prop.colorsStroke ? prop.colorsStroke : prop.colorsYellow;
+                this.context.fillStyle = prop.colorsYellowColor;
+                this.context.lineWidth = prop.linewidthSegments;
+                this.context.beginPath();
+                this.context.arc(
+                    this.centerx,
+                    this.centery,
+                    this.radius * 0.85,
+                    (((prop.colorsYellowStart - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                    (((prop.colorsYellowEnd - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                    false
+                );
+                
+                if (prop.segmentsRadiusStart > 0) {
+                    this.context.arc(
+                        this.centerx,
+                        this.centery,
+                        prop.segmentsRadiusStart,
+                        (((prop.colorsYellowEnd - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                        (((prop.colorsYellowStart - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                        true
+                    );
+                } else {
+                    this.context.lineTo(this.centerx, this.centery);
+                }
+    
+                this.context.closePath();
+                this.context.stroke();
+                this.context.fill();
+                
+                // Draw the red area
+                this.context.strokeStyle = prop.colorsStroke ? prop.colorsStroke : prop.colorsRedColor;
+                this.context.fillStyle = prop.colorsRedColor;
+                this.context.lineWidth = prop.linewidthSegments;
+                
+                this.context.beginPath();
+                    this.context.arc(
+                        this.centerx,
+                        this.centery,this.radius * 0.85,
+                        (((prop.colorsRedStart - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                        (((prop.colorsRedEnd - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                        false
+                    );
+        
+                    if (prop.segmentsRadiusStart > 0) {
+                        this.context.arc(
+                            this.centerx,
+                            this.centery,
+                            prop.segmentsRadiusStart,
+                            (((prop.colorsRedEnd - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                            (((prop.colorsRedStart - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart,
+                            true
+                        );
+                    } else {
+                        this.context.lineTo(this.centerx, this.centery);
+                    }
+    
+                this.context.closePath();
+                this.context.stroke();
+                this.context.fill();
+                
+                // Revert the linewidth
+                this.context.lineWidth = 1;
+            }
+    
+            // Draw the outline
+            if (prop.border) {
+                this.context.strokeStyle = prop.borderColor;
+                this.context.lineWidth   = prop.linewidth;
+                
+                this.context.beginPath();
+                    this.context.moveTo(this.centerx, this.centery);
+                    this.context.arc(
+                        this.centerx,
+                        this.centery,
+                        this.radius,
+                        prop.anglesStart,
+                        prop.anglesEnd,
+                        false
+                    );
+                this.context.closePath();
+            }
+    
+            this.context.stroke();
+            
+            // Reset the linewidth back to 1
+            this.context.lineWidth = 1;
+        };
+
+
+
+
+
+
+
+
+        //
+        // Draws the pointer
+        //
+        this.drawNeedle = function ()
+        {
+            //
+            // The angle that the needle is at
+            //
+            var a = (((this.value - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart;
+
+            //
+            // First draw the background image if it's defined
+            //
+            if (typeof prop.needleImageUrl === 'string' && !this.__needle_image__) {
+                
+                var img = new Image();
+
+                this.__needle_image__ = img;
+                img.src = prop.needleImageUrl;
+                var obj = this;
+
+                img.onload = function ()
+                {
+                    obj.context.save();
+                        RGraph.rotateCanvas(obj.canvas, obj.centerx, obj.centery, a);
+                        obj.context.drawImage(
+                            this,
+                            obj.centerx + prop.needleImageOffsetx,
+                            obj.centery + prop.needleImageOffsety
+                        );
+                    obj.context.restore();
+
+                    RGraph.redraw();
+                }
+
+            } else if (this.__needle_image__) {
+
+                this.context.save();
+                    RGraph.rotateCanvas(this.canvas, this.centerx, this.centery, a);
+                    this.context.drawImage(
+                        this.__needle_image__,
+                        this.centerx + prop.needleImageOffsetx,
+                        this.centery + prop.needleImageOffsety
+                    );
+                this.context.restore();
+            }
+
+
+            // Allow customising the needle radius
+            var needleRadius = typeof prop.needleRadius === 'number' ? prop.needleRadius : this.radius * 0.7;
+
+
+
+            //
+            // Draw a simple pointer as for the needle
+            //
+            if (prop.needleType === 'pointer') {
+
+                // Draw the center circle (the stroke)
+                var r = (this.radius * 0.06) > 40 ? 40 : (this.radius * 0.06);
+
+                // Draw the black circle at the bottom of the needle
+                this.context.beginPath();
+                
+                this.context.fillStyle = prop.needleColor;
+                
+                this.context.moveTo(this.centerx,this.centery);
+
+                this.context.arc(
+                    this.centerx,
+                    this.centery,
+                    r,
+                    0,
+                    RGraph.TWOPI,
+                    false
+                );
+                
+                this.context.fill();
+                this.context.beginPath();
+           
+                // This moves the "pen" to the outer edge of the needle
+                this.context.arc(
+                    this.centerx,
+                    this.centery,
+                    r,
+                    a + RGraph.HALFPI,
+                    a + RGraph.HALFPI + 0.0001,
+                    false
+                );
+ 
+                // Draw a line up to the tip of the needle
+                this.context.arc(
+                    this.centerx,
+                    this.centery,
+                    needleRadius,
+                    a,
+                    a + 0.001,
+                    false
+                );
+
+                // Draw a line back down to the other side of the circle
+                this.context.arc(
+                    this.centerx,
+                    this.centery,
+                    r,
+                    a - RGraph.HALFPI,
+                    a - RGraph.HALFPI + 0.001,
+                    false
+                );
+
+                
+                this.context.fill();
+                
+                
+            } else {
+
+        
+                // First draw the circle at the bottom
+                this.context.fillStyle = 'black';
+                this.context.lineWidth = this.radius >= 200 ? 7 : 3;
+                this.context.lineCap = 'round';
+        
+                // Now, draw the arm of the needle
+                this.context.beginPath();
+                    this.context.strokeStyle = prop.needleColor;
+                    if (typeof prop.needleLinewidth == 'number') this.context.lineWidth = prop.needleLinewidth;
+    
+        
+                    this.context.arc(this.centerx, this.centery, needleRadius, a, a + 0.001, false);
+                    this.context.lineTo(this.centerx, this.centery);
+                this.context.stroke();
+    
+                // Draw the triangular needle head
+
+                if (prop.needleHead) {
+                    this.context.fillStyle = prop.needleColor;
+                    this.context.beginPath();
+                        this.context.lineWidth = 1;
+                        //this.context.moveTo(this.centerx, this.centery);
+                        this.context.arc(this.centerx, this.centery, needleRadius + 15, a, a + 0.001, 0);
+                        this.context.arc(this.centerx, this.centery, needleRadius - prop.needleHeadLength + 15, a + prop.needleHeadWidth, a + prop.needleHeadWidth, 0);
+                        this.context.arc(this.centerx, this.centery, needleRadius - prop.needleHeadLength + 15, a - prop.needleHeadWidth, a - prop.needleHeadWidth, 1);
+                    this.context.fill();
+                }
+    
+                // Draw the tail if requested
+                if (prop.needleTail) {
+                    this.context.beginPath();
+                        this.context.strokeStyle = prop.needleColor;
+                        if (typeof prop.needleLinewidth == 'number') this.context.lineWidth = prop.needleLinewidth;
+    
+                        var a = ((this.value - this.min) / (this.max - this.min) * (this.properties.anglesEnd - this.properties.anglesStart)) + this.properties.anglesStart + RGraph.PI;
+                        this.context.arc(this.centerx, this.centery, 25, a, a + 0.001, false);
+                        this.context.lineTo(this.centerx, this.centery);
+                    this.context.stroke();
+                }
+    
+                // Draw the center circle (the stroke)
+                var r = (this.radius * 0.06) > 40 ? 40 : (this.radius * 0.06);
+        
+                this.context.beginPath();
+                this.context.fillStyle = prop.centerpinStroke;
+                this.context.arc(this.centerx, this.centery, r, 0 + 0.001, RGraph.TWOPI, 0);
+                this.context.fill();
+    
+    
+    
+                // Draw the centre bit of the circle (the fill)
+                this.context.fillStyle = prop.centerpinFill;
+                this.context.beginPath();
+                this.context.arc(this.centerx, this.centery, r - 2, 0 + 0.001, RGraph.TWOPI, 0);
+                this.context.fill();
+            }
+        };
+
+
+
+
+
+
+
+
+        //
+        // Draws the labels
+        //
+        this.drawLabels = function ()
+        {
+            if (!prop.labels) {
+                return;
+            }
+
+            var radius      = this.radius,
+                text_italic = prop.textItalic,
+                units_post  = prop.scaleUnitsPost,
+                units_pre   = prop.scaleUnitsPre,
+                point       = prop.scalePoint,
+                thousand    = prop.scaleThousand,
+                centerx     = this.centerx,
+                centery     = this.centery,
+                min         = this.min,
+                max         = this.max,
+                decimals    = prop.scaleDecimals,
+                numLabels   = prop.labelsCount,
+                offset      = prop.labelsRadiusOffset,
+                specific    = prop.labelsSpecific;
+
+
+            var textConf = RGraph.getTextConf({
+                object: this,
+                prefix: 'labels'
+            });
+
+
+            //
+            // Draw the specific labels if they're specific
+            //
+            if (specific) {
+
+                for (var i=0; i<specific.length; ++i) {
+
+                    if (typeof specific[i] === 'string' || typeof specific[i] === 'number') {
+
+                        var angle = this.getAngle(
+                                (((this.max - this.min) / specific.length) / 2) + (((this.max - this.min) / specific.length) * i) + this.min
+                            ),
+                            angle_degrees = angle * (180 / RGraph.PI),
+                            text          = specific[i].toString(),
+                            coords        = RGraph.getRadiusEndPoint(
+                                this.centerx,
+                                this.centery,
+                                angle,
+                                (this.radius * 0.925) + offset
+                            );
+
+                    } else {
+
+                        var angle         = this.getAngle(specific[i][1]),
+                            angle_degrees = angle * (180 / RGraph.PI),
+                            text          = specific[i][0].toString(),
+                            coords        = RGraph.getRadiusEndPoint(
+                                this.centerx,
+                                this.centery,
+                                angle,
+                                (this.radius * 0.925) + offset
+                            );
+                    }
+
+                    RGraph.text({
+                    
+                   object: this,
+
+                     font: textConf.font,
+                     size: textConf.size,
+                    color: textConf.color,
+                     bold: textConf.bold,
+                   italic: textConf.italic,
+
+                        x:        coords[0],
+                        y:        coords[1],
+                        text:     text,
+                        halign:   'center',
+                        valign:   'center',
+                        angle:    angle_degrees + 90,
+                        bounding: false,
+                        tag:      'labels-specific'
+                    });
+                }
+            
+                return;
+            }
+
+
+
+
+            this.context.fillStyle = prop.textColor;
+            this.context.lineWidth = 1;
+    
+            this.context.beginPath();
+    
+            for (var i=0; i<=numLabels; ++i) {
+            
+                var angle  = ((prop.anglesEnd - prop.anglesStart) * (i / numLabels)) + prop.anglesStart;
+                var coords = RGraph.getRadiusEndPoint(
+                    centerx,
+                    centery,
+                    angle + (((i == 0 || i == numLabels) && prop.border) ? (i == 0 ? 0.05 : -0.05) : 0),
+                    ((this.radius * 0.925) - (prop.textValign === 'bottom' ? 15 : 0) + prop.labelsRadiusOffset
+                ));
+                
+                var angleStart = prop.anglesStart,
+                    angleEnd   = prop.anglesEnd,
+                    angleRange = angleEnd - angleStart,                
+                    angleStart_degrees = angleStart * (180 / RGraph.PI),
+                    angleEnd_degrees = angleEnd * (180 / RGraph.PI),
+                    angleRange_degrees = angleRange * (180 / RGraph.PI)
+
+                // Vertical alignment
+                valign = prop.textValign;
+    
+                // Horizontal alignment
+                if (prop.border) {
+                    if (i == 0) {
+                        halign = 'left';
+                    } else if (i == numLabels) {
+                        halign = 'right';
+                    } else {
+                        halign = 'center'
+                    }
+                } else {
+                    halign = 'center';
+                }
+
+                var value = ((this.max - this.min) * (i / numLabels)) + this.min;
+
+                RGraph.text({
+                
+                   object: this,
+
+                     font: textConf.font,
+                     size: textConf.size,
+                    color: textConf.color,
+                     bold: textConf.bold,
+                   italic: textConf.italic,
+
+                    x:            coords[0],
+                    y:            coords[1],
+                    text:         RGraph.numberFormat({
+                                      object:    this,
+                                      number:    (value).toFixed(value === 0 ? 0 : decimals),
+                                      unitspre:  units_pre,
+                                      unitspost: units_post,
+                                      point:     point,
+                                      thousand:  thousand
+                                  }),
+                    halign:       halign,
+                    valign:       valign,
+                    angle:        ((angleRange_degrees * (1 / numLabels) * i) + angleStart_degrees) - 270,
+                    bounding:     false,
+                    boundingFill: (i == 0 || i == numLabels) ? 'white': null,
+                    tag:          'scale'
+                });
+            }
+        };
+
+
+
+
+
+
+
+
+        //
+        // This function draws the text readout if specified
+        //
+        this.drawReadout = function ()
+        {
+            if (prop.labelsValueText) {
+                
+                // The text label
+                var text = (prop.labelsValueTextUnitsPre || '')
+                            + (this.value).toFixed(prop.labelsValueTextDecimals)
+                            + (prop.labelsValueTextUnitsPost || '');
+                
+                // Allow for a specific label
+                if (typeof prop.labelsValueTextSpecific === 'string') {
+                    text = prop.labelsValueTextSpecific;
+                }
+
+                var textConf = RGraph.getTextConf({
+                    object: this,
+                    prefix: 'labelsValueText'
+                });
+
+                RGraph.text({
+                
+               object: this,
+
+                 font: textConf.font,
+                 size: textConf.size,
+                color: textConf.color,
+                 bold: textConf.bold,
+               italic: textConf.italic,
+
+                    x:            this.centerx,
+                    y:            this.centery - textConf.size - 15,
+                    text:         text,
+                    halign:       'center',
+                    valign:       'bottom',
+                    bounding:     prop.labelsValueTextBackground,
+                    boundingFill: prop.labelsValueTextBackgroundFill,
+                    boundingStroke: prop.labelsValueTextBackgroundStroke,
+                    accessible:     prop.labelsValueTextAccessible,
+                    tag:            'value.text'
+                });
+            }
+        };
+
+
+
+
+
+
+
+
+        //
+        // A placeholder function
+        // 
+        // @param object The event object
+        //
+        this.getShape = function (e) {};
+
+
+
+
+
+
+
+
+        //
+        // This function returns the pertinent value for a particular click (or other mouse event)
+        // 
+        // @param obj e The event object
+        //
+        this.getValue = function (e)
+        {
+            var mouseXY = RGraph.getMouseXY(e);
+            var angle   = RGraph.getAngleByXY(this.centerx, this.centery, mouseXY[0], mouseXY[1]);
+
+            // Work out the radius
+            var radius = RGraph.getHypLength(this.centerx, this.centery, mouseXY[0], mouseXY[1]);
+            if (radius > this.radius) {
+                return null;
+            }
+    
+    
+            if (angle < RGraph.HALFPI) {
+                angle += RGraph.TWOPI;
+            }
+
+            var value = (((angle - prop.anglesStart) / (prop.anglesEnd - prop.anglesStart)) * (this.max - this.min)) + this.min;
+
+            value = Math.max(value, this.min);
+            value = Math.min(value, this.max);
+
+            return value;
+        };
+
+
+
+
+
+
+
+
+        //
+        // The getObjectByXY() worker method. Don't call this call:
+        // 
+        // RGraph.ObjectRegistry.getObjectByXY(e)
+        // 
+        // @param object e The event object
+        //
+        this.getObjectByXY = function (e)
+        {
+            var mouseXY = RGraph.getMouseXY(e);
+    
+            // Work out the radius
+            var radius = RGraph.getHypLength(this.centerx, this.centery, mouseXY[0], mouseXY[1]);
+    
+            if (
+                   mouseXY[0] > (this.centerx - this.radius)
+                && mouseXY[0] < (this.centerx + this.radius)
+                && mouseXY[1] > (this.centery - this.radius)
+                && mouseXY[1] < (this.centery + this.radius)
+                && radius <= this.radius
+                ) {
+    
+                return this;
+            }
+        };
+
+
+
+
+
+
+
+
+        //
+        // This method handles the adjusting calculation for when the mouse is moved
+        // 
+        // @param object e The event object
+        //
+        this.adjusting_mousemove = function (e)
+        {
+            //
+            // Handle adjusting for the Bar
+            //
+            if (prop.adjustable && RGraph.Registry.get('adjusting') && RGraph.Registry.get('adjusting').uid == this.uid) {
+                this.value = this.getValue(e);
+                RGraph.clear(this.canvas);
+                RGraph.redrawCanvas(this.canvas);
+                RGraph.fireCustomEvent(this, 'onadjust');
+            }
+        };
+
+
+
+
+
+
+
+
+        //
+        // This method returns the appropriate angle for a value
+        // 
+        // @param number value The value
+        //
+        this.getAngle = function (value)
+        {
+            // Higher than max
+            if (value > this.max || value < this.min) {
+                return null;
+            }
+    
+            var angle = (((value - this.min) / (this.max - this.min)) * (prop.anglesEnd - prop.anglesStart)) + prop.anglesStart;
+    
+            return angle;
+        };
+
+
+
+
+
+
+
+
+        //
+        // This allows for easy specification of gradients
+        //
+        this.parseColors = function ()
+        {
+            // Save the original colors so that they can be restored when the canvas is reset
+            if (this.original_colors.length === 0) {
+                this.original_colors.colorsGreenColor  = RGraph.arrayClone(prop.colorsGreenColor);
+                this.original_colors.colorsYellowColor = RGraph.arrayClone(prop.colorsYellowColor);
+                this.original_colors.colorsRedColor    = RGraph.arrayClone(prop.colorsRedColor);
+                this.original_colorsColorsRanges       = RGraph.arrayClone(prop.colorsRanges);
+            }
+
+            // Parse the basic colors
+            prop.colorsGreenColor  = this.parseSingleColorForGradient(prop.colorsGreenColor);
+            prop.colorsYellowColor = this.parseSingleColorForGradient(prop.colorsYellowColor);
+            prop.colorsRedColor    = this.parseSingleColorForGradient(prop.colorsRedColor);
+    
+            // Parse colorsRanges
+            var ranges = prop.colorsRanges;
+
+            if (ranges && ranges.length) {
+                for (var i=0; i<ranges.length; ++i) {
+                    ranges[i][2] = this.parseSingleColorForGradient(ranges[i][2]);
+                }
+            }
+        };
+
+
+
+
+
+
+
+
+        //
+        // Use this function to reset the object to the post-constructor state. Eg reset colors if
+        // need be etc
+        //
+        this.reset = function ()
+        {
+        };
+
+
+
+
+
+
+
+
+        //
+        // This parses a single color value
+        //
+        this.parseSingleColorForGradient = function (color)
+        {
+            if (!color || typeof color != 'string') {
+                return color;
+            }
+
+            if (color.match(/^gradient\((.*)\)$/i)) {
+
+                // Allow for JSON gradients
+                if (color.match(/^gradient\(({.*})\)$/i)) {
+                    return RGraph.parseJSONGradient({
+                        object: this,
+                        def:    RegExp.$1,radial:true
+                    });
+                }
+
+                var parts = RegExp.$1.split(':');
+    
+                // Create the gradient
+                var grad = this.context.createRadialGradient(this.centerx, this.centery, prop.segmentsRadiusStart, this.centerx, this.centery, this.radius * 0.85);
+    
+                var diff = 1 / (parts.length - 1);
+    
+                for (var j=0; j<parts.length; ++j) {
+                    grad.addColorStop(j * diff, RGraph.trim(parts[j]));
+                }
+            }
+    
+            return grad ? grad : color;
+        };
+
+
+
+
+
+
+
+
+        //
+        // Using a function to add events makes it easier to facilitate method chaining
+        // 
+        // @param string   type The type of even to add
+        // @param function func 
+        //
+        this.on = function (type, func)
+        {
+            if (type.substr(0,2) !== 'on') {
+                type = 'on' + type;
+            }
+            
+            if (typeof this[type] !== 'function') {
+                this[type] = func;
+            } else {
+                RGraph.addCustomEventListener(this, type, func);
+            }
+
+            return this;
+        };
+
+
+
+
+
+
+
+
+        //
+        // This function runs once only
+        // (put at the end of the file (before any effects))
+        //
+        this.firstDrawFunc = function ()
+        {
+        };
+
+
+
+
+
+
+
+
+        //
+        // Meter Grow
+        // 
+        // This effect gradually increases the represented value
+        // 
+        // @param              An object of options - eg: {frames: 60}
+        // @param function     An optional callback function
+        //
+        this.grow = function ()
+        {
+            var obj = this;
+
+            obj.currentValue = obj.currentValue || obj.min;
+
+            var opt      = arguments[0] || {};
+            var frames   = opt.frames || 30;
+            var frame    = 0;
+            var diff     = obj.value - obj.currentValue;
+            var step     = diff / frames;
+            var callback = arguments[1] || function () {};
+            var initial  = obj.currentValue;
+
+
+
+            function iterator ()
+            {
+                obj.value = initial + (frame++ * step);
+    
+                RGraph.clear(obj.canvas);
+                RGraph.redrawCanvas(obj.canvas);
+            
+                if (frame <= frames) {
+                    RGraph.Effects.updateCanvas(iterator);
+                } else {
+                    callback(obj);
+                }
+            }
+            
+            iterator();
+            
+            return this;
+        };
+
+
+
+
+
+
+
+
+        //
+        // Register the object
+        //
+        RGraph.register(this);
+
+
+
+
+
+
+
+
+        //
+        // This is the 'end' of the constructor so if the first argument
+        // contains configuration data - handle that.
+        //
+        RGraph.parseObjectStyleConfig(this, conf.options);
+    };

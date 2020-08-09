@@ -3,7 +3,7 @@ table{
 }
 
 table thead th{
-  background-color:#4579b3; /*#007bff*/
+  background-color:#022B49; /*#007bff*/
   padding:6px;
   color:#fff;
   text-align:center;
@@ -16,12 +16,12 @@ table thead th.header{
 table tbody td{
   padding:6px;
   text-align:center;
-  color:#333;
+  color:#022B49;
   font-size:12px;
 }
 
 table tbody tr.odd td{
-  background-color:#ffffcc;
+  background-color:#D0D0D0;
 }
 
 table tbody tr.even td{
@@ -43,4 +43,3 @@ table tbody tr.selected td{
 #dataTable, #dataTable2, #dataTable3, #dataTable4 td:hover {
     cursor: pointer;
 }
-

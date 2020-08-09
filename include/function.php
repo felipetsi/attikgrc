@@ -38,7 +38,8 @@ echo '
 		<!-- Was be in and of page -->
 		<script  src="'.$_SESSION['LP'].'js/custom.js" type="text/javascript"></script>
 
-		<script src="'.$_SESSION['LP'].'vendor/jquery/jquery.min.js"></script>
+		<!--<script src="'.$_SESSION['LP'].'vendor/jquery/jquery.min.js"></script>--!>
+		<script src="'.$_SESSION['LP'].'vendor/jquery/jquery.js"></script>
 		<script src="'.$_SESSION['LP'].'vendor/popper/popper.min.js"></script>
 		<script src="'.$_SESSION['LP'].'vendor/bootstrap/js/bootstrap.min.js"></script>
 
@@ -48,8 +49,8 @@ echo '
 		
         <!-- Date Plugin -->
         <script type="text/javascript" src="'.$_SESSION['LP'].'vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-        <link rel="stylesheet" href="'.$_SESSION['LP'].'vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css"/>
-		
+		<link rel="stylesheet" href="'.$_SESSION['LP'].'vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css"/>
+
 	</head>';
 }
 

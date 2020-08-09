@@ -100,6 +100,10 @@
 				  <li>
 					<a href="/module/report/reports.php?datatype=controlNotEffective"><?php echo $Cn;?></a>
 				  </li>
+				  <li>
+					<a href="/module/report/reports.php?datatype=controlCompliance"><?php echo $LANG_COMPLIANCE;?></a>
+				  </li>
+				  
 				</ul>
 				<a class="nav-link-collapse collapsed" data-toggle="collapse" href="#taskReport"><?php echo $LANG_TASK;?></a>
 				<ul class="sidenav-third-level collapse" id="taskReport">

@@ -63,11 +63,11 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 						<div class="col-xl-3 col-sm-6 mb-3" id="amountincident"><script>showDataDashboard("amountincident");</script></div>
 					</div>
 					<div class="row">
-						<div class="col-xl-3" id="riskcomplied"><script>showDataDashboard("riskcomplied");</script></div>
+					<div class="col-xl-3" id="graph_risk_treatment"><script>showDataDashboard("graph_risk_treatment");</script></div>
 						<div class="col-xl-9" id="graph_risk_history_amount"><script>showDataDashboard("graph_risk_history_amount");</script></div>
 					</div>
 					<div class="row">
-						<div class="col-xl-3" id="graph_risk_treatment"><script>showDataDashboard("graph_risk_treatment");</script></div>
+						<div class="col-xl-3" id="riskcomplied"><script>showDataDashboard("riskcomplied");</script></div>
 						<div class="col-xl-3" id="aboutcontrol"><script>showDataDashboard("aboutcontrol");</script></div>
 						<div class="col-xl-3" id="aboutarea"><script>showDataDashboard("aboutarea");</script></div>
 						<div class="col-xl-3" id="percentapplied"><script>showDataDashboard("percentapplied");</script></div>

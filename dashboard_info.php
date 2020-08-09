@@ -160,7 +160,8 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 					$SQL = "SELECT COUNT(cbp.id) AS amountapply FROM tcontrol_best_pratice cbp ";
 					$SQL .= "WHERE cbp.id IN (SELECT tacb.id_control_best_pratice FROM tacontrol_best_pratice tacb WHERE tacb.id_control IN ";
 					$SQL .= "(SELECT id FROM tcontrol WHERE id_process IN (SELECT id FROM tprocess WHERE id_area IN ";
-					$SQL .= "(SELECT id FROM tarea WHERE id_instance = ".$_SESSION['INSTANCE_ID'].")) AND status = 'a')) AND ";
+					$SQL .= "(SELECT id FROM tarea WHERE id_instance = ".$_SESSION['INSTANCE_ID'].")) AND ";
+					$SQL .= "tacb.id_control IN (SELECT id_control FROM tarisk_control) AND status = 'a')) AND ";
 					$SQL .= "cbp.id_category IN(SELECT id FROM tcategory_best_pratice WHERE ";
 					$SQL .= "id_section IN(SELECT id FROM tsection_best_pratice WHERE id_best_pratice IN(SELECT id FROM tbest_pratice WHERE ";
 					$SQL .= "id = ".$ARRAY['id'].")))";
@@ -187,14 +188,14 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 					<i class="fa fa-check-square"></i>
 					'.$LANG_IMPLEMENTATION_LEVEL.'
 				</div>
-				<div class="list-group list-group-flush small">';
+				<div class="list-group list-group-flush">';
 					foreach($NAMEBP as $key => $value){
 						echo '
 						<a href="#" class="list-group-item list-group-item-action">
 						<div class="media">
 							<div class="media-body">
-								<div class="row list-group-item">
-								<strong>'.$value.'</strong>
+								<div class="list-group-item">
+									<strong>'.$value.'</strong>
 								</div>
 								<div class="row">
 									<div class="col-md-8">'.$LANG_ITENS.':</div>
@@ -380,33 +381,25 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 			}
 			if(!empty($AMOUNTS)){//
 				echo '
-				<div class="card mb-3">
-					<div class="card-header">
-						<i class="fa fa-pie-chart"></i>
+				<div class="col-md">
+					<i class="fa fa-pie-chart"></i>
+					'.$LANG_RISK_TREATMENT.'
 
-					</div>
-					<div class="list-group list-group-flush">
-						<a href="#" class="list-group-item list-group-item-action">
-							<div class="media">
-								<div class="media-body">
-									<canvas id="graph_risk_treatment" width="250" height="250"></canvas>
-									<script>
-										new RGraph.SVG.Pie({
-											id: \'graph_risk_treatment\',
-											data: ['.$AMOUNTS.'],
-											options: {
-												tooltipsEvent: \'mousemove\',
-												highlightStyle: \'outline\',
-												labelsSticksHlength: 50,
-												tooltips: ['.$LABELS.'],
-												key: [\'\']
-											}
-										}).draw();
-									</script>
-								</div>
-							</div>
-						</a>
-					</div>
+					<canvas id="graph_risk_treatment" width="250" height="250"></canvas>
+					<script>
+						new RGraph.SVG.Pie({
+							id: \'graph_risk_treatment\',
+							data: ['.$AMOUNTS.'],
+							options: {
+								tooltipsEvent: \'mousemove\',
+								highlightStyle: \'outline\',
+								labelsSticksHlength: 50,
+								colors: [\'#132A40\',\'#1B3B59\',\'#224C73\',\'#4F6F8F\',\'#7B93AB\',\'#005B77\'],
+								tooltips: ['.$LABELS.'],
+								key: [\'\']
+							}
+						}).draw();
+					</script>	
 				</div>';
 			}
 			break;
@@ -445,60 +438,52 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 				$KEY = $_SESSION['GRHA_KEY'];
 			}
 			echo '
-			<div class="card mb">
-				<div class="card-header">
-					<i class="fa fa-line-chart"></i>
-					
-				</div>
-				<div class="media">
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="media-body">
-							<div class="widget line">
-								<canvas id="graph_risk_history_amount" ></canvas>
-							</div>
-							<script>
-								new RGraph.SVG.Line({
-									id: \'graph_risk_history_amount\',
-									data: ['.$LABELS.'],
-									options: {
-										tooltips: \'onmousemove\',
-										tooltips: ['.$LABELS.'],
-										
-										backgroundGridVlines: false,
-										backgroundGridBorder: false,
+			<div class="col-md">
+				
+				<canvas id="graph_risk_history_amount" ></canvas>
+				<script>
+					new RGraph.SVG.Line({
+						id: \'graph_risk_history_amount\',
+						data: ['.$LABELS.'],
+						options: {
+							tooltips: \'onmousemove\',
+							tooltips: ['.$LABELS.'],
+							
+							backgroundGridVlines: false,
+							backgroundGridBorder: false,
 
-										gutterTop: 55,
+							filled: true,
+							filledOpacity: 0.5,
+							colors: [\'#022B49\'],
 
-										linewidth: 1,
-										hmargin: 0,
+							gutterTop: 55,
 
-										title: \''.$LANG_AMOUNT_RISK_HIST.'\',
+							linewidth: 1,
+							hmargin: 0,
 
-										gutterLeft: 60,
-										gutterRight: 60,
-										gutterBottom: 75,
-										yaxisDecimals: 0,
+							title: \''.$LANG_AMOUNT_RISK_HIST.'\',
 
-										tickmarksFill: \'white\',
-										tickmarksLinewidth: 3,
-										tickmarksSize: 12,
+							gutterLeft: 60,
+							gutterRight: 60,
+							gutterBottom: 75,
+							yaxisDecimals: 0,
 
-										spline: true,
-										xaxis: false,
-										yaxis: false,
-										xaxisLabels: [
-											'.$KEY.'
-										],
-										shadow: true
-									}
-								}).trace();
-							</script>
-						</div>
-					</a>
-				</div>
+							tickmarksFill: \'white\',
+							tickmarksLinewidth: 3,
+							tickmarksSize: 12,
+
+							spline: true,
+							xaxis: false,
+							yaxis: false,
+							xaxisLabels: [
+								'.$KEY.'
+							],
+							shadow: true
+						}
+					}).trace();
+				</script>
 			</div>';
-			break;
-			
+			break;		
 	}
 }
 ?>

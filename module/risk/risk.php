@@ -84,6 +84,7 @@ if(!isset($_SESSION['user_id'])||(!isset($_SESSION['INSTANCE_ID']))){
 
 		// End - individual configuration 
 		?>
+
 		<body class="fixed-nav sticky-footer bg-dark" id="page-top">
 			<!-- Navigation -->
 			<?php

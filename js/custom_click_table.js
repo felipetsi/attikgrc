@@ -36,3 +36,9 @@ $(document).ready(function() {
 		}
 	});
 });
+
+$(document).ready(function() {
+	$('#dataTable').DataTable( {
+		stateSave: true
+	} );
+} );
