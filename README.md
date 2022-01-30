@@ -1,8 +1,8 @@
-# @ttik GRC
+# Attik GRC
 
 This project was created to intended of enable any Organization to adopt Risk Management and Compliance practices that are needed in your business context.
 
-The @ttik GRC came with suppot to:
+The Attik GRC came with suppot to:
 * Identify the risks according with business process of areas in a Organization;
 * Risks treatment;
 * Compliance requiriment control;
@@ -19,7 +19,7 @@ See [INSTALL.md](INSTALL.md) file.
 
 ## Created by
 
-* [@ttik GRC](http://www.attik.com.br) - The website of maintainer
+* [Attik GRC](http://www.attik.com.br) - The website of maintainer
 
 ## Contributing
 
