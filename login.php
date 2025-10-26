@@ -1,5 +1,6 @@
 <?php
-session_start();
+error_reporting(E_ALL);
+
 session_destroy();
 session_start();
 $_SESSION['LP'] = "./"; //Level path
@@ -7,28 +8,34 @@ $THIS_PAGE = "login.php";
 $_SESSION['LAST_PAGE'] = $THIS_PAGE;
 
 if((!isset($_GET['instance']))||(empty($_GET['instance']))){
-	print_r("Error! Please contact us to more information and use");
+	print_r("Lab mode! Type it: http://IP_INSTANCE?instance=TRY-HACKING");
 
 } else {
 	require_once($_SESSION['LP'].'include/function.php');
 	
-	$_SESSION['INSTANCE_NAME'] = substr(trim(addslashes($_GET['instance'])),0,10);
+	$_SESSION['INSTANCE_NAME'] = $_GET['instance'];
 	
 	$SQL = "SELECT id, language_default FROM tinstance WHERE name LIKE '".$_SESSION['INSTANCE_NAME']."'";
+	
 	$RS = pg_query($conn, $SQL);
 	$ARRAY = pg_fetch_array($RS);
+	$ARRAY2 = $ARRAY;
+	
+	do{
+		print_r($ARRAY2);
+	}while($ARRAY2 = pg_fetch_array($RS));
 
-	if(pg_affected_rows($RS) == 1){
+	if(pg_affected_rows($RS) != 0){
 		$LANG = $ARRAY['language_default'];
 		$_SESSION['INSTANCE_ID'] = $ARRAY['id'];
-		$_SESSION['lang_default'] = substr($LANG,0,2);
+		$_SESSION['lang_default'] = $LANG;
 
 		$LANG = $CONF_DEFAULT_SYSTEM_LANG;
 		require_once($_SESSION['LP']."include/lang/$LANG/general.php");
 
 		$DESTINATIONPAGE = "login_run.php";
 	} else {
-		print_r("Instance not found! Please, check the URL typed");	
+		print_r("URL typed wrong. Type it: http://IP_INSTANCE?instance=TRY-HACKING");	
 	}
 
 }
@@ -39,7 +46,7 @@ if((!isset($_GET['instance']))||(empty($_GET['instance']))){
 		print_general_head($LANG);
 		echo '<script src="js/login.js"></script>';
 		?>
-		<body class="bg-dark">
+		<body >
 
 			<div class="container">
 			<?php
@@ -52,7 +59,7 @@ if((!isset($_GET['instance']))||(empty($_GET['instance']))){
 			}
 			?>
 			  <div class="card card-login mx-auto mt-5">
-			  	<img src="../img/logoattik_GRC.png" class="img-fluid" alt="Responsive image">
+			  	<img src="../img/logo_labsec.png" class="img-fluid" alt="Responsive image">
 				<div class="card-header">
 				  <?php echo $LANG_LOGIN;?>
 				</div>
@@ -76,9 +83,6 @@ if((!isset($_GET['instance']))||(empty($_GET['instance']))){
 					</div>
 					<a class="btn btn-primary btn-block" href="javascript:postForm();"><?php echo $LANG_LOGIN;?></a>
 				  </form>
-				  <div class="text-center">
-					<a class="d-block small" href="forgot_password.php?instance=<?php echo $_SESSION['INSTANCE_NAME'];?>"><?php echo $LANG_FORGOT_PASSWORD;?>?</a>
-				  </div>
 				</div>
 			  </div>
 			</div>

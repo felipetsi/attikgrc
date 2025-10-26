@@ -1,3 +1,0 @@
-### 09/08/2020 - Version 1.1
-# Change the filder scheduling_month to allow select more one month
-ALTER TABLE tcontrol ALTER COLUMN scheduling_month TYPE varchar(30) NULL;
